@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1081993108172",
+    "project_id": "almanet-3c967",
+    "storage_bucket": "almanet-3c967.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1081993108172:android:f287ad9763fc12566ec069",
+        "android_client_info": {
+          "package_name": "com.android.application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANAsJB7k_NHiRZilezItaFsB8F3Gj9PfA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1081993108172:android:4a2419c0108dcdc76ec069",
+        "android_client_info": {
+          "package_name": "com.example.almanet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANAsJB7k_NHiRZilezItaFsB8F3Gj9PfA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
