@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'firebase_options.dart';
+import 'package:almanet/home.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,12 +17,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false ,
       title: 'Almanet',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Almanet'),
+      home: Home(),
     );
   }
 }
