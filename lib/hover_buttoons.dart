@@ -5,12 +5,16 @@ class Hover_Button extends StatefulWidget {
   final Color defaultcolor;
   final Color hovercolor;
   final VoidCallback ontap;
+  final double fontsize;
+  final double width;
 
   Hover_Button({
     required this.text,
     required this.defaultcolor,
     required this.hovercolor,
     required this.ontap,
+    required this.fontsize,
+    required this.width,
 });
 
   @override
@@ -21,6 +25,7 @@ class _Hover_ButtonState extends State<Hover_Button> {
   bool ish = false;
   @override
   Widget build(BuildContext context) {
+    double pad = widget.width*0.01;
     return MouseRegion(
       cursor: SystemMouseCursors.none,
       onEnter: (_) => setState(() {
@@ -32,15 +37,28 @@ class _Hover_ButtonState extends State<Hover_Button> {
       child: InkWell(
         onTap: widget.ontap,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: AnimatedDefaultTextStyle(
+          padding:  EdgeInsets.symmetric(horizontal: pad),
+          child: AnimatedContainer(
             duration: Duration(milliseconds: 300),
-           style: TextStyle(
-              fontSize: 25,
-              fontWeight: FontWeight.w300,
-              color: ish ? widget.hovercolor : widget.defaultcolor
-          ),
-            child: Text(widget.text,),
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color: ish ? widget.hovercolor : Colors.white,
+                  width: 2
+                )
+              )
+            ),
+            child: AnimatedDefaultTextStyle(
+              duration: Duration(milliseconds: 300),
+             style: TextStyle(
+                fontSize: widget.fontsize,
+                fontWeight: FontWeight.w300,
+                color: ish ? widget.hovercolor : widget.defaultcolor
+            ),
+              child: Text(widget.text,
+              softWrap: true,
+              overflow: TextOverflow.visible,),
+            ),
           ),
         ),
       ),
