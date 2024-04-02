@@ -1,9 +1,9 @@
-import 'package:almanet_crm_page/hovering_btn.dart';
+import 'package:almanet/hover_buttoons.dart';
 
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class CRMPage extends StatelessWidget {
+  const CRMPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +26,7 @@ class HomePage extends StatelessWidget {
               hovercolor: Colors.blue,
               ontap: () {},
               fontsize: 23,
+              width: 0,
             ),
             const SizedBox(
               width: 5,
@@ -36,6 +37,7 @@ class HomePage extends StatelessWidget {
               hovercolor: Colors.blue,
               ontap: () {},
               fontsize: 23,
+              width: 0,
             ),
             const SizedBox(
               width: 5,
@@ -46,6 +48,7 @@ class HomePage extends StatelessWidget {
               hovercolor: Colors.blue,
               ontap: () {},
               fontsize: 23,
+              width: 0,
             ),
             const SizedBox(
               width: 5,
