@@ -1,9 +1,7 @@
 import 'package:almanet/hover_buttoons.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hovering/hovering.dart';
-import 'firebase_options.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
