@@ -8,10 +8,11 @@ class MobileBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 8.0, ),
+      padding: const EdgeInsets.only(
+        right: 8.0,
+      ),
       child: Scaffold(
         appBar: AppBar(
-
           title: const Text(
             "CRM",
             style: TextStyle(
@@ -67,6 +68,5 @@ class MobileBody extends StatelessWidget {
         ),
       ),
     );
-    ();
   }
 }
