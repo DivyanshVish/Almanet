@@ -8,6 +8,11 @@ import 'package:get/get.dart';
 import 'package:hovering/hovering.dart';
 import 'firebase_options.dart';
 
+
+
+
+
+
 class Home_Services extends StatefulWidget {
 
   final String Title;
@@ -39,11 +44,13 @@ class _Home_ServicesState extends State<Home_Services> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(widget.Title,style: TextStyle(color: Colors.green, fontSize: ww*0.011,fontWeight: FontWeight.bold),),
+            Text(widget.Title,style: TextStyle(color: Colors.green, fontSize: ww*0.011,fontWeight: FontWeight.bold, decoration: TextDecoration.none),),
             Padding(
               padding:  EdgeInsets.symmetric(vertical: hh*0.04),
               child: Text(widget.Description,overflow: TextOverflow.visible,softWrap: true,style: TextStyle(
-                fontSize: ww*0.0085
+                fontSize: ww*0.0085,
+                color: Colors.black,
+                decoration: TextDecoration.none
               ),),
             ),
             SizedBox(
