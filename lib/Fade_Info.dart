@@ -33,7 +33,7 @@ class _FadeInFromLeftToRightState extends State<FadeInFromLeftToRight> with Sing
   Widget build(BuildContext context) {
     List<Widget> aa = widget.widgets;
     return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: widget.widgets
           .asMap()
           .map((index, widget) => MapEntry(

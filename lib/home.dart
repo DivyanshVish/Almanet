@@ -169,25 +169,69 @@ class _HomeState extends State<Home> {
                   width: double.infinity,
                   child: Column(
                     children : [
+                      SizedBox(height: 100,),
 
-                      Text('Welcome to Almanet', style: TextStyle(
-                          fontSize: fs,
-                        decoration: TextDecoration.none
-                      ),),
+
                       Padding(
-                        padding:  EdgeInsets.symmetric(horizontal: ww*0.15),
-                        child: FadeInFromLeftToRight(
-                          widgets: [
-                          Home_Services(Title: 'SAP Services', Description: 'We provide SAP technology and industry expertise, tangible solutions, and a personalized approach to ensure you maximize your software investment.', ontap: (){}),
-                            Home_Services(Title: 'SAP Services', Description: 'We provide SAP technology and industry expertise, tangible solutions, and a personalized approach to ensure you maximize your software investment.', ontap: (){}),
-                            Home_Services(Title: 'SAP Services', Description: 'We provide SAP technology and industry expertise, tangible solutions, and a personalized approach to ensure you maximize your software investment.', ontap: (){}),
-                            Home_Services(Title: 'SAP Services', Description: 'We provide SAP technology and industry expertise, tangible solutions, and a personalized approach to ensure you maximize your software investment.', ontap: (){}),
-                            Home_Services(Title: 'SAP Services', Description: 'We provide SAP technology and industry expertise, tangible solutions, and a personalized approach to ensure you maximize your software investment.', ontap: (){}),
+                        padding:  EdgeInsets.only(left: ww*0.15, right: ww*0.15, bottom: hh*0.06),
+                        child: Column(
+                          children: [
+                            FadeInFromLeftToRight(widgets: [
+                              Container(
+                                width: ww*0.2,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('SOLUTIONS',style: TextStyle(
+                                      fontSize: ww*0.01,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.green
 
+                                    ),),
+                                    Padding(
+                                      padding:  EdgeInsets.only(top: hh*0.02,bottom: hh*0.03),
+                                      child: Text('Less cookie-cutter, more tailored expertise',
+                                        style: TextStyle(
+                                            fontSize: ww*0.015,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.indigo.shade900
 
+                                        ),
+                                      ),
+                                    ),
+                                    Text('Using holistic thinking and a proven methodology to solving problems, we’re enterprise resource planning (ERP) and SAP software experts committed to five core innovative practices.',style: TextStyle(
+                                      fontSize: ww*0.008
+                                    ),),
+
+                                  ],
+                                ),
+                              ),
+                              Image(image: AssetImage('assets/images/img_4.png'),
+                              width: ww*0.3,
+                                height: hh*0.3,
+                              )
+                            ], duration: Duration(milliseconds: 500)),
+                            SizedBox(height: hh*0.05,),
+                            FadeInFromLeftToRight(
+                              widgets: [
+                            
+                              Home_Services(Title: 'SAP Services', Description: 'We provide SAP technology and industry expertise, tangible solutions, and a personalized approach to ensure you maximize your software investment.', ontap: (){}),
+                                Home_Services(Title: 'SAP Services', Description: 'We provide SAP technology and industry expertise, tangible solutions, and a personalized approach to ensure you maximize your software investment.', ontap: (){}),
+                                Home_Services(Title: 'SAP Services', Description: 'We provide SAP technology and industry expertise, tangible solutions, and a personalized approach to ensure you maximize your software investment.', ontap: (){}),
+                                Home_Services(Title: 'SAP Services', Description: 'We provide SAP technology and industry expertise, tangible solutions, and a personalized approach to ensure you maximize your software investment.', ontap: (){}),
+                                Home_Services(Title: 'SAP Services', Description: 'We provide SAP technology and industry expertise, tangible solutions, and a personalized approach to ensure you maximize your software investment.', ontap: (){}),
+                            
+                            
+                              ],
+                              duration: Duration(milliseconds: 500),
+                            ),
                           ],
-                          duration: Duration(milliseconds: 500),
                         ),
+                      ),
+                      Divider(
+                        thickness: 3,
+                        height: hh*0.02,
+                        color: Color(0xFF082444),
                       ),
                       SizedBox(height: 700,)
                     ],
