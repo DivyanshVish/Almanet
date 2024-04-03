@@ -43,11 +43,11 @@ class _Hover_ButtonState extends State<Hover_Button> {
             decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(
-                  color: ish ? widget.hovercolor : Colors.white,
-                  width: 2
+                  color: ish ? widget.hovercolor : Colors.transparent
                 )
               )
             ),
+
             child: AnimatedDefaultTextStyle(
               duration: Duration(milliseconds: 300),
              style: TextStyle(

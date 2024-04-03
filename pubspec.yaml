@@ -42,6 +42,7 @@ dependencies:
   firebase_auth: ^4.18.0
   google_sign_in: ^6.2.1
   sign_in_button: ^3.2.0
+  font_awesome_flutter: ^10.7.0
 
 dev_dependencies:
   flutter_test:
@@ -62,7 +63,10 @@ flutter:
   assets:
     - assets/images/logo.jpg
     - assets/images/img.png
-
+    - assets/images/img_3.png
+    - assets/images/img_4.png
+    - assets/images/ii.png
+    - assets/images/sap.jpeg
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
