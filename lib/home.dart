@@ -7,6 +7,7 @@ import 'package:almanet/try.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:hovering/hovering.dart';
@@ -25,17 +26,20 @@ class _HomeState extends State<Home> {
 @override
   void initState() {
     super.initState();
-    print('ii ${innerBoxIsScrolled}');
 
     _scrollController.addListener(() {
       setState(() {
         innerBoxIsScrolled = _scrollController.position.pixels > Get.height*0.4 ? true : false;
-        print('ss ${innerBoxIsScrolled}');
       });
     });
   }
   @override
   Widget build(BuildContext context) {
+  final blog_title = 'Is “digital transformation” just a buzzword? Thoughts from a tech CEO on how we can give meaning back to the phrase';
+  final blog_desc = "One of the key benefits of technology like enterprise resource planning (ERP) is the automation of workflows and manual tasks. And yet, despite significant investments in ERP, many manufacturers still manually track information, which not only slows down operations but increases the chance of human error. In an economy where every opportunity to gain a competitive edge can make a material impact on a company’s success, most companies with extensive shop floor operations can’t afford delays or errors. Businesses that have the vision to increase speed and agility should consider automation tools that collect, aggregate, and analyze that data, and then communicate back to the shop floor with an appropriate response. ";
+final blog_image =AssetImage('assets/images/img_5.png');
+
+
     return LayoutBuilder(
       builder: (context,constraints)
       {
@@ -50,11 +54,12 @@ class _HomeState extends State<Home> {
              padding:  EdgeInsets.only(left: ww*0.2),
              child: Image(
 
-               image: AssetImage('assets/images/sap.jpeg'),
-               width: ww * 0.04,
+               image: AssetImage('assets/images/logo.jpg'),
+               width: ww * 0.1,
+               height: hh*0.06,
              ),
            ),
-           toolbarHeight: hh*0.05,
+           toolbarHeight: hh*0.06,
            actions: [
              Hover_Button(text: 'Careers', defaultcolor: Colors.white, hovercolor: Colors.white, ontap: (){},fontsize: ww*0.011,width: ww,),
              Padding(
@@ -126,13 +131,17 @@ class _HomeState extends State<Home> {
                SliverAppBar(
                  collapsedHeight: hh*0.08,
                  actions: [
-                   Hover_Button(text: 'Contact Us', defaultcolor: Colors.grey.shade600, hovercolor: Colors.blue, ontap: (){print(innerBoxIsScrolled);}, fontsize: fs, width: ww,),
-                   Hover_Button(text: 'Blog', defaultcolor: Colors.grey.shade600, hovercolor: Colors.blue, ontap: (){},fontsize: fs,width: ww,),
+
                    Hover_Button(text: 'About Us', defaultcolor: Colors.grey.shade600, hovercolor: Colors.blue, ontap: (){},fontsize: fs,width: ww,),
+                   Hover_Button(text: 'Services', defaultcolor: Colors.grey.shade600, hovercolor: Colors.blue, ontap: (){},fontsize: fs,width: ww,),
+                   Hover_Button(text: 'Contact Us', defaultcolor: Colors.grey.shade600, hovercolor: Colors.blue, ontap: (){}, fontsize: fs, width: ww,),
+                   Hover_Button(text: 'Blog', defaultcolor: Colors.grey.shade600, hovercolor: Colors.blue, ontap: (){},fontsize: fs,width: ww,),
                    Padding(
                      padding:  EdgeInsets.only(right: ww*0.1),
-                     child: Hover_Button(text: 'Services', defaultcolor: Colors.grey.shade600, hovercolor: Colors.blue, ontap: (){},fontsize: fs,width: ww,),
+                     child: Hover_Button(text: 'CRM', defaultcolor: Colors.grey.shade600, hovercolor: Colors.blue, ontap: (){},fontsize: fs,width: ww,),
                    ),
+
+
                    // Hover_Button(text: 'Login', defaultcolor: Colors.grey.shade600, hovercolor: Colors.blue, ontap: (){Get.to(() => login());},fontsize: fs,width: ww,),
                    // Hover_Button(text: 'Register', defaultcolor: Colors.grey.shade600, hovercolor: Colors.blue, ontap: (){Get.to(() => signup());},fontsize: fs,width: ww,),
 
@@ -141,14 +150,14 @@ class _HomeState extends State<Home> {
                  ],
                  expandedHeight: hh * 0.5 ,
                  pinned: true,
-                 floating: true, // Make the app bar float
+                 // floating: true, // Make the app bar float
                  backgroundColor: Colors.white,
                  flexibleSpace: FlexibleSpaceBar(
                    title: this.innerBoxIsScrolled
                        ?  Padding(
              padding: const EdgeInsets.only(left: 15.0,  top: 5),
              child: Image(
-             image: AssetImage('assets/images/logo.jpg'),
+             image: AssetImage('assets/images/sap.jpeg'),
              width: ww * 0.3,
              ),
              ) : null,
@@ -225,6 +234,7 @@ class _HomeState extends State<Home> {
                               ],
                               duration: Duration(milliseconds: 500),
                             ),
+
                           ],
                         ),
                       ),
@@ -233,6 +243,24 @@ class _HomeState extends State<Home> {
                         height: hh*0.02,
                         color: Color(0xFF082444),
                       ),
+                  Padding(
+                    padding:  EdgeInsets.only(left: ww*0.15, right: ww*0.15, bottom: hh*0.1, top: hh*0.1),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Align(child: Text('Blog',style: TextStyle(color: Colors.blue, fontSize: ww*0.015),),
+                        alignment: Alignment.topLeft,),
+                      FadeInFromLeftToRight(widgets: [
+                        AnimatedWidgetColumn(title: blog_title, image: blog_image, desc: blog_desc, ontap: (){}),
+                        AnimatedWidgetColumn(title: blog_title, image: blog_image, desc: blog_desc, ontap: (){}),
+                        AnimatedWidgetColumn(title: blog_title, image: blog_image, desc: blog_desc, ontap: (){}),
+                      ], duration: Duration(seconds: 2)),
+
+                      ],
+                    ),
+                  ),
+
                       SizedBox(height: 700,)
                     ],
                   ),
