@@ -1,5 +1,5 @@
-import 'package:almanet/home.dart';
-import 'package:almanet/hover_buttoons.dart';
+import 'package:almanet/screens/home.dart';
+import 'package:almanet/constants/hover_buttoons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';

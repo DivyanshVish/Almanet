@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../hover_buttoons.dart';
+import '../constants/hover_buttoons.dart';
 
 class DesktopBody extends StatelessWidget {
   const DesktopBody({super.key});

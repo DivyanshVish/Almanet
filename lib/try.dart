@@ -1,8 +1,8 @@
-import 'package:almanet/Fade_Info.dart';
-import 'package:almanet/Login.dart';
-import 'package:almanet/Sign_Up.dart';
-import 'package:almanet/home_services.dart';
-import 'package:almanet/hover_buttoons.dart';
+import 'package:almanet/constants/Fade_Info.dart';
+import 'package:almanet/screens/pages/Login.dart';
+import 'package:almanet/screens/pages/Sign_Up.dart';
+import 'package:almanet/constants/home_services.dart';
+import 'package:almanet/constants/hover_buttoons.dart';
 import 'package:almanet/try.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
@@ -43,7 +43,7 @@ class _AnimatedWidgetColumnState extends State<AnimatedWidgetColumn>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 1),
+      duration: const Duration(seconds: 1),
     );
     _controller.forward();
     _scrollController = ScrollController();
@@ -78,7 +78,7 @@ class _AnimatedWidgetColumnState extends State<AnimatedWidgetColumn>
     double fs = ww*0.0165;
     double hh = Get.height;
     return Material(
-      child: Container(
+      child: SizedBox(
         width: ww*0.2,
         height: hh*0.6,
         child: Column(
@@ -90,7 +90,7 @@ class _AnimatedWidgetColumnState extends State<AnimatedWidgetColumn>
         ).animate(
           CurvedAnimation(
             parent: _controller,
-            curve: Interval(
+            curve: const Interval(
               (1 / 4) ,
               1.0,
               curve: Curves.easeInOut,
@@ -109,7 +109,7 @@ class _AnimatedWidgetColumnState extends State<AnimatedWidgetColumn>
                 ).animate(
                   CurvedAnimation(
                     parent: _controller,
-                    curve: Interval(
+                    curve: const Interval(
                       (1 / 4) ,
                       1.0,
                       curve: Curves.easeInOut,
@@ -128,7 +128,7 @@ class _AnimatedWidgetColumnState extends State<AnimatedWidgetColumn>
                   ).animate(
                     CurvedAnimation(
                       parent: _controller,
-                      curve: Interval(
+                      curve: const Interval(
                         (1 / 4) ,
                         1.0,
                         curve: Curves.easeInOut,
@@ -149,7 +149,7 @@ class _AnimatedWidgetColumnState extends State<AnimatedWidgetColumn>
                     ).animate(
                       CurvedAnimation(
                         parent: _controller,
-                        curve: Interval(
+                        curve: const Interval(
                           (1 / 4) ,
                           1.0,
                           curve: Curves.easeInOut,
