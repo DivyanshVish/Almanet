@@ -12,6 +12,7 @@ import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:hovering/hovering.dart';
+import '../constants/blogs.dart';
 import '../firebase_options.dart';
 
 class Home extends StatefulWidget {
