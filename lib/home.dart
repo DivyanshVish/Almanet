@@ -1,3 +1,4 @@
+import 'package:almanet/Crm/crm_web_page.dart';
 import 'package:almanet/Fade_Info.dart';
 import 'package:almanet/Login.dart';
 import 'package:almanet/Sign_Up.dart';
@@ -138,7 +139,7 @@ final blog_image =AssetImage('assets/images/img_5.png');
                    Hover_Button(text: 'Blog', defaultcolor: Colors.grey.shade600, hovercolor: Colors.blue, ontap: (){},fontsize: fs,width: ww,),
                    Padding(
                      padding:  EdgeInsets.only(right: ww*0.1),
-                     child: Hover_Button(text: 'CRM', defaultcolor: Colors.grey.shade600, hovercolor: Colors.blue, ontap: (){},fontsize: fs,width: ww,),
+                     child: Hover_Button(text: 'CRM', defaultcolor: Colors.grey.shade600, hovercolor: Colors.blue, ontap: (){Get.to(()=>CRMPage());},fontsize: fs,width: ww,),
                    ),
 
 
