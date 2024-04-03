@@ -1,4 +1,4 @@
-import 'package:almanet/crm_web_page.dart';
+import 'package:almanet/Crm/crm_web_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
