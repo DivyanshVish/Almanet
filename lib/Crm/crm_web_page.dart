@@ -1,5 +1,5 @@
-import 'package:almanet/responsive/desktop_body.dart';
-import 'package:almanet/responsive/mobile_body.dart';
+import 'package:almanet/responsive/screens/desktop_body.dart';
+import 'package:almanet/responsive/screens/mobile_body.dart';
 import 'package:almanet/responsive/responsive.dart';
 
 import 'package:flutter/material.dart';
