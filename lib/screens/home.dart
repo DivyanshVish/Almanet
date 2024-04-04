@@ -12,6 +12,7 @@ import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:hovering/hovering.dart';
+import '../constants/FadeContainer.dart';
 import '../constants/blogs.dart';
 import '../firebase_options.dart';
 
@@ -52,7 +53,7 @@ class _HomeState extends State<Home> {
         double hh = Get.height;
         return Scaffold(
           appBar: AppBar(
-            backgroundColor: const Color(0xFF082444),
+            backgroundColor:  Color(0xFF082444),
             title: Padding(
               padding: EdgeInsets.only(left: ww * 0.2),
               child: Image(
@@ -321,41 +322,106 @@ class _HomeState extends State<Home> {
                             padding: EdgeInsets.only(
                                 left: ww * 0.15,
                                 right: ww * 0.15,
-                                bottom: hh * 0.1,
-                                top: hh * 0.1),
+                                ),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Align(
-                                  child: Text(
-                                    'Blog',
-                                    style: TextStyle(
-                                        color: Colors.blue,
-                                        fontSize: ww * 0.015),
+                                Padding(
+                                  padding:  EdgeInsets.only(top: hh * 0.1, left: ww*0.015),
+                                  child: Align(
+                                    child: Text(
+                                      'Blog',
+                                      style: TextStyle(
+                                          color: Colors.blue,
+                                          fontSize: ww * 0.015),
+                                    ),
+                                    alignment: Alignment.topLeft,
                                   ),
-                                  alignment: Alignment.topLeft,
                                 ),
-                                FadeInFromLeftToRight(widgets: [
-                                  AnimatedWidgetColumn(
-                                      title: blog_title,
-                                      image: blog_image,
-                                      desc: blog_desc,
-                                      ontap: () {}),
-                                  AnimatedWidgetColumn(
-                                      title: blog_title,
-                                      image: blog_image,
-                                      desc: blog_desc,
-                                      ontap: () {}),
-                                  AnimatedWidgetColumn(
-                                      title: blog_title,
-                                      image: blog_image,
-                                      desc: blog_desc,
-                                      ontap: () {}),
-                                ], duration: const Duration(seconds: 2)),
+                                Padding(
+                                  padding:  EdgeInsets.only(bottom: hh * 0.1,
+                                      ),
+                                  child: FadeInFromLeftToRight(widgets: [
+                                    AnimatedWidgetColumn(
+                                        title: blog_title,
+                                        image: blog_image,
+                                        desc: blog_desc,
+                                        ontap: () {}),
+                                    AnimatedWidgetColumn(
+                                        title: blog_title,
+                                        image: blog_image,
+                                        desc: blog_desc,
+                                        ontap: () {}),
+                                    AnimatedWidgetColumn(
+                                        title: blog_title,
+                                        image: blog_image,
+                                        desc: blog_desc,
+                                        ontap: () {}),
+                                  ], duration: const Duration(seconds: 2)),
+                                ),
+
                               ],
                             ),
                           ),
+                          FadeInContainer(
+                            width: double.infinity,
+                            height: hh*0.45,
+                            colour: Color(0xFF082444),
+                            child: Center(child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+
+                              children: [
+                                Padding(
+                                  padding:  EdgeInsets.only(bottom: 3),
+                                  child: Text('Join our team',style: TextStyle(color: Colors.white, fontSize: ww*0.015, fontWeight: FontWeight.bold),),
+                                ),
+                                Text('We engage and hire the best talent',style: TextStyle(color: Colors.white, fontSize: ww*0.011, fontWeight: FontWeight.bold),),
+                                Container(
+                                    width: ww*0.3,
+                                  child: Text('We take a glass half full approach, choosing not to ask what’s the worst that can happen but instead ask what’s the best that can happen.',style: TextStyle(color: Colors.white, fontSize: ww*0.008, ),softWrap: true,textAlign: TextAlign.center,)),
+                                Padding(padding: EdgeInsets.only(top: hh*0.03),
+                                child: FadeInFromLeftToRight(
+                                  duration: Duration(milliseconds: 500),
+                                  widgets: [
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Get.to(() => const login());
+                                      },
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                        MaterialStateProperty.resolveWith<Color>((states) {
+                                          if (!states.contains(MaterialState.hovered)) {
+                                            return Colors.white; // Change color when hovered
+                                          }
+                                          return Colors.green; // Default color
+                                        }),
+                                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(8),
+
+                                          ),
+                                        ),
+                                      ),
+                                      child: Text(
+                                        'DISCOVER MORE ABOUT OUR WORLD',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: ww * 0.008,
+                                            ),
+                                      ),
+                                    ),
+                                  ],
+                                  
+                                ),),
+
+
+
+                              ],
+                            )),
+                            duration: Duration(milliseconds: 250),
+                          ),
+
                           const SizedBox(
                             height: 700,
                           )
