@@ -2,14 +2,22 @@ import 'package:flutter/material.dart';
 
 import '../../constants/hover_buttoons.dart';
 
-class DesktopBody extends StatelessWidget {
-  const DesktopBody({super.key});
+class DesktopBody extends StatefulWidget {
+  const DesktopBody({Key? key}) : super(key: key);
+
+  @override
+  _DesktopBodyState createState() => _DesktopBodyState();
+}
+
+class _DesktopBodyState extends State<DesktopBody> {
+  String? _selectedCompany;
+  String? _selectedCompanyGroup;
+  String? _numberOfTeamMembers;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsetsDirectional.only(end: 20),
-      //padding: const EdgeInsets.only(right: 8.0, top: 5),
       child: Scaffold(
         appBar: AppBar(
           title: const Text(
@@ -23,74 +31,67 @@ class DesktopBody extends StatelessWidget {
             Padding(
               padding: const EdgeInsetsDirectional.only(end: 20),
               child: Hover_Button(
+                width: 0,
+                defaultcolor: Colors.grey.shade600,
+                fontsize: 23,
+                hovercolor: Colors.green,
+                ontap: () {},
                 text: 'Sales',
-                defaultcolor: Colors.grey.shade600,
-                hovercolor: Colors.blue,
-                ontap: () {},
-                fontsize: 23,
-                width: 0,
               ),
             ),
-            const SizedBox(
-              width: 5,
-            ),
+            const SizedBox(width: 5),
             Padding(
               padding: const EdgeInsetsDirectional.only(end: 20),
               child: Hover_Button(
-                text: 'Reporting',
-                defaultcolor: Colors.grey.shade600,
-                hovercolor: Colors.blue,
-                ontap: () {},
-                fontsize: 23,
                 width: 0,
+                defaultcolor: Colors.grey.shade600,
+                fontsize: 23,
+                hovercolor: Colors.green,
+                ontap: () {},
+                text: 'Reports',
               ),
             ),
-            const SizedBox(
-              width: 5,
-            ),
+            const SizedBox(width: 5),
             Padding(
               padding: const EdgeInsetsDirectional.only(end: 20),
               child: Hover_Button(
+                width: 0,
+                defaultcolor: Colors.grey.shade600,
+                fontsize: 23,
+                hovercolor: Colors.green,
+                ontap: () {},
                 text: 'Configuration',
-                defaultcolor: Colors.grey.shade600,
-                hovercolor: Colors.blue,
-                ontap: () {},
-                fontsize: 23,
-                width: 0,
               ),
             ),
-            const SizedBox(
-              width: 5,
-            ),
+            const SizedBox(width: 5),
             InkWell(
+              hoverColor: Colors.transparent,
+              onTap: () {},
               child: const Padding(
                 padding: EdgeInsetsDirectional.only(end: 20),
                 child: Icon(Icons.settings),
               ),
-              onTap: () {},
             )
           ],
           leading: InkWell(
-              onTap: () {},
-              child: const Icon(
-                Icons.dehaze_rounded,
-                size: 35,
-              )),
+            onTap: () {},
+            child: const Icon(
+              Icons.dehaze_rounded,
+              size: 35,
+            ),
+          ),
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              // Button to create a new something
               ElevatedButton(
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  backgroundColor: MaterialStateProperty.all(Colors.green),
+                  backgroundColor: Colors.green,
                 ),
                 onPressed: () {
                   // Add functionality for the "New" button here
@@ -98,131 +99,169 @@ class DesktopBody extends StatelessWidget {
                 child: const Text(
                   'New',
                   style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold),
+                    color: Colors.black,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-              const SizedBox(width: 20), // Spacer
-
-              // Button to generate lead
+              const SizedBox(width: 20),
               ElevatedButton(
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  backgroundColor: MaterialStateProperty.all(Colors.green),
+                  backgroundColor: Colors.green,
                 ),
                 onPressed: () {
                   // Show popup when "Generate Lead" button is pressed
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return AlertDialog(
-                        contentPadding: EdgeInsets.zero,
-                        content: SizedBox(
-                          width: MediaQuery.of(context).size.width *
-                              0.6, // 80% of screen width
-                          height: MediaQuery.of(context).size.height *
-                              0.4, // 60% of screen height
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              // Custom appbar-like header with close icon
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16, vertical: 8),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Text(
-                                      'Need help to reach the target?',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                    IconButton(
-                                      icon: const Icon(Icons.close,
-                                          color: Colors.black, size: 30),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              // Content of the popup window
-                              Expanded(
-                                child: SingleChildScrollView(
-                                  child: Padding(
+                      return StatefulBuilder(
+                        builder: (context, setState) {
+                          return AlertDialog(
+                            contentPadding: EdgeInsets.zero,
+                            content: SizedBox(
+                              width: MediaQuery.of(context).size.width *
+                                  0.4, // 40% of screen width
+                              height: MediaQuery.of(context).size.height *
+                                  0.4, // 30% of screen height
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
                                     padding: const EdgeInsets.symmetric(
-                                        horizontal: 15.0),
+                                      horizontal: 16,
+                                      vertical: 8,
+                                    ),
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Column(
-                                          children: [
-                                            const Text(
-                                              'How many leads would you like?',
-                                              style: TextStyle(fontSize: 20),
-                                            ),
-                                            const SizedBox(height: 20),
-                                            DropdownButton<String>(
-                                              hint: const Text(
-                                                  'Select no. of leads'),
-                                              items: <String>[
-                                                '< 5 leads',
-                                                '5-10 leads',
-                                                '> 10 leads',
-                                              ].map((String value) {
-                                                return DropdownMenuItem<String>(
-                                                  value: value,
-                                                  child: Text(value),
-                                                );
-                                              }).toList(),
-                                              onChanged: (String? newValue) {
-                                                // Implement what to do when company is selected
-                                              },
-                                            ),
-                                            const SizedBox(height: 20),
-                                            DropdownButton<String>(
-                                              items: <String>[
-                                                'Companies',
-                                                'Companies and their contacts',
-
-                                              ].map((String value) {
-                                                return DropdownMenuItem<String>(
-                                                  value: value,
-                                                  child: Text(value),
-                                                );
-                                              }).toList(),
-                                              onChanged: (String? newValue) {
-                                                // Implement what to do when company group is selected
-                                              },
-                                            ),
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: const Text('Close'),
-                                            ),
-                                          ],
+                                        const Text(
+                                          'Need help to reach the target?',
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        IconButton(
+                                          icon: const Icon(
+                                            Icons.close,
+                                            color: Colors.black,
+                                            size: 30,
+                                          ),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
                                         ),
                                       ],
                                     ),
                                   ),
-                                ),
+                                  const Divider(
+                                    height: 10,
+                                    thickness: 1,
+                                    color: Colors.black,
+                                  ),
+                                  const Padding(
+                                    padding: EdgeInsets.only(left: 15),
+                                    child: Text(
+                                      'How many leads would you like?',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 15),
+                                    child: DropdownButton<String>(
+                                      hint: const Text('Select Company'),
+                                      value: _selectedCompany,
+                                      items: <String>[
+                                        'Companies',
+                                        'Companies and their contacts',
+                                      ].map((String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Text(value),
+                                        );
+                                      }).toList(),
+                                      onChanged: (String? newValue) {
+                                        setState(() {
+                                          _selectedCompany = newValue;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 15),
+                                    child: DropdownButton<String>(
+                                      hint: const Text('Select the Industries'),
+                                      value: _selectedCompanyGroup,
+                                      items: <String>[
+                                        'Sales',
+                                        '5-10 leads',
+                                        '> 10 leads',
+                                      ].map((String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Text(value),
+                                        );
+                                      }).toList(),
+                                      onChanged: (String? newValue) {
+                                        setState(() {
+                                          _selectedCompanyGroup = newValue;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.only(left: 15, right: 15),
+                                    child: TextField(
+                                      decoration: const InputDecoration(
+                                        labelText: 'Number of leads',
+                                        border: OutlineInputBorder(),
+                                      ),
+                                      style: const TextStyle(
+                                        fontSize: 14, // Adjust font size here
+                                      ),
+                                      onChanged: (value) {
+                                        _numberOfTeamMembers = value;
+                                      },
+                                    ),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  Padding(
+                                    padding:
+                                    const EdgeInsets.only(left: 15, ) ,
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
+                                        backgroundColor: Colors.green,
+                                      ),
+                                      child: const Text('Close',style: TextStyle(color: Colors.black,fontWeight: FontWeight.w600),),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
+                            ),
+                          );
+                        },
                       );
                     },
                   );

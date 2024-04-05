@@ -1,16 +1,11 @@
-import 'package:almanet/constants/Fade_Info.dart';
-import 'package:almanet/screens/pages/Login.dart';
-import 'package:almanet/screens/pages/Sign_Up.dart';
-import 'package:almanet/constants/home_services.dart';
+
 import 'package:almanet/constants/hover_buttoons.dart';
-import 'package:almanet/try.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:get/get.dart';
-import 'package:hovering/hovering.dart';
-import 'package:almanet/firebase_options.dart';
+
 
 class AnimatedWidgetColumn extends StatefulWidget {
   final String title;
