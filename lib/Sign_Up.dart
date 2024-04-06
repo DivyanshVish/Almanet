@@ -1,10 +1,10 @@
-import 'package:almanet/home.dart';
+
 import 'package:almanet/screens/home.dart';
 
 import 'package:almanet/screens/pages/Login.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:get/get.dart';
 
 class signup extends StatefulWidget {
@@ -275,15 +275,15 @@ class _signupState extends State<signup> {
                       padding: const EdgeInsets.only(top: 20.0),
                       child: ElevatedButton(
                           onPressed: () {},
-                          child: const Text(
-                            'Sign Up',
-                            style: TextStyle(color: Colors.white, fontSize: 25),
-                          ),
                           style: ElevatedButton.styleFrom(
                               alignment: Alignment.center,
                               backgroundColor: Colors.blue.shade800,
                               minimumSize:
-                                  Size(Get.width * 0.27, Get.height * 0.06))),
+                                  Size(Get.width * 0.27, Get.height * 0.06)),
+                          child: const Text(
+                            'Sign Up',
+                            style: TextStyle(color: Colors.white, fontSize: 25),
+                          )),
                     )
                   ],
                 ),

@@ -39,7 +39,7 @@ class _Hover_ButtonState extends State<Hover_Button> {
         child: Padding(
           padding:  EdgeInsets.symmetric(horizontal: pad),
           child: AnimatedContainer(
-            duration: Duration(milliseconds: 300),
+            duration: const Duration(milliseconds: 300),
             decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(
@@ -49,7 +49,7 @@ class _Hover_ButtonState extends State<Hover_Button> {
             ),
 
             child: AnimatedDefaultTextStyle(
-              duration: Duration(milliseconds: 300),
+              duration: const Duration(milliseconds: 300),
              style: TextStyle(
                 fontSize: widget.fontsize,
                 fontWeight: FontWeight.w300,
