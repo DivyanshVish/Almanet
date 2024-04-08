@@ -1,17 +1,20 @@
 import 'package:almanet/Crm/crm_web_page.dart';
 import 'package:almanet/constants/Fade_Info.dart';
 import 'package:almanet/screens/pages/Login.dart';
-
+import 'package:almanet/screens/pages/Sign_Up.dart';
 import 'package:almanet/constants/home_services.dart';
 import 'package:almanet/constants/hover_buttoons.dart';
-
+import 'package:almanet/try.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-
+import 'package:hovering/hovering.dart';
 import '../constants/FadeContainer.dart';
 import '../constants/blogs.dart';
+import '../firebase_options.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -50,7 +53,7 @@ class _HomeState extends State<Home> {
         double hh = Get.height;
         return Scaffold(
           appBar: AppBar(
-            backgroundColor: Color(0xFF082444),
+            backgroundColor:  Color(0xFF082444),
             title: Padding(
               padding: EdgeInsets.only(left: ww * 0.2),
               child: Image(
@@ -204,7 +207,7 @@ class _HomeState extends State<Home> {
                   flexibleSpace: FlexibleSpaceBar(
                     title: this.innerBoxIsScrolled
                         ? Padding(
-                            padding: const EdgeInsets.only(left: 15.0, top: 5),
+                            padding:  EdgeInsets.only(left: 15.0, top: 5),
                             child: Image(
                               image: const AssetImage('assets/images/sap.jpeg'),
                               width: ww * 0.3,
@@ -317,16 +320,15 @@ class _HomeState extends State<Home> {
                           ),
                           Padding(
                             padding: EdgeInsets.only(
-                              left: ww * 0.15,
-                              right: ww * 0.15,
-                            ),
+                                left: ww * 0.15,
+                                right: ww * 0.15,
+                                ),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Padding(
-                                  padding: EdgeInsets.only(
-                                      top: hh * 0.1, left: ww * 0.015),
+                                  padding:  EdgeInsets.only(top: hh * 0.1, left: ww*0.015),
                                   child: Align(
                                     child: Text(
                                       'Blog',
@@ -338,9 +340,8 @@ class _HomeState extends State<Home> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(
-                                    bottom: hh * 0.1,
-                                  ),
+                                  padding:  EdgeInsets.only(bottom: hh * 0.1,
+                                      ),
                                   child: FadeInFromLeftToRight(widgets: [
                                     AnimatedWidgetColumn(
                                         title: blog_title,
@@ -359,91 +360,323 @@ class _HomeState extends State<Home> {
                                         ontap: () {}),
                                   ], duration: const Duration(seconds: 2)),
                                 ),
+
                               ],
                             ),
                           ),
                           FadeInContainer(
                             width: double.infinity,
-                            height: hh * 0.45,
+                            height: hh*0.45,
                             colour: Color(0xFF082444),
-                            child: Center(
-                                child: Column(
+                            child: Center(child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
+
                               children: [
                                 Padding(
-                                  padding: EdgeInsets.only(bottom: 3),
-                                  child: Text(
-                                    'Join our team',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: ww * 0.015,
-                                        fontWeight: FontWeight.bold),
-                                  ),
+                                  padding:  EdgeInsets.only(bottom: 3),
+                                  child: Text('Join our team',style: TextStyle(color: Colors.white, fontSize: ww*0.015, fontWeight: FontWeight.bold),),
                                 ),
-                                Text(
-                                  'We engage and hire the best talent',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: ww * 0.011,
-                                      fontWeight: FontWeight.bold),
-                                ),
+                                Text('We engage and hire the best talent',style: TextStyle(color: Colors.white, fontSize: ww*0.011, fontWeight: FontWeight.bold),),
                                 Container(
-                                    width: ww * 0.3,
-                                    child: Text(
-                                      'We take a glass half full approach, choosing not to ask what’s the worst that can happen but instead ask what’s the best that can happen.',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: ww * 0.008,
-                                      ),
-                                      softWrap: true,
-                                      textAlign: TextAlign.center,
-                                    )),
-                                Padding(
-                                  padding: EdgeInsets.only(top: hh * 0.03),
-                                  child: FadeInFromLeftToRight(
-                                    duration: Duration(milliseconds: 500),
-                                    widgets: [
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          Get.to(() => const login());
-                                        },
-                                        style: ButtonStyle(
-                                          backgroundColor: MaterialStateProperty
-                                              .resolveWith<Color>((states) {
-                                            if (!states.contains(
-                                                MaterialState.hovered)) {
-                                              return Colors
-                                                  .white; // Change color when hovered
-                                            }
-                                            return Colors
-                                                .green; // Default color
-                                          }),
-                                          shape: MaterialStateProperty.all<
-                                              RoundedRectangleBorder>(
-                                            RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                            ),
+                                    width: ww*0.3,
+                                  child: Text('We take a glass half full approach, choosing not to ask what’s the worst that can happen but instead ask what’s the best that can happen.',style: TextStyle(color: Colors.white, fontSize: ww*0.008, ),softWrap: true,textAlign: TextAlign.center,)),
+                                Padding(padding: EdgeInsets.only(top: hh*0.03),
+                                child: FadeInFromLeftToRight(
+                                  duration: Duration(milliseconds: 500),
+                                  widgets: [
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Get.to(() => const login());
+                                      },
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                        MaterialStateProperty.resolveWith<Color>((states) {
+                                          if (!states.contains(MaterialState.hovered)) {
+                                            return Colors.white; // Change color when hovered
+                                          }
+                                          return Colors.green; // Default color
+                                        }),
+                                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(8),
+
                                           ),
                                         ),
-                                        child: Text(
-                                          'DISCOVER MORE ABOUT OUR WORLD',
-                                          style: TextStyle(
+                                      ),
+                                      child: Text(
+                                        'DISCOVER MORE ABOUT OUR WORLD',
+                                        style: TextStyle(
                                             color: Colors.black,
                                             fontSize: ww * 0.008,
-                                          ),
-                                        ),
+                                            ),
                                       ),
-                                    ],
-                                  ),
-                                ),
+                                    ),
+                                  ],
+                                  
+                                ),),
+
+
+
                               ],
                             )),
                             duration: Duration(milliseconds: 250),
                           ),
-                          const SizedBox(
-                            height: 700,
-                          )
+                          FadeInContainer_footer(width: double.infinity, height: hh*0.5, child:
+                              Padding(
+                                padding:  EdgeInsets.symmetric(horizontal: ww * 0.15,),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: ww*0.18,
+                                      height:  hh*0.5,
+                                      color: Color(0xFF082444),
+                                      child: Column(
+                                        children: [
+                                          Align(
+                                            alignment: Alignment.topCenter,
+                                            child: Padding(
+                                              padding:  EdgeInsets.symmetric(horizontal: ww*0.012),
+                                              child: Divider(
+                                                color: Colors.green,
+                                                height: 8,
+                                                thickness: 3,
+                                              ),
+                                            ),
+                                          ),
+                                          Align(
+                                            alignment: Alignment.center,
+                                            child: Padding(
+                                              padding:  EdgeInsets.only(top: hh*0.07,bottom: hh*0.15),
+                                              child: Image(
+                                                image:  AssetImage('assets/images/logo.jpg'),
+                                                width: ww * 0.15,
+                                                // height: hh * 0.2,
+                                              ),
+                                            ),
+
+                                          ),
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text('Discover more About our world',style: TextStyle(color: Colors.white, fontSize: ww*0.01, fontWeight: FontWeight.w500),),
+                                              Hover_Button(text: 'Join Our Team >', defaultcolor: Colors.white, hovercolor: Colors.white, ontap: (){}, fontsize: ww*0.009, width: ww)
+
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ) ,
+                                    Padding(
+                                      padding:  EdgeInsets.only(top: hh*0.08, left: ww*0.05),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Column(
+                                                children: [
+                                                  Padding(
+                                                    padding:  EdgeInsets.only(bottom: hh*0.015),
+                                                    child: Text('Solutions', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: ww*0.007),),
+                                                  ),
+                                                  
+                                                  Padding(
+                                                    padding:  EdgeInsets.symmetric( vertical: hh*0.01),
+                                                    child: Hover_Button(text: 'SAP S/4HANA', defaultcolor: Colors.white, hovercolor: Colors.white, ontap: (){}, fontsize: ww*0.006, width: ww),
+                                                  ),
+                                                  Padding(
+                                                    padding:  EdgeInsets.symmetric( vertical: hh*0.01),
+                                                    child: Hover_Button(text: 'SAP S/4HANA', defaultcolor: Colors.white, hovercolor: Colors.white, ontap: (){}, fontsize: ww*0.006, width: ww),
+                                                  ),
+                                                  Padding(
+                                                    padding:  EdgeInsets.symmetric( vertical: hh*0.01),
+                                                    child: Hover_Button(text: 'SAP S/4HANA', defaultcolor: Colors.white, hovercolor: Colors.white, ontap: (){}, fontsize: ww*0.006, width: ww),
+                                                  ),
+                                                  Padding(
+                                                    padding:  EdgeInsets.symmetric( vertical: hh*0.01),
+                                                    child: Hover_Button(text: 'SAP S/4HANA', defaultcolor: Colors.white, hovercolor: Colors.white, ontap: (){}, fontsize: ww*0.006, width: ww),
+                                                  ),
+                                                ],
+                                              ),
+                                              Column(
+                                                children: [
+                                                  Padding(
+                                                    padding:  EdgeInsets.only(bottom: hh*0.015),
+                                                    child: Text('About us', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: ww*0.007),),
+                                                  ),
+                                                  Padding(
+                                                    padding:  EdgeInsets.symmetric( vertical: hh*0.01),
+                                                    child: Hover_Button(text: 'Know Us More', defaultcolor: Colors.white, hovercolor: Colors.white, ontap: (){}, fontsize: ww*0.006, width: ww),
+                                                  ),
+                                                  Padding(
+                                                    padding:  EdgeInsets.symmetric( vertical: hh*0.01),
+                                                    child: Hover_Button(text: 'Blogs', defaultcolor: Colors.white, hovercolor: Colors.white, ontap: (){}, fontsize: ww*0.006, width: ww),
+                                                  ),
+                                                  Padding(
+                                                    padding:  EdgeInsets.symmetric( vertical: hh*0.01),
+                                                    child: Hover_Button(text: 'Contact Us', defaultcolor: Colors.white, hovercolor: Colors.white, ontap: (){}, fontsize: ww*0.006, width: ww),
+                                                  ),
+
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                          Padding(
+                                            padding:  EdgeInsets.only(top: hh*0.02, right: ww*0.01),
+                                            child: Row(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text('Sign up to our Blog.', style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: ww*0.01,
+                                                  color: Colors.white
+                                                ),),
+                                                Padding(
+                                                  padding:  EdgeInsets.only(left: ww*0.025),
+                                                  child: OutlinedButton(
+                                                    onPressed: () {
+
+                                                    },
+                                                    style: ButtonStyle(
+                                                      foregroundColor: MaterialStateProperty.resolveWith<Color>((states) {
+                                                        if (!states.contains(MaterialState.hovered)) {
+                                                          return Colors.white; // Change color when hovered
+                                                        }
+                                                        return Colors.blue; // Default color
+                                                      }),
+                                                      backgroundColor:
+                                                      MaterialStateProperty.resolveWith<Color>((states) {
+                                                        if (!states.contains(MaterialState.hovered)) {
+                                                          return Colors.transparent; // Change color when hovered
+                                                        }
+                                                        return Colors.white; // Default color
+                                                      }),
+                                                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                        RoundedRectangleBorder(
+                                                          borderRadius: BorderRadius.circular(0.0), // Set to 0.0 for rectangular shape
+                                                        ),
+                                                      ),
+                                                    ),
+
+
+                                                    child: Text(
+                                                      'Subscribe',
+                                                      style: TextStyle(
+
+                                                          fontSize: ww * 0.008,
+                                                          ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(padding: EdgeInsets.only(top: hh*0.025),
+                                          child: Row(
+                                            children: [
+                                              Image(
+                                                image: const AssetImage('assets/images/sap.jpeg'),
+                                                width: ww * 0.05,
+                                              ),
+
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(horizontal: ww * 0.005),
+                                                child:  IconButton(
+                                                  icon:  Icon(FontAwesomeIcons.facebook,
+                                                    size: 25,),
+                                                  onPressed: (){},
+                                                  style: ButtonStyle(
+                                                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                        RoundedRectangleBorder(
+                                                          borderRadius: BorderRadius.circular(0), // Set to 0 for rectangular shape
+                                                        ),
+                                                  ),
+                                                  ),
+                                                  color: Color(0xFF082444),
+                                                  hoverColor: Colors.white,
+                                                  padding: EdgeInsets.all(5),
+
+
+                                                ),
+                                              ),
+
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(horizontal: ww * 0.005),
+                                                child:  IconButton(
+                                                  icon:  Icon(FontAwesomeIcons.instagram,
+                                                    size: 25,),
+                                                  onPressed: (){},
+                                                  style: ButtonStyle(
+                                                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                      RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(0), // Set to 0 for rectangular shape
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  color: Color(0xFF082444),
+                                                  hoverColor: Colors.white,
+                                                  padding: EdgeInsets.all(5),
+
+
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(horizontal: ww * 0.005),
+                                                child:  IconButton(
+                                                  icon:  Icon(FontAwesomeIcons.twitter,
+                                                    size: 25,),
+                                                  onPressed: (){},
+                                                  style: ButtonStyle(
+                                                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                      RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(0), // Set to 0 for rectangular shape
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  color: Color(0xFF082444),
+                                                  hoverColor: Colors.white,
+                                                  padding: EdgeInsets.all(5),
+
+
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(horizontal: ww * 0.005),
+                                                child:  IconButton(
+                                                  icon:  Icon(FontAwesomeIcons.youtube,
+                                                    size: 25,),
+                                                  onPressed: (){},
+                                                  style: ButtonStyle(
+                                                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                      RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(0), // Set to 0 for rectangular shape
+                                                      ),
+
+                                                    ),
+                                                  ),
+                                                  color: Color(0xFF082444),
+                                                  hoverColor: Colors.white,
+                                                  padding: EdgeInsets.all(5),
+
+
+                                                ),
+                                              ),
+
+                                            ],
+                                          ),)
+
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+
+
+                              , duration: Duration(milliseconds: 500)),
+
+
                         ],
                       ),
                     ),
