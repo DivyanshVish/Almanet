@@ -13,7 +13,6 @@ class DesktopBody extends StatefulWidget {
 
 String? _selectedCompany;
 String? _selectedCompanyGroup;
-
 String? _numberOfTeamMembers;
 String? _name;
 String? _contact;
