@@ -15,7 +15,6 @@ class DesktopBody extends StatefulWidget {
 
 String? selectedCompanyGroup;
 
-
 class _DesktopBodyState extends State<DesktopBody> {
   TextEditingController nameController = TextEditingController();
   TextEditingController addressController = TextEditingController();
@@ -34,8 +33,7 @@ class _DesktopBodyState extends State<DesktopBody> {
     String email = emailController.text.trim();
     String selectedCompany =
         selectedCompanyGroup ?? selectedCompanyGroupController.text.trim();
-    String numberOfTeamMembers =
-         numberOfTeamMembersController.text.trim();
+    String numberOfTeamMembers = numberOfTeamMembersController.text.trim();
 
     if (name.isNotEmpty && address.isNotEmpty && contact.isNotEmpty) {
       // Access Firestore instance
