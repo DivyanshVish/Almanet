@@ -1,7 +1,9 @@
 // ignore_for_file: unused_element
 
 import 'package:almanet/constants/hover_buttoons.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class DesktopBody extends StatefulWidget {
   const DesktopBody({super.key});
@@ -11,15 +13,53 @@ class DesktopBody extends StatefulWidget {
   _DesktopBodyState createState() => _DesktopBodyState();
 }
 
-String? _selectedCompany;
-String? _selectedCompanyGroup;
-String? _numberOfTeamMembers;
-String? _name;
-String? _contact;
-String? _address;
-String? _email;
+String? selectedCompanyGroup;
+
 
 class _DesktopBodyState extends State<DesktopBody> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+  TextEditingController contactController = TextEditingController();
+  TextEditingController companyController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController selectedCompanyGroupController =
+      TextEditingController();
+  TextEditingController numberOfTeamMembersController = TextEditingController();
+
+  void saveDataToFirebase() {
+    String name = nameController.text.trim();
+    String address = addressController.text.trim();
+    String contact = contactController.text.trim();
+    String companyName = companyController.text.trim();
+    String email = emailController.text.trim();
+    String selectedCompany =
+        selectedCompanyGroup ?? selectedCompanyGroupController.text.trim();
+    String numberOfTeamMembers =
+         numberOfTeamMembersController.text.trim();
+
+    if (name.isNotEmpty && address.isNotEmpty && contact.isNotEmpty) {
+      // Access Firestore instance
+      FirebaseFirestore.instance.collection('leads').add({
+        'name': name,
+        'address': address,
+        'contact': contact,
+        'companyName': companyName,
+        'email': email,
+        'selectedCompanyGroup': selectedCompanyGroup,
+        'numberOfTeamMembers': numberOfTeamMembers,
+      }).then((value) {
+        // Success message
+        print("Data added successfully!");
+      }).catchError((error) {
+        // Error message
+        print("Failed to add data: $error");
+      });
+    } else {
+      // Validation error
+      print("Please fill all fields!");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -81,7 +121,7 @@ class _DesktopBodyState extends State<DesktopBody> {
           ],
           leading: InkWell(
             onTap: () {
-              Navigator.of(context).pop();
+              Get.back();
             },
             child: const Icon(
               Icons.dehaze_rounded,
@@ -91,303 +131,404 @@ class _DesktopBodyState extends State<DesktopBody> {
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      backgroundColor: Colors.green,
+                    ),
+                    onPressed: () {
+                      // Add functionality for the "New" button here
+                    },
+                    child: const Text(
+                      'New',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                  backgroundColor: Colors.green,
-                ),
-                onPressed: () {
-                  // Add functionality for the "New" button here
-                },
-                child: const Text(
-                  'New',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              const SizedBox(width: 20),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  backgroundColor: Colors.green,
-                ),
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        contentPadding: EdgeInsets.zero,
-                        content: SingleChildScrollView(
-                          child: StatefulBuilder(
-                            builder: (context, setState) {
-                              return SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.29,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.8,
-                                child: AlertDialog(
-                                  contentPadding: EdgeInsets.zero,
-                                  content: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 16,
-                                          vertical: 8,
-                                        ),
-                                        child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            const Text(
-                                              'Need help to reach the target?',
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            IconButton(
-                                              icon: const Icon(
-                                                Icons.close,
-                                                color: Colors.black,
-                                                size: 30,
-                                              ),
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      const Divider(
-                                        height: 10,
-                                        thickness: 1,
-                                        color: Colors.black,
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      const Padding(
-                                        padding: EdgeInsets.only(left: 15),
-                                        child: Text(
-                                          'How many leads would you like?',
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(height: 20),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 15),
-                                        child: DropdownButton<String>(
-                                          hint: const Text('Select Company'),
-                                          value: _selectedCompany,
-                                          items: <String>[
-                                            'Companies',
-                                            'Companies and their contacts',
-                                          ].map((String value) {
-                                            return DropdownMenuItem<String>(
-                                              value: value,
-                                              child: Text(value),
-                                            );
-                                          }).toList(),
-                                          onChanged: (String? newValue) {
-                                            setState(() {
-                                              _selectedCompany = newValue;
-                                            });
-                                          },
-                                        ),
-                                      ),
-                                      const SizedBox(height: 20),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 15),
-                                        child: DropdownButton<String>(
-                                          hint: const Text(
-                                              'Select the Industries'),
-                                          value: _selectedCompanyGroup,
-                                          items: <String>[
-                                            'Automobiles & Components',
-                                            'Industry',
-                                            'Banks & Insurance',
-                                            'Consumer Durables & Apparel',
-                                            'Consumer Services',
-                                            'Energy & Utilities',
-                                            'Media',
-                                            'Retailing',
-                                            'Software & Services',
-                                            'Telecommunication Services',
-                                            'Transportation',
-                                            'Health Care Equipment & Services',
-                                            'Materials',
-                                            'Pharmaceuticals, Biotechnology & Life Sciences',
-                                            'Real Estate',
-                                            'Consumer Staples',
-                                            'Diversified Financials & Financial Services',
-                                            'Food & Beverage & Tobacco',
-                                            'Capital Goods',
-                                            'Consumer Discretionary',
-                                            'Commercial & Professional Services',
-                                            'Independent Power and Renewable Electricity Producers',
-                                          ].map((String value) {
-                                            return DropdownMenuItem<String>(
-                                              value: value,
-                                              child: Text(value),
-                                            );
-                                          }).toList(),
-                                          onChanged: (String? newValue) {
-                                            setState(() {
-                                              _selectedCompanyGroup = newValue;
-                                            });
-                                          },
-                                        ),
-                                      ),
-                                      const SizedBox(height: 20),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 15, right: 15),
-                                        child: TextField(
-                                          decoration: const InputDecoration(
-                                            labelText: 'Number of leads',
-                                            border: OutlineInputBorder(),
-                                          ),
-                                          style: const TextStyle(
-                                            fontSize:
-                                                14, // Adjust font size here
-                                          ),
-                                          onChanged: (value) {
-                                            _numberOfTeamMembers = value;
-                                          },
-                                        ),
-                                      ),
-                                      const SizedBox(height: 18),
-                                      Padding(
-                                        padding: const EdgeInsets.all(15.0),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            const Text(
-                                              'Lead Information',
-                                              style: TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 5,
-                                            ),
-                                            TextFormField(
-                                              decoration: const InputDecoration(
-                                                labelText: 'Name',
-                                              ),
-                                              onChanged: (value) {
-                                                _name = value;
-                                              },
-                                            ),
-                                            TextFormField(
-                                              decoration: const InputDecoration(
-                                                  labelText: 'Contact'),
-                                              onChanged: (value) {
-                                                _contact = value;
-                                              },
-                                            ),
-                                            TextFormField(
-                                              decoration: const InputDecoration(
-                                                  labelText: 'Address'),
-                                              onChanged: (value) {
-                                                _address = value;
-                                              },
-                                            ),
-                                            TextFormField(
-                                              decoration: const InputDecoration(
-                                                  labelText: 'Email Address'),
-                                              onChanged: (value) {
-                                                _email = value;
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      const SizedBox(height: 20),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
+                  const SizedBox(width: 20),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      backgroundColor: Colors.green,
+                    ),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            contentPadding: EdgeInsets.zero,
+                            content: SingleChildScrollView(
+                              child: StatefulBuilder(
+                                builder: (context, setState) {
+                                  return SizedBox(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.29,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.9,
+                                    child: AlertDialog(
+                                      contentPadding: EdgeInsets.zero,
+                                      content: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          ElevatedButton(
-                                            onPressed: () {
-                                              // TODO: Add functionality to generate leads
-                                            },
-                                            style: ElevatedButton.styleFrom(
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              ),
-                                              backgroundColor: Colors.green,
+                                          Container(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 16,
+                                              vertical: 8,
                                             ),
-                                            child: const Text(
-                                              'Generate Leads',
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                const Text(
+                                                  'Need help to reach the target?',
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                IconButton(
+                                                  icon: const Icon(
+                                                    Icons.close,
+                                                    color: Colors.black,
+                                                    size: 30,
+                                                  ),
+                                                  onPressed: () {
+                                                    Get.back();
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          const Divider(
+                                            height: 10,
+                                            thickness: 1,
+                                            color: Colors.black,
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          const Padding(
+                                            padding: EdgeInsets.only(left: 15),
+                                            child: Text(
+                                              'How many leads would you like?',
                                               style: TextStyle(
                                                 color: Colors.black,
-                                                fontWeight: FontWeight.w600,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                           ),
-                                          ElevatedButton(
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                            style: ElevatedButton.styleFrom(
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              ),
-                                              backgroundColor: Colors.green,
+                                          const SizedBox(height: 20),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 15),
+                                            child: DropdownButton<String>(
+                                              hint: const Text(
+                                                  'Select the Industries'),
+                                              value: selectedCompanyGroup,
+                                              items: <String>[
+                                                'Automobiles & Components',
+                                                'Industry',
+                                                'Banks & Insurance',
+                                                'Consumer Durables & Apparel',
+                                                'Consumer Services',
+                                                'Energy & Utilities',
+                                                'Media',
+                                                'Retailing',
+                                                'Software & Services',
+                                                'Telecommunication Services',
+                                                'Transportation',
+                                                'Health Care Equipment & Services',
+                                                'Materials',
+                                                'Pharmaceuticals, Biotechnology & Life Sciences',
+                                                'Real Estate',
+                                                'Consumer Staples',
+                                                'Diversified Financials & Financial Services',
+                                                'Food & Beverage & Tobacco',
+                                                'Capital Goods',
+                                                'Consumer Discretionary',
+                                                'Commercial & Professional Services',
+                                                'Independent Power and Renewable Electricity Producers',
+                                              ].map((String value) {
+                                                return DropdownMenuItem<String>(
+                                                  value: value,
+                                                  child: Text(value),
+                                                );
+                                              }).toList(),
+                                              onChanged: (String? newValue) {
+                                                setState(() {
+                                                  selectedCompanyGroup =
+                                                      newValue;
+                                                });
+                                              },
                                             ),
-                                            child: const Text(
-                                              'Close',
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.w600,
+                                          ),
+                                          const SizedBox(height: 20),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 15, right: 15),
+                                            child: TextFormField(
+                                              decoration: const InputDecoration(
+                                                labelText: 'Number of leads',
+                                                border: OutlineInputBorder(),
                                               ),
+                                              style: const TextStyle(
+                                                fontSize:
+                                                    14, // Adjust font size here
+                                              ),
+                                              controller:
+                                                  numberOfTeamMembersController,
                                             ),
+                                          ),
+                                          const SizedBox(height: 18),
+                                          Padding(
+                                            padding: const EdgeInsets.all(15.0),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                const Text(
+                                                  'Lead Information',
+                                                  style: TextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                TextFormField(
+                                                  controller: nameController,
+                                                  decoration:
+                                                      const InputDecoration(
+                                                    border:
+                                                        OutlineInputBorder(),
+                                                    labelText: 'Name',
+                                                  ),
+                                                  onChanged: (value) {
+                                                    nameController = value
+                                                        as TextEditingController;
+                                                  },
+                                                ),
+                                                const SizedBox(
+                                                  height: 15,
+                                                ),
+                                                TextFormField(
+                                                  controller: contactController,
+                                                  decoration:
+                                                      const InputDecoration(
+                                                          border:
+                                                              OutlineInputBorder(),
+                                                          labelText: 'Contact'),
+                                                  onChanged: (value) {
+                                                    contactController = value
+                                                        as TextEditingController;
+                                                  },
+                                                ),
+                                                const SizedBox(
+                                                  height: 15,
+                                                ),
+                                                TextFormField(
+                                                  controller: addressController,
+                                                  decoration:
+                                                      const InputDecoration(
+                                                          border:
+                                                              OutlineInputBorder(),
+                                                          labelText: 'Address'),
+                                                  onChanged: (value) {
+                                                    addressController = value
+                                                        as TextEditingController;
+                                                  },
+                                                ),
+                                                const SizedBox(
+                                                  height: 15,
+                                                ),
+                                                TextFormField(
+                                                  controller: emailController,
+                                                  decoration:
+                                                      const InputDecoration(
+                                                          border:
+                                                              OutlineInputBorder(),
+                                                          labelText:
+                                                              'Email Address'),
+                                                  onChanged: (value) {
+                                                    emailController = value
+                                                        as TextEditingController;
+                                                  },
+                                                ),
+                                                const SizedBox(
+                                                  height: 15,
+                                                ),
+                                                TextFormField(
+                                                  controller: companyController,
+                                                  decoration:
+                                                      const InputDecoration(
+                                                    border:
+                                                        OutlineInputBorder(),
+                                                    labelText: 'Company Name',
+                                                  ),
+                                                  onChanged: (value) {
+                                                    companyController = value
+                                                        as TextEditingController;
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          const SizedBox(height: 20),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              ElevatedButton(
+                                                onPressed: () {
+                                                  saveDataToFirebase();
+                                                },
+                                                style: ElevatedButton.styleFrom(
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                  ),
+                                                  backgroundColor: Colors.green,
+                                                ),
+                                                child: const Text(
+                                                  'Generate Leads',
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                              ),
+                                              ElevatedButton(
+                                                onPressed: () {
+                                                  //Navigator.of(context).pop();
+                                                  Get.back();
+                                                },
+                                                style: ElevatedButton.styleFrom(
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                  ),
+                                                  backgroundColor: Colors.green,
+                                                ),
+                                                child: const Text(
+                                                  'Close',
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          );
+                        },
                       );
                     },
-                  );
-                },
-                child: const Text(
-                  'Generate Lead',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
+                    child: const Text(
+                      'Generate Lead',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                padding: const EdgeInsets.all(20),
+                height: MediaQuery.of(context).size.height * 0.6,
+                width: MediaQuery.of(context).size.width * 0.3,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Name : ${nameController.text}',
+                      style: const TextStyle(
+                          fontSize: 25,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      'Contact : ${contactController.text}',
+                      style: const TextStyle(
+                          fontSize: 25,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      'Address : ${addressController.text}',
+                      style: const TextStyle(
+                          fontSize: 25,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      'Email : ${emailController.text}',
+                      style: const TextStyle(
+                          fontSize: 25,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      'Company Name : ${companyController.text}',
+                      style: const TextStyle(
+                          fontSize: 25,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      'Selected Industries : ${selectedCompanyGroupController.text}',
+                      style: const TextStyle(
+                          fontSize: 25,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      'Number of Leads : ${numberOfTeamMembersController.text}',
+                      style: const TextStyle(
+                          fontSize: 25,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ],
                 ),
               ),
             ],
