@@ -202,7 +202,7 @@ class _DesktopBodyState extends State<DesktopBody> {
                 height: 24,
               ),
               ListView.builder(
-                itemCount: 1,
+                itemCount: 3,
                 shrinkWrap: true,
                 itemBuilder: (context, index) => CRMListTile(
                   nameController: nameController,
