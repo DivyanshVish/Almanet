@@ -52,7 +52,7 @@ class _HomeState extends State<Home> {
     return LayoutBuilder(
 
      builder: (context, constraint)
-      {
+        {
         double ww = Get.width;
         double fs = ww * 0.0165;
         double hh = Get.height;

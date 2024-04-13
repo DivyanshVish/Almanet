@@ -52,7 +52,94 @@ class _sliverappbar_collapsedState extends State<sliverappbar_collapsed> {
           double fs = ww * 0.0165;
           double hh = Get.height;
           return Scaffold(
-              appBar: web_appbar(),
+              appBar: AppBar(
+                backgroundColor:  Color(0xFF082444),
+                title: Padding(
+                  padding: EdgeInsets.only(left: ww * 0.2),
+                  child: Image(
+                    image: const AssetImage('assets/images/logo.jpg'),
+                    width: ww * 0.1,
+                    height: hh * 0.06,
+                  ),
+                ),
+                toolbarHeight: hh * 0.2,
+                actions: [
+                  Hover_Button(
+                    text: 'Careers',
+                    defaultcolor: Colors.white,
+                    hovercolor: Colors.white,
+                    ontap: () {},
+                    fontsize: ww * 0.011,
+                    width: ww,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: ww * 0.005),
+                    child: const Icon(
+                      FontAwesomeIcons.facebook,
+                      color: Colors.white,
+                      size: 18,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: ww * 0.005),
+                    child: const Icon(
+                      FontAwesomeIcons.instagram,
+                      color: Colors.white,
+                      size: 18,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: ww * 0.005),
+                    child: const Icon(
+                      FontAwesomeIcons.twitter,
+                      color: Colors.white,
+                      size: 18,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: ww * 0.005),
+                    child: const Icon(
+                      FontAwesomeIcons.youtube,
+                      color: Colors.white,
+                      size: 18,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: ww * 0.005, right: ww * 0.11),
+                    child: SizedBox(
+                      height: hh * 0.03,
+                      width: ww * 0.075,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Get.to(() => const login());
+                        },
+                        style: ButtonStyle(
+                          backgroundColor:
+                          MaterialStateProperty.resolveWith<Color>((states) {
+                            if (!states.contains(MaterialState.hovered)) {
+                              return Colors.green; // Change color when hovered
+                            }
+                            return const Color(0xFF082444); // Default color
+                          }),
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              side: const BorderSide(color: Colors.green, width: 1),
+                            ),
+                          ),
+                        ),
+                        child: Text(
+                          'Login/Signup',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: ww * 0.008,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
               body: CustomScrollView(
                   controller: _scrollController,
                   // double appBarHeight = hh * 0.5; // Initial height
@@ -175,7 +262,97 @@ class _sliverappbarState extends State<sliverappbar> {
           double fs = ww * 0.0165;
           double hh = Get.height;
           return Scaffold(
-              appBar: web_appbar(),
+              appBar: AppBar(
+                backgroundColor:  Color(0xFF082444),
+                title: Padding(
+                  padding: EdgeInsets.only(left: ww * 0.2),
+                  child: Image(
+                    image: const AssetImage('assets/images/logo.jpg'),
+                    width: ww * 0.1,
+                    height: hh * 0.06,
+                  ),
+                ),
+                toolbarHeight: hh * 0.06,
+                actions: [
+                  Padding(
+                    padding:  EdgeInsets.only(top: hh*0.02),
+                    child: Hover_Button(
+                      text: 'Careers',
+                      defaultcolor: Colors.white,
+                      hovercolor: Colors.white,
+                      ontap: () {},
+                      fontsize: ww * 0.011,
+                      width: ww,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: ww * 0.005),
+                    child: const Icon(
+                      FontAwesomeIcons.facebook,
+                      color: Colors.white,
+                      size: 18,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: ww * 0.005),
+                    child: const Icon(
+                      FontAwesomeIcons.instagram,
+                      color: Colors.white,
+                      size: 18,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: ww * 0.005),
+                    child: const Icon(
+                      FontAwesomeIcons.twitter,
+                      color: Colors.white,
+                      size: 18,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: ww * 0.005),
+                    child: const Icon(
+                      FontAwesomeIcons.youtube,
+                      color: Colors.white,
+                      size: 18,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: ww * 0.005, right: ww * 0.11, top: hh*0.02, bottom: hh*0.01),
+                    child: SizedBox(
+                      height: hh * 0.03,
+                      width: ww * 0.075,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Get.to(() => const login());
+                        },
+                        style: ButtonStyle(
+                          backgroundColor:
+                          MaterialStateProperty.resolveWith<Color>((states) {
+                            if (!states.contains(MaterialState.hovered)) {
+                              return Colors.green; // Change color when hovered
+                            }
+                            return const Color(0xFF082444); // Default color
+                          }),
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              side: const BorderSide(color: Colors.green, width: 1),
+                            ),
+                          ),
+                        ),
+                        child: Text(
+                          'Login/Signup',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: ww * 0.008,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
               body: CustomScrollView(
                   controller: _scrollController,
                   // double appBarHeight = hh * 0.5; // Initial height
@@ -267,115 +444,29 @@ class _sliverappbarState extends State<sliverappbar> {
   }
 }
 
-
-class web_appbar extends StatefulWidget implements PreferredSizeWidget{
-  const web_appbar({super.key});
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
-
-  @override
-  State<web_appbar> createState() => _web_appbarState();
-}
-
-class _web_appbarState extends State<web_appbar> {
-
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context,constraints){
-      double ww = Get.width;
-      // double fs = ww * 0.0165;
-      double hh = Get.height;
-      return AppBar(
-        backgroundColor:  Color(0xFF082444),
-        title: Padding(
-          padding: EdgeInsets.only(left: ww * 0.15),
-          child: Image(
-            image: const AssetImage('assets/images/logo.jpg'),
-            width: ww * 0.1,
-            height: hh * 0.06,
-          ),
-        ),
-        toolbarHeight: hh * 0.06,
-        actions: [
-          Hover_Button(
-            text: 'Careers',
-            defaultcolor: Colors.white,
-            hovercolor: Colors.white,
-            ontap: () {},
-            fontsize: ww * 0.011,
-            width: ww,
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: ww * 0.005),
-            child: const Icon(
-              FontAwesomeIcons.facebook,
-              color: Colors.white,
-              size: 18,
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: ww * 0.005),
-            child: const Icon(
-              FontAwesomeIcons.instagram,
-              color: Colors.white,
-              size: 18,
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: ww * 0.005),
-            child: const Icon(
-              FontAwesomeIcons.twitter,
-              color: Colors.white,
-              size: 18,
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: ww * 0.005),
-            child: const Icon(
-              FontAwesomeIcons.youtube,
-              color: Colors.white,
-              size: 18,
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: ww * 0.005, right: ww * 0.11),
-            child: SizedBox(
-              height: hh * 0.03,
-              width: ww * 0.075,
-              child: ElevatedButton(
-                onPressed: () {
-                  Get.to(() => const login());
-                },
-                style: ButtonStyle(
-                  backgroundColor:
-                  MaterialStateProperty.resolveWith<Color>((states) {
-                    if (!states.contains(MaterialState.hovered)) {
-                      return Colors.green; // Change color when hovered
-                    }
-                    return const Color(0xFF082444); // Default color
-                  }),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      side: const BorderSide(color: Colors.green, width: 1),
-                    ),
-                  ),
-                ),
-                child: Text(
-                  'Login/Signup',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: ww * 0.008,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-          )
-        ],
-      );
-    });
-
-  }
-}
+//
+// class web_appbar extends StatefulWidget {
+//   const web_appbar({super.key});
+//
+//
+//
+//   @override
+//   State<web_appbar> createState() => _web_appbarState();
+// }
+//
+// class _web_appbarState extends State<web_appbar> {
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return LayoutBuilder(builder: (context,constraints){
+//       double ww = Get.width;
+//       // double fs = ww * 0.0165;
+//       double hh = Get.height;
+//       return
+//     });
+//
+//   }
+// }
 
 class Web_footer extends StatefulWidget {
   const Web_footer({super.key});
