@@ -1,9 +1,11 @@
 // ignore_for_file: unused_element
 
+import 'package:almanet/constants/dummy_data/industries_dummy_data.dart';
 import 'package:almanet/constants/hover_buttoons.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'dart:developer';
 
 class DesktopBody extends StatefulWidget {
   const DesktopBody({super.key});
@@ -13,45 +15,57 @@ class DesktopBody extends StatefulWidget {
   _DesktopBodyState createState() => _DesktopBodyState();
 }
 
-String? selectedCompanyGroup;
-
 class _DesktopBodyState extends State<DesktopBody> {
+  String? selectedCompanyGroup;
   TextEditingController nameController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   TextEditingController contactController = TextEditingController();
   TextEditingController companyController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  TextEditingController selectedCompanyGroupController =
-      TextEditingController();
+  TextEditingController selectedCompanyGroupController = TextEditingController();
   TextEditingController numberOfTeamMembersController = TextEditingController();
 
-  void saveDataToFirebase() {
+  void saveDataToFirebase() async {
     String name = nameController.text.trim();
     String address = addressController.text.trim();
     String contact = contactController.text.trim();
     String companyName = companyController.text.trim();
     String email = emailController.text.trim();
-    String selectedCompany =
-        selectedCompanyGroup ?? selectedCompanyGroupController.text.trim();
+    String selectedCompany = selectedCompanyGroup ?? selectedCompanyGroupController.text.trim();
     String numberOfTeamMembers = numberOfTeamMembersController.text.trim();
 
     if (name.isNotEmpty && address.isNotEmpty && contact.isNotEmpty) {
       // Access Firestore instance
-      FirebaseFirestore.instance.collection('leads').add({
-        'name': name,
-        'address': address,
-        'contact': contact,
-        'companyName': companyName,
-        'email': email,
-        'selectedCompanyGroup': selectedCompanyGroup,
-        'numberOfTeamMembers': numberOfTeamMembers,
-      }).then((value) {
-        // Success message
-        print("Data added successfully!");
-      }).catchError((error) {
-        // Error message
-        print("Failed to add data: $error");
-      });
+      try {
+        final response = await FirebaseFirestore.instance.collection('leads').add({
+          'name': name,
+          'address': address,
+          'contact': contact,
+          'companyName': companyName,
+          'email': email,
+          'selectedCompanyGroup': selectedCompany,
+          'numberOfTeamMembers': numberOfTeamMembers,
+        });
+
+        log("[Data Added] $response");
+      } catch (e) {
+        log(e.toString());
+      }
+      // FirebaseFirestore.instance.collection('leads').add({
+      //   'name': name,
+      //   'address': address,
+      //   'contact': contact,
+      //   'companyName': companyName,
+      //   'email': email,
+      //   'selectedCompanyGroup': selectedCompanyGroup,
+      //   'numberOfTeamMembers': numberOfTeamMembers,
+      // }).then((value) {
+      //   // Success message
+      //   print("Data added successfully!");
+      // }).catchError((error) {
+      //   // Error message
+      //   print("Failed to add data: $error");
+      // });
     } else {
       // Validation error
       print("Please fill all fields!");
@@ -172,15 +186,12 @@ class _DesktopBodyState extends State<DesktopBody> {
                               child: StatefulBuilder(
                                 builder: (context, setState) {
                                   return SizedBox(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.29,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.9,
+                                    width: MediaQuery.of(context).size.width * 0.29,
+                                    height: MediaQuery.of(context).size.height * 0.9,
                                     child: AlertDialog(
                                       contentPadding: EdgeInsets.zero,
                                       content: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Container(
                                             padding: const EdgeInsets.symmetric(
@@ -188,11 +199,8 @@ class _DesktopBodyState extends State<DesktopBody> {
                                               vertical: 8,
                                             ),
                                             child: Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
                                                 const Text(
                                                   'Need help to reach the target?',
@@ -236,36 +244,11 @@ class _DesktopBodyState extends State<DesktopBody> {
                                           ),
                                           const SizedBox(height: 20),
                                           Padding(
-                                            padding:
-                                                const EdgeInsets.only(left: 15),
+                                            padding: const EdgeInsets.only(left: 15),
                                             child: DropdownButton<String>(
-                                              hint: const Text(
-                                                  'Select the Industries'),
+                                              hint: const Text('Select the Industries'),
                                               value: selectedCompanyGroup,
-                                              items: <String>[
-                                                'Automobiles & Components',
-                                                'Industry',
-                                                'Banks & Insurance',
-                                                'Consumer Durables & Apparel',
-                                                'Consumer Services',
-                                                'Energy & Utilities',
-                                                'Media',
-                                                'Retailing',
-                                                'Software & Services',
-                                                'Telecommunication Services',
-                                                'Transportation',
-                                                'Health Care Equipment & Services',
-                                                'Materials',
-                                                'Pharmaceuticals, Biotechnology & Life Sciences',
-                                                'Real Estate',
-                                                'Consumer Staples',
-                                                'Diversified Financials & Financial Services',
-                                                'Food & Beverage & Tobacco',
-                                                'Capital Goods',
-                                                'Consumer Discretionary',
-                                                'Commercial & Professional Services',
-                                                'Independent Power and Renewable Electricity Producers',
-                                              ].map((String value) {
+                                              items: dummyIndustriesData.map((String value) {
                                                 return DropdownMenuItem<String>(
                                                   value: value,
                                                   child: Text(value),
@@ -273,35 +256,30 @@ class _DesktopBodyState extends State<DesktopBody> {
                                               }).toList(),
                                               onChanged: (String? newValue) {
                                                 setState(() {
-                                                  selectedCompanyGroup =
-                                                      newValue;
+                                                  selectedCompanyGroup = newValue;
                                                 });
                                               },
                                             ),
                                           ),
                                           const SizedBox(height: 20),
                                           Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 15, right: 15),
+                                            padding: const EdgeInsets.only(left: 15, right: 15),
                                             child: TextFormField(
                                               decoration: const InputDecoration(
                                                 labelText: 'Number of leads',
                                                 border: OutlineInputBorder(),
                                               ),
                                               style: const TextStyle(
-                                                fontSize:
-                                                    14, // Adjust font size here
+                                                fontSize: 14, // Adjust font size here
                                               ),
-                                              controller:
-                                                  numberOfTeamMembersController,
+                                              controller: numberOfTeamMembersController,
                                             ),
                                           ),
                                           const SizedBox(height: 18),
                                           Padding(
                                             padding: const EdgeInsets.all(15.0),
                                             child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
                                                 const Text(
                                                   'Lead Information',
@@ -315,15 +293,12 @@ class _DesktopBodyState extends State<DesktopBody> {
                                                 ),
                                                 TextFormField(
                                                   controller: nameController,
-                                                  decoration:
-                                                      const InputDecoration(
-                                                    border:
-                                                        OutlineInputBorder(),
+                                                  decoration: const InputDecoration(
+                                                    border: OutlineInputBorder(),
                                                     labelText: 'Name',
                                                   ),
                                                   onChanged: (value) {
-                                                    nameController = value
-                                                        as TextEditingController;
+                                                    nameController = value as TextEditingController;
                                                   },
                                                 ),
                                                 const SizedBox(
@@ -331,14 +306,9 @@ class _DesktopBodyState extends State<DesktopBody> {
                                                 ),
                                                 TextFormField(
                                                   controller: contactController,
-                                                  decoration:
-                                                      const InputDecoration(
-                                                          border:
-                                                              OutlineInputBorder(),
-                                                          labelText: 'Contact'),
+                                                  decoration: const InputDecoration(border: OutlineInputBorder(), labelText: 'Contact'),
                                                   onChanged: (value) {
-                                                    contactController = value
-                                                        as TextEditingController;
+                                                    contactController = value as TextEditingController;
                                                   },
                                                 ),
                                                 const SizedBox(
@@ -346,14 +316,9 @@ class _DesktopBodyState extends State<DesktopBody> {
                                                 ),
                                                 TextFormField(
                                                   controller: addressController,
-                                                  decoration:
-                                                      const InputDecoration(
-                                                          border:
-                                                              OutlineInputBorder(),
-                                                          labelText: 'Address'),
+                                                  decoration: const InputDecoration(border: OutlineInputBorder(), labelText: 'Address'),
                                                   onChanged: (value) {
-                                                    addressController = value
-                                                        as TextEditingController;
+                                                    addressController = value as TextEditingController;
                                                   },
                                                 ),
                                                 const SizedBox(
@@ -361,15 +326,9 @@ class _DesktopBodyState extends State<DesktopBody> {
                                                 ),
                                                 TextFormField(
                                                   controller: emailController,
-                                                  decoration:
-                                                      const InputDecoration(
-                                                          border:
-                                                              OutlineInputBorder(),
-                                                          labelText:
-                                                              'Email Address'),
+                                                  decoration: const InputDecoration(border: OutlineInputBorder(), labelText: 'Email Address'),
                                                   onChanged: (value) {
-                                                    emailController = value
-                                                        as TextEditingController;
+                                                    emailController = value as TextEditingController;
                                                   },
                                                 ),
                                                 const SizedBox(
@@ -377,15 +336,12 @@ class _DesktopBodyState extends State<DesktopBody> {
                                                 ),
                                                 TextFormField(
                                                   controller: companyController,
-                                                  decoration:
-                                                      const InputDecoration(
-                                                    border:
-                                                        OutlineInputBorder(),
+                                                  decoration: const InputDecoration(
+                                                    border: OutlineInputBorder(),
                                                     labelText: 'Company Name',
                                                   ),
                                                   onChanged: (value) {
-                                                    companyController = value
-                                                        as TextEditingController;
+                                                    companyController = value as TextEditingController;
                                                   },
                                                 ),
                                               ],
@@ -393,8 +349,7 @@ class _DesktopBodyState extends State<DesktopBody> {
                                           ),
                                           const SizedBox(height: 20),
                                           Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
+                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                             children: [
                                               ElevatedButton(
                                                 onPressed: () {
@@ -402,9 +357,7 @@ class _DesktopBodyState extends State<DesktopBody> {
                                                 },
                                                 style: ElevatedButton.styleFrom(
                                                   shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
+                                                    borderRadius: BorderRadius.circular(10),
                                                   ),
                                                   backgroundColor: Colors.green,
                                                 ),
@@ -423,9 +376,7 @@ class _DesktopBodyState extends State<DesktopBody> {
                                                 },
                                                 style: ElevatedButton.styleFrom(
                                                   shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
+                                                    borderRadius: BorderRadius.circular(10),
                                                   ),
                                                   backgroundColor: Colors.green,
                                                 ),
@@ -473,58 +424,37 @@ class _DesktopBodyState extends State<DesktopBody> {
                   children: [
                     Text(
                       'Name : ${nameController.text}',
-                      style: const TextStyle(
-                          fontSize: 25,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500),
+                      style: const TextStyle(fontSize: 25, color: Colors.black, fontWeight: FontWeight.w500),
                     ),
                     const SizedBox(height: 10),
                     Text(
                       'Contact : ${contactController.text}',
-                      style: const TextStyle(
-                          fontSize: 25,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500),
+                      style: const TextStyle(fontSize: 25, color: Colors.black, fontWeight: FontWeight.w500),
                     ),
                     const SizedBox(height: 10),
                     Text(
                       'Address : ${addressController.text}',
-                      style: const TextStyle(
-                          fontSize: 25,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500),
+                      style: const TextStyle(fontSize: 25, color: Colors.black, fontWeight: FontWeight.w500),
                     ),
                     const SizedBox(height: 10),
                     Text(
                       'Email : ${emailController.text}',
-                      style: const TextStyle(
-                          fontSize: 25,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500),
+                      style: const TextStyle(fontSize: 25, color: Colors.black, fontWeight: FontWeight.w500),
                     ),
                     const SizedBox(height: 10),
                     Text(
                       'Company Name : ${companyController.text}',
-                      style: const TextStyle(
-                          fontSize: 25,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500),
+                      style: const TextStyle(fontSize: 25, color: Colors.black, fontWeight: FontWeight.w500),
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      'Selected Industries : ${selectedCompanyGroupController.text}',
-                      style: const TextStyle(
-                          fontSize: 25,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500),
+                      'Selected Industries : $selectedCompanyGroup',
+                      style: const TextStyle(fontSize: 25, color: Colors.black, fontWeight: FontWeight.w500),
                     ),
                     const SizedBox(height: 10),
                     Text(
                       'Number of Leads : ${numberOfTeamMembersController.text}',
-                      style: const TextStyle(
-                          fontSize: 25,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500),
+                      style: const TextStyle(fontSize: 25, color: Colors.black, fontWeight: FontWeight.w500),
                     ),
                   ],
                 ),
