@@ -1,5 +1,6 @@
 import 'package:almanet/Crm/crm_web_page.dart';
 import 'package:almanet/screens/home.dart';
+import 'package:almanet/utils/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,11 +22,8 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Almanet',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home:  Home(),
+      theme: CustomTheme.customTheme,
+      home: const Home(),
     );
   }
 }
