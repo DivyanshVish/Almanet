@@ -1,5 +1,4 @@
 import 'package:almanet/Crm/crm_web_page.dart';
-import 'package:almanet/screens/home.dart';
 import 'package:almanet/utils/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +22,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Almanet',
       theme: CustomTheme.customTheme,
-      home: const Home(),
+      home: const CRMPage(),
     );
   }
 }

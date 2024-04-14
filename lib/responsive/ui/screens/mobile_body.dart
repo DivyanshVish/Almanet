@@ -1,8 +1,6 @@
-
 import 'package:flutter/material.dart';
 
-
-import '../../constants/hover_buttoons.dart';
+import '../../../constants/hover_buttoons.dart';
 
 class MobileBody extends StatefulWidget {
   const MobileBody({super.key});
@@ -73,7 +71,6 @@ class _MobileBodyState extends State<MobileBody> {
                 size: 32,
               )),
         ),
-
       ),
     );
   }

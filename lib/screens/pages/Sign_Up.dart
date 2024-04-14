@@ -1,12 +1,7 @@
 import 'package:almanet/screens/pages/Login.dart';
 import 'package:almanet/screens/home.dart';
-import 'package:almanet/constants/hover_buttoons.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-
-
 
 class signup extends StatefulWidget {
   const signup({super.key});
@@ -30,16 +25,20 @@ class _signupState extends State<signup> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 18.0),
                 child: InkWell(
-                    onTap: (){Get.to(()=>const Home());},
-                    child: Image(image: const AssetImage('assets/images/logo.jpg'), height: Get.height*0.2, width: Get.width*0.2,)),
+                    onTap: () {
+                      Get.to(() => const Home());
+                    },
+                    child: Image(
+                      image: const AssetImage('assets/images/logo.jpg'),
+                      height: Get.height * 0.2,
+                      width: Get.width * 0.2,
+                    )),
               ),
               Container(
-                width: Get.width*0.4,
-                height: Get.height*0.7,
+                width: Get.width * 0.4,
+                height: Get.height * 0.7,
                 color: Colors.grey.shade200,
                 padding: const EdgeInsets.only(left: 50, right: 50, top: 20),
-
-
                 child: Column(
                   // crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -51,30 +50,30 @@ class _signupState extends State<signup> {
                     // ),),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 12.0),
-                      child: Text("Create a New Account",  style: TextStyle(
-                        fontSize: 30,
-                        color: Colors.blue.shade900,
-                        fontWeight: FontWeight.bold,
-                      ),),
+                      child: Text(
+                        "Create a New Account",
+                        style: TextStyle(
+                          fontSize: 30,
+                          color: Colors.blue.shade900,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
 
                     Padding(
                       padding: const EdgeInsets.only(top: 10, bottom: 7),
                       child: Container(
-
-                        width: Get.width*0.127  ,
+                        width: Get.width * 0.127,
                         alignment: Alignment.topLeft,
-                        decoration: BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius: BorderRadius.circular(25)
-                        ),
+                        decoration: BoxDecoration(color: Colors.blue, borderRadius: BorderRadius.circular(25)),
                         child: const ListTile(
                           leading: CircleAvatar(
                             backgroundImage: AssetImage('assets/images/img.png'),
                           ),
-                          title: Text('Sign up with Google',style: TextStyle(
-                              color: Colors.white
-                          ),),
+                          title: Text(
+                            'Sign up with Google',
+                            style: TextStyle(color: Colors.white),
+                          ),
                         ),
                       ),
                     ),
@@ -88,9 +87,10 @@ class _signupState extends State<signup> {
                         ),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 25.0),
-                          child: Text('OR', style: TextStyle(
-                              fontSize: 18
-                          ),),
+                          child: Text(
+                            'OR',
+                            style: TextStyle(fontSize: 18),
+                          ),
                         ),
                         Expanded(
                           child: Padding(
@@ -106,34 +106,29 @@ class _signupState extends State<signup> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround
-                            ,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const Text('First Name'),
-                                  const SizedBox(height: 15,),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
                                   Padding(
                                     padding: const EdgeInsets.only(bottom: 15.0),
                                     child: Container(
-                                      height: Get.height*0.05,
-                                      width: Get.width*0.16,
+                                      height: Get.height * 0.05,
+                                      width: Get.width * 0.16,
                                       decoration: BoxDecoration(
-                                        border: Border.all(
-                                            width: 0.3
-                                        ),
+                                        border: Border.all(width: 0.3),
                                         color: Colors.white,
-
                                       ),
                                       padding: const EdgeInsets.only(left: 7),
                                       child: const TextField(
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
-
                                         ),
-
-
                                       ),
                                     ),
                                   ),
@@ -143,50 +138,42 @@ class _signupState extends State<signup> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const Text('Last Name'),
-                                  const SizedBox(height: 15,),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
                                   Padding(
                                     padding: const EdgeInsets.only(bottom: 15.0),
                                     child: Container(
-                                      height: Get.height*0.05,
-                                      width: Get.width*0.16,
-
+                                      height: Get.height * 0.05,
+                                      width: Get.width * 0.16,
                                       decoration: BoxDecoration(
-                                        border: Border.all(
-                                          width: 0.3
-                                        ),
+                                        border: Border.all(width: 0.3),
                                         color: Colors.white,
-
                                       ),
                                       padding: const EdgeInsets.only(left: 7),
                                       child: const TextField(
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
-
-
                                         ),
-
-
                                       ),
                                     ),
                                   ),
                                 ],
                               ),
-                            ]
-                              ,
+                            ],
                           ),
                           const Text('Email'),
-                          const SizedBox(height: 15,),
+                          const SizedBox(
+                            height: 15,
+                          ),
                           Padding(
                             padding: const EdgeInsets.only(bottom: 15.0),
                             child: Container(
-                              width: Get.width*0.35,
-                              height: Get.height*0.05,
+                              width: Get.width * 0.35,
+                              height: Get.height * 0.05,
                               decoration: BoxDecoration(
-                                border: Border.all(
-                                    width: 0.3
-                                ),
+                                border: Border.all(width: 0.3),
                                 color: Colors.white,
-
                               ),
                               padding: const EdgeInsets.only(left: 7),
                               child: const TextField(
@@ -194,42 +181,34 @@ class _signupState extends State<signup> {
                                   border: InputBorder.none,
                                   hintText: 'Email',
                                   hintStyle: TextStyle(color: Colors.grey),
-
                                 ),
-
-
                               ),
                             ),
                           ),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround
-                            ,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const Text('Password'),
-                                  const SizedBox(height: 15,),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
                                   Padding(
                                     padding: const EdgeInsets.only(bottom: 15.0),
                                     child: Container(
-                                      height: Get.height*0.05,
-                                      width: Get.width*0.16,
+                                      height: Get.height * 0.05,
+                                      width: Get.width * 0.16,
                                       decoration: BoxDecoration(
-                                        border: Border.all(
-                                            width: 0.3
-                                        ),
+                                        border: Border.all(width: 0.3),
                                         color: Colors.white,
-
                                       ),
                                       padding: const EdgeInsets.only(left: 7),
                                       child: const TextField(
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
-
                                         ),
-
-
                                       ),
                                     ),
                                   ),
@@ -239,92 +218,82 @@ class _signupState extends State<signup> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const Text('Confirm Password'),
-                                  const SizedBox(height: 15,),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
                                   Padding(
                                     padding: const EdgeInsets.only(bottom: 15.0),
                                     child: Container(
-                                      height: Get.height*0.05,
-                                      width: Get.width*0.16,
-
+                                      height: Get.height * 0.05,
+                                      width: Get.width * 0.16,
                                       decoration: BoxDecoration(
-                                        border: Border.all(
-                                            width: 0.3
-                                        ),
+                                        border: Border.all(width: 0.3),
                                         color: Colors.white,
-
                                       ),
                                       padding: const EdgeInsets.only(left: 7),
                                       child: const TextField(
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
-
-
                                         ),
-
-
                                       ),
                                     ),
                                   ),
                                 ],
                               ),
-                            ]
-                            ,
+                            ],
                           ),
-
-
                         ],
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 15.0),
                       child: Align(
-                        alignment: Alignment.center,
-                        child: RichText(
-                          text: const TextSpan(
-                            children: [
-                              TextSpan(
-                                text: 'By creating the account, you accept the '
-                              ),
-                              TextSpan(
-                                  text: 'Privacy Policies',
-                              style: TextStyle(color: Colors.blue))
-                            ]
-                          ),
-                        )
-                      ),
+                          alignment: Alignment.center,
+                          child: RichText(
+                            text: const TextSpan(children: [TextSpan(text: 'By creating the account, you accept the '), TextSpan(text: 'Privacy Policies', style: TextStyle(color: Colors.blue))]),
+                          )),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 20.0),
-                      child: ElevatedButton(onPressed: (){}, child: const Text('Sign Up', style: TextStyle(color: Colors.white, fontSize: 25),),style:ElevatedButton.styleFrom(
-                          alignment: Alignment.center,
-                          backgroundColor: Colors.blue.shade800  ,
-                          minimumSize: Size(Get.width*0.27, Get.height*0.06)
-
-
-                      )),
+                      child: ElevatedButton(
+                          onPressed: () {},
+                          child: const Text(
+                            'Sign Up',
+                            style: TextStyle(color: Colors.white, fontSize: 25),
+                          ),
+                          style: ElevatedButton.styleFrom(alignment: Alignment.center, backgroundColor: Colors.blue.shade800, minimumSize: Size(Get.width * 0.27, Get.height * 0.06))),
                     )
-
-
                   ],
                 ),
               ),
-              Padding(padding: const EdgeInsets.only(top: 15),
+              Padding(
+                padding: const EdgeInsets.only(top: 15),
                 child: Container(
-                  width: Get.width*0.4,
-                  height: Get.height*0.1,
+                  width: Get.width * 0.4,
+                  height: Get.height * 0.1,
                   child: Row(
                     children: [
-                      const Text("Already have an account?",style: TextStyle(fontSize: 18),),
-                      const SizedBox(width: 10,),
-                      ElevatedButton(onPressed: (){Get.to(() => const login());}, child: const Text('Sign In', style: TextStyle(color: Colors.white, fontSize: 19),),style:ElevatedButton.styleFrom(
-                          alignment: Alignment.center,
-                          backgroundColor: Colors.blue.shade800  ,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(0),
-                          )
-
-
-                      )),
+                      const Text(
+                        "Already have an account?",
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      ElevatedButton(
+                          onPressed: () {
+                            Get.to(() => const login());
+                          },
+                          child: const Text(
+                            'Sign In',
+                            style: TextStyle(color: Colors.white, fontSize: 19),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                              alignment: Alignment.center,
+                              backgroundColor: Colors.blue.shade800,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(0),
+                              ))),
                     ],
                   ),
                 ),

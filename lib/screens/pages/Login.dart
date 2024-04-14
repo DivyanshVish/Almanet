@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:sign_in_button/sign_in_button.dart';
 
 import 'Sign_Up.dart';
 
@@ -69,24 +68,19 @@ class _loginState extends State<login> {
                       ),
 
                       Padding(
-                        padding:
-                            const EdgeInsets.only(top: 10, left: 10, bottom: 7),
+                        padding: const EdgeInsets.only(top: 10, left: 10, bottom: 7),
                         child: Container(
                           width: Get.width * 0.127,
                           alignment: Alignment.topLeft,
-                          decoration: BoxDecoration(
-                              color: Colors.blue,
-                              borderRadius: BorderRadius.circular(25)),
+                          decoration: BoxDecoration(color: Colors.blue, borderRadius: BorderRadius.circular(25)),
                           child: ListTile(
                             leading: CircleAvatar(
-                              backgroundImage:
-                                  const AssetImage('assets/images/img.png'),
+                              backgroundImage: const AssetImage('assets/images/img.png'),
                               radius: ww * 0.01,
                             ),
                             title: Text(
                               'Sign in with Google',
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: ww * 0.0085),
+                              style: TextStyle(color: Colors.white, fontSize: ww * 0.0085),
                             ),
                           ),
                         ),
@@ -100,8 +94,7 @@ class _loginState extends State<login> {
                             ),
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 25.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 25.0),
                             child: Text(
                               'OR',
                               style: TextStyle(fontSize: ww * 0.008),
@@ -140,9 +133,7 @@ class _loginState extends State<login> {
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintText: 'Email',
-                                    hintStyle: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: ww * 0.008),
+                                    hintStyle: TextStyle(color: Colors.grey, fontSize: ww * 0.008),
                                   ),
                                 ),
                               ),
@@ -165,8 +156,7 @@ class _loginState extends State<login> {
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   hintText: 'Password',
-                                  hintStyle: TextStyle(
-                                      color: Colors.grey, fontSize: ww * 0.008),
+                                  hintStyle: TextStyle(color: Colors.grey, fontSize: ww * 0.008),
                                 ),
                               ),
                             ),
@@ -193,14 +183,9 @@ class _loginState extends State<login> {
                             onPressed: () {},
                             child: Text(
                               'Login',
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: ww * 0.015),
+                              style: TextStyle(color: Colors.white, fontSize: ww * 0.015),
                             ),
-                            style: ElevatedButton.styleFrom(
-                                alignment: Alignment.center,
-                                backgroundColor: Colors.blue.shade800,
-                                minimumSize:
-                                    Size(Get.width * 0.27, Get.height * 0.06))),
+                            style: ElevatedButton.styleFrom(alignment: Alignment.center, backgroundColor: Colors.blue.shade800, minimumSize: Size(Get.width * 0.27, Get.height * 0.06))),
                       )
                     ],
                   ),
@@ -225,8 +210,7 @@ class _loginState extends State<login> {
                             },
                             child: Text(
                               'Sign Up',
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: ww * 0.0081),
+                              style: TextStyle(color: Colors.white, fontSize: ww * 0.0081),
                             ),
                             style: ElevatedButton.styleFrom(
                                 alignment: Alignment.center,

@@ -1,9 +1,9 @@
 import 'dart:developer';
+import 'package:almanet/responsive/ui/widgets/crm_list_tile.dart';
+import 'package:almanet/responsive/ui/widgets/crm_popup_dialog.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:almanet/responsive/screens/widgets/crm_list_tile.dart';
-import 'package:almanet/responsive/screens/widgets/crm_popup_dialog.dart';
 
 class DesktopBody extends StatefulWidget {
   const DesktopBody({super.key});
@@ -202,7 +202,7 @@ class _DesktopBodyState extends State<DesktopBody> {
                 height: 24,
               ),
               ListView.builder(
-                itemCount: 3,
+                itemCount: 1,
                 shrinkWrap: true,
                 itemBuilder: (context, index) => CRMListTile(
                   nameController: nameController,

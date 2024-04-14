@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'dart:ui';
+
 class FadeInFromLeftToRight extends StatefulWidget {
   final List<Widget> widgets;
   final Duration duration;
@@ -37,25 +36,25 @@ class _FadeInFromLeftToRightState extends State<FadeInFromLeftToRight> with Sing
       children: widget.widgets
           .asMap()
           .map((index, widget) => MapEntry(
-        index,
-        FadeTransition(
-          opacity: _animation.drive(
-            Tween<double>(
-              begin: 0.0,
-              end: 1.0,
-            ).chain(
-              CurveTween(
-                curve: Interval(
-                  index * 1.0 / (aa.length),
-                  1.0,
-                  curve: Curves.easeIn,
+                index,
+                FadeTransition(
+                  opacity: _animation.drive(
+                    Tween<double>(
+                      begin: 0.0,
+                      end: 1.0,
+                    ).chain(
+                      CurveTween(
+                        curve: Interval(
+                          index * 1.0 / (aa.length),
+                          1.0,
+                          curve: Curves.easeIn,
+                        ),
+                      ),
+                    ),
+                  ),
+                  child: widget,
                 ),
-              ),
-            ),
-          ),
-          child: widget,
-        ),
-      ))
+              ))
           .values
           .toList(),
     );
