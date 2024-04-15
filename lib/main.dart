@@ -1,8 +1,11 @@
 import 'package:almanet/Crm/crm_web_page.dart';
+import 'package:almanet/responsive/provider/crm_provider.dart';
+import 'package:almanet/screens/home.dart';
 import 'package:almanet/utils/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -18,11 +21,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Almanet',
-      theme: CustomTheme.customTheme,
-      home: const CRMPage(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<CRMProvider>(
+          create: (context) => CRMProvider(),
+        ),
+      ],
+      child: GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Almanet',
+        theme: CustomTheme.customTheme,
+        home: const Home(),
+      ),
     );
   }
 }

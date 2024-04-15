@@ -1,9 +1,12 @@
 import 'dart:developer';
+import 'package:almanet/responsive/models/lead_model.dart';
+import 'package:almanet/responsive/provider/crm_provider.dart';
 import 'package:almanet/responsive/ui/widgets/crm_list_tile.dart';
 import 'package:almanet/responsive/ui/widgets/crm_popup_dialog.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
 
 class DesktopBody extends StatefulWidget {
   const DesktopBody({super.key});
@@ -22,53 +25,9 @@ class _DesktopBodyState extends State<DesktopBody> {
   TextEditingController selectedCompanyGroupController = TextEditingController();
   TextEditingController numberOfTeamMembersController = TextEditingController();
 
-  void saveDataToFirebase() async {
-    String name = nameController.text.trim();
-    String email = emailController.text.trim();
-    String selectedCompany = selectedCompanyGroup;
-    String address = addressController.text.trim();
-    String contact = contactController.text.trim();
-    String companyName = companyController.text.trim();
-    String numberOfTeamMembers = numberOfTeamMembersController.text.trim();
-
-    if (name.isNotEmpty && address.isNotEmpty && contact.isNotEmpty) {
-      try {
-        final response = await FirebaseFirestore.instance.collection('leads').add({
-          'name': name,
-          'address': address,
-          'contact': contact,
-          'companyName': companyName,
-          'email': email,
-          'selectedCompanyGroup': selectedCompany,
-          'numberOfTeamMembers': numberOfTeamMembers,
-        });
-
-        log("[Data Added] $response");
-      } catch (e) {
-        log(e.toString());
-      }
-      // FirebaseFirestore.instance.collection('leads').add({
-      //   'name': name,
-      //   'address': address,
-      //   'contact': contact,
-      //   'companyName': companyName,
-      //   'email': email,
-      //   'selectedCompanyGroup': selectedCompanyGroup,
-      //   'numberOfTeamMembers': numberOfTeamMembers,
-      // }).then((value) {
-      //   // Success message
-      //   print("Data added successfully!");
-      // }).catchError((error) {
-      //   // Error message
-      //   print("Failed to add data: $error");
-      // });
-    } else {
-      log("Please fill all fields!");
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    log("Rebuild");
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
@@ -145,58 +104,80 @@ class _DesktopBodyState extends State<DesktopBody> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6),
+              Consumer<CRMProvider>(
+                builder: (context, crmProvider, child) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          backgroundColor: Colors.green,
+                        ),
+                        child: const Text('New'),
+                        onPressed: () async {
+                          //TODO: Add functionality for the "New" button here
+                          await crmProvider.getLeadsData();
+                        },
                       ),
-                      backgroundColor: Colors.green,
-                    ),
-                    child: const Text('New'),
-                    onPressed: () {
-                      //TODO: Add functionality for the "New" button here
-                    },
-                  ),
-                  const SizedBox(width: 8),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      backgroundColor: Colors.green,
-                    ),
-                    child: const Text('Generate Lead'),
-                    onPressed: () async {
-                      await showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return CRMPopupDialogWidget(
-                            nameController: nameController,
-                            addressController: addressController,
-                            contactController: contactController,
-                            companyController: companyController,
-                            emailController: emailController,
-                            selectedCompanyGroupController: selectedCompanyGroupController,
-                            numberOfTeamMembersController: numberOfTeamMembersController,
-                            onGenerateLeadsButton: () {
-                              saveDataToFirebase();
-                            },
-                            selectIndustriesOnChange: (newValue) {
-                              setState(() {
-                                selectedCompanyGroup = newValue ?? "";
-                              });
+                      const SizedBox(width: 8),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          backgroundColor: Colors.green,
+                        ),
+                        child: const Text('Generate Lead'),
+                        onPressed: () async {
+                          await showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (BuildContext context) {
+                              return CRMPopupDialogWidget(
+                                selectedCompanyGroup: crmProvider.selectedCompanyGroup!,
+                                nameController: nameController,
+                                addressController: addressController,
+                                contactController: contactController,
+                                companyController: companyController,
+                                emailController: emailController,
+                                selectedCompanyGroupController: selectedCompanyGroupController,
+                                numberOfTeamMembersController: numberOfTeamMembersController,
+                                onGenerateLeadsButton: () async {
+                                  if (nameController.text.isEmpty && emailController.text.isEmpty && contactController.text.isEmpty) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text("Please fill all the data"),
+                                      ),
+                                    );
+                                    return;
+                                  }
+                                  LeadsModel lead = LeadsModel(
+                                    name: nameController.text.trim(),
+                                    email: emailController.text.trim(),
+                                    selectedCompanyGroup: selectedCompanyGroup,
+                                    address: addressController.text.trim(),
+                                    contact: contactController.text.trim(),
+                                    companyName: companyController.text.trim(),
+                                    numberOfTeamMembers: numberOfTeamMembersController.text.trim(),
+                                  );
+                                  crmProvider.saveDataToFirebase(lead: lead);
+                                },
+                                selectIndustriesOnChange: (newValue) {
+                                  crmProvider.selectedCompanyGroup = newValue;
+                                },
+                              );
                             },
                           );
                         },
-                      );
-                    },
-                  ),
-                ],
+                      ),
+                    ],
+                  );
+                },
               ),
               const SizedBox(
                 height: 24,
