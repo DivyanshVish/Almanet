@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 class CRMPopupDialogWidget extends StatefulWidget {
   const CRMPopupDialogWidget({
     super.key,
-    required this.selectedCompanyGroup,
+    // required this.selectedCompanyGroup,
     required this.nameController,
     required this.emailController,
     required this.addressController,
@@ -19,7 +19,7 @@ class CRMPopupDialogWidget extends StatefulWidget {
     required this.selectedCompanyGroupController,
   });
 
-  final String? selectedCompanyGroup;
+  // final String? selectedCompanyGroup;
   final VoidCallback onGenerateLeadsButton;
   final TextEditingController nameController;
   final TextEditingController emailController;
@@ -98,7 +98,7 @@ class _CRMPopupDialogWidgetState extends State<CRMPopupDialogWidget> {
                   ),
                   child: DropdownButton<String>(
                     hint: const Text('Select the Industries'),
-                    value: widget.selectedCompanyGroup,
+                    value: context.watch<CRMProvider>().selectedCompanyGroup,
                     underline: const SizedBox(),
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     items: dummyIndustriesData.map((String value) {

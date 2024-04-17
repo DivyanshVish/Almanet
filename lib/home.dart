@@ -1,11 +1,12 @@
 // import 'package:almanet/Crm/crm_web_page.dart';
-//
+
 // import 'package:almanet/Sign_Up.dart';
 // import 'package:almanet/constants/Fade_Info.dart';
 // import 'package:almanet/constants/home_services.dart';
 // import 'package:almanet/constants/hover_buttoons.dart';
+// import 'package:almanet/responsive/provider/crm_provider.dart';
 // import 'package:almanet/screens/pages/Login.dart';
-//
+
 // import 'package:almanet/try.dart';
 // import 'package:firebase_core/firebase_core.dart';
 // import 'package:flutter/cupertino.dart';
@@ -14,39 +15,37 @@
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // import 'package:get/get.dart';
 // import 'package:hovering/hovering.dart';
+// import 'package:provider/provider.dart';
 // import 'constants/blogs.dart';
 // import 'firebase_options.dart';
-//
+
 // class Home extends StatefulWidget {
 //   const Home({super.key});
-//
+
 //   @override
 //   State<Home> createState() => _HomeState();
 // }
-//
+
 // class _HomeState extends State<Home> {
 //   final ScrollController _scrollController = ScrollController();
 //   bool innerBoxIsScrolled = false;
 //   @override
 //   void initState() {
 //     super.initState();
-//
+
 //     _scrollController.addListener(() {
 //       setState(() {
-//         innerBoxIsScrolled =
-//             _scrollController.position.pixels > Get.height * 0.4 ? true : false;
+//         innerBoxIsScrolled = _scrollController.position.pixels > Get.height * 0.4 ? true : false;
 //       });
 //     });
 //   }
-//
+
 //   @override
 //   Widget build(BuildContext context) {
-//     final blog_title =
-//         'Is “digital transformation” just a buzzword? Thoughts from a tech CEO on how we can give meaning back to the phrase';
-//     final blog_desc =
-//         "One of the key benefits of technology like enterprise resource planning (ERP) is the automation of workflows and manual tasks. And yet, despite significant investments in ERP, many manufacturers still manually track information, which not only slows down operations but increases the chance of human error. In an economy where every opportunity to gain a competitive edge can make a material impact on a company’s success, most companies with extensive shop floor operations can’t afford delays or errors. Businesses that have the vision to increase speed and agility should consider automation tools that collect, aggregate, and analyze that data, and then communicate back to the shop floor with an appropriate response. ";
+//     final blog_title = 'Is “digital transformation” just a buzzword? Thoughts from a tech CEO on how we can give meaning back to the phrase';
+//     final blog_desc = "One of the key benefits of technology like enterprise resource planning (ERP) is the automation of workflows and manual tasks. And yet, despite significant investments in ERP, many manufacturers still manually track information, which not only slows down operations but increases the chance of human error. In an economy where every opportunity to gain a competitive edge can make a material impact on a company’s success, most companies with extensive shop floor operations can’t afford delays or errors. Businesses that have the vision to increase speed and agility should consider automation tools that collect, aggregate, and analyze that data, and then communicate back to the shop floor with an appropriate response. ";
 //     final blog_image = AssetImage('assets/images/img_5.png');
-//
+
 //     return LayoutBuilder(
 //       builder: (context, constraints) {
 //         double ww = Get.width;
@@ -116,14 +115,10 @@
 //                     },
 //                     child: Text(
 //                       'Login/Signup',
-//                       style: TextStyle(
-//                           color: Colors.white,
-//                           fontSize: ww * 0.008,
-//                           fontWeight: FontWeight.bold),
+//                       style: TextStyle(color: Colors.white, fontSize: ww * 0.008, fontWeight: FontWeight.bold),
 //                     ),
 //                     style: ButtonStyle(
-//                       backgroundColor:
-//                           MaterialStateProperty.resolveWith<Color>((states) {
+//                       backgroundColor: MaterialStateProperty.resolveWith<Color>((states) {
 //                         if (!states.contains(MaterialState.hovered)) {
 //                           return Colors.green; // Change color when hovered
 //                         }
@@ -145,7 +140,7 @@
 //               controller: _scrollController,
 //               // double appBarHeight = hh * 0.5; // Initial height
 //               // Color appBarColor = Colors.white; // Initial color
-//
+
 //               // Change height and color when scrolled down
 //               // print(innerBoxIsScrolled);
 //               slivers: <Widget>[
@@ -190,14 +185,16 @@
 //                         text: 'CRM',
 //                         defaultcolor: Colors.grey.shade600,
 //                         hovercolor: Colors.blue,
-//                         ontap: () {
+//                         ontap: () async {
+//                           // await context.read<CRMProvider>().getLeadsData();
+
 //                           Get.to(() => CRMPage());
 //                         },
 //                         fontsize: fs,
 //                         width: ww,
 //                       ),
 //                     ),
-//
+
 //                     // Hover_Button(text: 'Login', defaultcolor: Colors.grey.shade600, hovercolor: Colors.blue, ontap: (){Get.to(() => login());},fontsize: fs,width: ww,),
 //                     // Hover_Button(text: 'Register', defaultcolor: Colors.grey.shade600, hovercolor: Colors.blue, ontap: (){Get.to(() => signup());},fontsize: fs,width: ww,),
 //                   ],
@@ -231,49 +228,35 @@
 //                             height: 100,
 //                           ),
 //                           Padding(
-//                             padding: EdgeInsets.only(
-//                                 left: ww * 0.15,
-//                                 right: ww * 0.15,
-//                                 bottom: hh * 0.06),
+//                             padding: EdgeInsets.only(left: ww * 0.15, right: ww * 0.15, bottom: hh * 0.06),
 //                             child: Column(
 //                               children: [
 //                                 FadeInFromLeftToRight(widgets: [
 //                                   Container(
 //                                     width: ww * 0.2,
 //                                     child: Column(
-//                                       crossAxisAlignment:
-//                                           CrossAxisAlignment.start,
+//                                       crossAxisAlignment: CrossAxisAlignment.start,
 //                                       children: [
 //                                         Text(
 //                                           'SOLUTIONS',
-//                                           style: TextStyle(
-//                                               fontSize: ww * 0.01,
-//                                               fontWeight: FontWeight.bold,
-//                                               color: Colors.green),
+//                                           style: TextStyle(fontSize: ww * 0.01, fontWeight: FontWeight.bold, color: Colors.green),
 //                                         ),
 //                                         Padding(
-//                                           padding: EdgeInsets.only(
-//                                               top: hh * 0.02,
-//                                               bottom: hh * 0.03),
+//                                           padding: EdgeInsets.only(top: hh * 0.02, bottom: hh * 0.03),
 //                                           child: Text(
 //                                             'Less cookie-cutter, more tailored expertise',
-//                                             style: TextStyle(
-//                                                 fontSize: ww * 0.015,
-//                                                 fontWeight: FontWeight.bold,
-//                                                 color: Colors.indigo.shade900),
+//                                             style: TextStyle(fontSize: ww * 0.015, fontWeight: FontWeight.bold, color: Colors.indigo.shade900),
 //                                           ),
 //                                         ),
 //                                         Text(
 //                                           'Using holistic thinking and a proven methodology to solving problems, we’re enterprise resource planning (ERP) and SAP software experts committed to five core innovative practices.',
-//                                           style:
-//                                               TextStyle(fontSize: ww * 0.008),
+//                                           style: TextStyle(fontSize: ww * 0.008),
 //                                         ),
 //                                       ],
 //                                     ),
 //                                   ),
 //                                   Image(
-//                                     image:
-//                                         AssetImage('assets/images/img_4.png'),
+//                                     image: AssetImage('assets/images/img_4.png'),
 //                                     width: ww * 0.3,
 //                                     height: hh * 0.3,
 //                                   )
@@ -283,31 +266,11 @@
 //                                 ),
 //                                 FadeInFromLeftToRight(
 //                                   widgets: [
-//                                     Home_Services(
-//                                         Title: 'SAP Services',
-//                                         Description:
-//                                             'We provide SAP technology and industry expertise, tangible solutions, and a personalized approach to ensure you maximize your software investment.',
-//                                         ontap: () {}),
-//                                     Home_Services(
-//                                         Title: 'SAP Services',
-//                                         Description:
-//                                             'We provide SAP technology and industry expertise, tangible solutions, and a personalized approach to ensure you maximize your software investment.',
-//                                         ontap: () {}),
-//                                     Home_Services(
-//                                         Title: 'SAP Services',
-//                                         Description:
-//                                             'We provide SAP technology and industry expertise, tangible solutions, and a personalized approach to ensure you maximize your software investment.',
-//                                         ontap: () {}),
-//                                     Home_Services(
-//                                         Title: 'SAP Services',
-//                                         Description:
-//                                             'We provide SAP technology and industry expertise, tangible solutions, and a personalized approach to ensure you maximize your software investment.',
-//                                         ontap: () {}),
-//                                     Home_Services(
-//                                         Title: 'SAP Services',
-//                                         Description:
-//                                             'We provide SAP technology and industry expertise, tangible solutions, and a personalized approach to ensure you maximize your software investment.',
-//                                         ontap: () {}),
+//                                     Home_Services(Title: 'SAP Services', Description: 'We provide SAP technology and industry expertise, tangible solutions, and a personalized approach to ensure you maximize your software investment.', ontap: () {}),
+//                                     Home_Services(Title: 'SAP Services', Description: 'We provide SAP technology and industry expertise, tangible solutions, and a personalized approach to ensure you maximize your software investment.', ontap: () {}),
+//                                     Home_Services(Title: 'SAP Services', Description: 'We provide SAP technology and industry expertise, tangible solutions, and a personalized approach to ensure you maximize your software investment.', ontap: () {}),
+//                                     Home_Services(Title: 'SAP Services', Description: 'We provide SAP technology and industry expertise, tangible solutions, and a personalized approach to ensure you maximize your software investment.', ontap: () {}),
+//                                     Home_Services(Title: 'SAP Services', Description: 'We provide SAP technology and industry expertise, tangible solutions, and a personalized approach to ensure you maximize your software investment.', ontap: () {}),
 //                                   ],
 //                                   duration: Duration(milliseconds: 500),
 //                                 ),
@@ -320,11 +283,7 @@
 //                             color: Color(0xFF082444),
 //                           ),
 //                           Padding(
-//                             padding: EdgeInsets.only(
-//                                 left: ww * 0.15,
-//                                 right: ww * 0.15,
-//                                 bottom: hh * 0.1,
-//                                 top: hh * 0.1),
+//                             padding: EdgeInsets.only(left: ww * 0.15, right: ww * 0.15, bottom: hh * 0.1, top: hh * 0.1),
 //                             child: Column(
 //                               mainAxisAlignment: MainAxisAlignment.start,
 //                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -332,27 +291,14 @@
 //                                 Align(
 //                                   child: Text(
 //                                     'Blog',
-//                                     style: TextStyle(
-//                                         color: Colors.blue,
-//                                         fontSize: ww * 0.015),
+//                                     style: TextStyle(color: Colors.blue, fontSize: ww * 0.015),
 //                                   ),
 //                                   alignment: Alignment.topLeft,
 //                                 ),
 //                                 FadeInFromLeftToRight(widgets: [
-//                                   AnimatedWidgetColumn(                                      title: blog_title,
-//                                       image: blog_image,
-//                                       desc: blog_desc,
-//                                       ontap: () {}),
-//                                   AnimatedWidgetColumn(
-//                                       title: blog_title,
-//                                       image: blog_image,
-//                                       desc: blog_desc,
-//                                       ontap: () {}),
-//                                   AnimatedWidgetColumn(
-//                                       title: blog_title,
-//                                       image: blog_image,
-//                                       desc: blog_desc,
-//                                       ontap: () {}),
+//                                   AnimatedWidgetColumn(title: blog_title, image: blog_image, desc: blog_desc, ontap: () {}),
+//                                   AnimatedWidgetColumn(title: blog_title, image: blog_image, desc: blog_desc, ontap: () {}),
+//                                   AnimatedWidgetColumn(title: blog_title, image: blog_image, desc: blog_desc, ontap: () {}),
 //                                 ], duration: Duration(seconds: 2)),
 //                               ],
 //                             ),

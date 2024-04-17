@@ -12,13 +12,13 @@ class CRMListTile extends StatelessWidget {
     required this.numberOfTeamMembersController,
   });
 
-  final TextEditingController nameController;
-  final TextEditingController contactController;
-  final TextEditingController addressController;
-  final TextEditingController emailController;
-  final TextEditingController companyController;
+  final String nameController;
+  final String contactController;
+  final String addressController;
+  final String emailController;
+  final String companyController;
   final String selectedCompanyGroup;
-  final TextEditingController numberOfTeamMembersController;
+  final String numberOfTeamMembersController;
 
   @override
   Widget build(BuildContext context) {
@@ -37,30 +37,13 @@ class CRMListTile extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'Name : ${nameController.text}',
+                  'Name : $nameController',
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
               Expanded(
                 child: Text(
-                  'Contact : ${contactController.text}',
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  'Address : ${addressController.text}',
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-              ),
-              Expanded(
-                child: Text(
-                  'Email : ${emailController.text}',
+                  'Contact : $contactController',
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
@@ -71,7 +54,24 @@ class CRMListTile extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'Company Name : ${companyController.text}',
+                  'Address : $addressController',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              ),
+              Expanded(
+                child: Text(
+                  'Email : $emailController',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  'Company Name : $companyController',
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
@@ -85,7 +85,7 @@ class CRMListTile extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Text(
-            'Number of Leads : ${numberOfTeamMembersController.text}',
+            'Number of Leads : $numberOfTeamMembersController',
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ],

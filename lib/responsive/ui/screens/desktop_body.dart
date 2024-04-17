@@ -16,7 +16,6 @@ class DesktopBody extends StatefulWidget {
 }
 
 class _DesktopBodyState extends State<DesktopBody> {
-  String selectedCompanyGroup = "";
   TextEditingController nameController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   TextEditingController contactController = TextEditingController();
@@ -24,6 +23,32 @@ class _DesktopBodyState extends State<DesktopBody> {
   TextEditingController emailController = TextEditingController();
   TextEditingController selectedCompanyGroupController = TextEditingController();
   TextEditingController numberOfTeamMembersController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getLeadsData();
+  }
+
+  Future getLeadsData() async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> response = await FirebaseFirestore.instance.collection('leads').get();
+
+      List<LeadsModel> data = response.docs
+          .map(
+            (leads) => LeadsModel.fromJson(
+              leads.data(),
+            ),
+          )
+          .toList();
+
+      if (!mounted) return;
+      context.read<CRMProvider>().leadsList = data;
+    } catch (e) {
+      log(e.toString());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +145,6 @@ class _DesktopBodyState extends State<DesktopBody> {
                         child: const Text('New'),
                         onPressed: () async {
                           //TODO: Add functionality for the "New" button here
-                          await crmProvider.getLeadsData();
                         },
                       ),
                       const SizedBox(width: 8),
@@ -139,7 +163,7 @@ class _DesktopBodyState extends State<DesktopBody> {
                             barrierDismissible: false,
                             builder: (BuildContext context) {
                               return CRMPopupDialogWidget(
-                                selectedCompanyGroup: crmProvider.selectedCompanyGroup!,
+                                // selectedCompanyGroup: crmProvider.selectedCompanyGroup!,
                                 nameController: nameController,
                                 addressController: addressController,
                                 contactController: contactController,
@@ -159,13 +183,14 @@ class _DesktopBodyState extends State<DesktopBody> {
                                   LeadsModel lead = LeadsModel(
                                     name: nameController.text.trim(),
                                     email: emailController.text.trim(),
-                                    selectedCompanyGroup: selectedCompanyGroup,
                                     address: addressController.text.trim(),
                                     contact: contactController.text.trim(),
                                     companyName: companyController.text.trim(),
+                                    selectedCompanyGroup: crmProvider.selectedCompanyGroup,
                                     numberOfTeamMembers: numberOfTeamMembersController.text.trim(),
                                   );
-                                  crmProvider.saveDataToFirebase(lead: lead);
+                                  await crmProvider.saveDataToFirebase(lead: lead);
+                                  Get.back();
                                 },
                                 selectIndustriesOnChange: (newValue) {
                                   crmProvider.selectedCompanyGroup = newValue;
@@ -173,6 +198,7 @@ class _DesktopBodyState extends State<DesktopBody> {
                               );
                             },
                           );
+                          await getLeadsData();
                         },
                       ),
                     ],
@@ -182,18 +208,22 @@ class _DesktopBodyState extends State<DesktopBody> {
               const SizedBox(
                 height: 24,
               ),
-              ListView.builder(
-                itemCount: 1,
-                shrinkWrap: true,
-                itemBuilder: (context, index) => CRMListTile(
-                  nameController: nameController,
-                  contactController: contactController,
-                  addressController: addressController,
-                  emailController: emailController,
-                  companyController: companyController,
-                  selectedCompanyGroup: selectedCompanyGroup,
-                  numberOfTeamMembersController: numberOfTeamMembersController,
-                ),
+              Consumer<CRMProvider>(
+                builder: (context, crmProvider, child) {
+                  return ListView.builder(
+                    itemCount: crmProvider.leadsList.length,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) => CRMListTile(
+                      nameController: crmProvider.leadsList[index].name ?? "-",
+                      contactController: crmProvider.leadsList[index].contact ?? "-",
+                      addressController: crmProvider.leadsList[index].address ?? "-",
+                      emailController: crmProvider.leadsList[index].email ?? "-",
+                      companyController: crmProvider.leadsList[index].companyName ?? "-",
+                      selectedCompanyGroup: crmProvider.leadsList[index].selectedCompanyGroup ?? "-",
+                      numberOfTeamMembersController: crmProvider.leadsList[index].numberOfTeamMembers ?? "-",
+                    ),
+                  );
+                },
               ),
             ],
           ),

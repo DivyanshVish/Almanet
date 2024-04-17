@@ -9,6 +9,14 @@ class CRMProvider extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
+  List<LeadsModel> _leadsList = [];
+  List<LeadsModel> get leadsList => _leadsList;
+
+  set leadsList(List<LeadsModel> value) {
+    _leadsList = value;
+    notifyListeners();
+  }
+
   set isLoading(bool value) {
     _isLoading = value;
     notifyListeners();
@@ -22,7 +30,7 @@ class CRMProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void saveDataToFirebase({
+  Future saveDataToFirebase({
     required LeadsModel lead,
   }) async {
     try {
@@ -31,19 +39,6 @@ class CRMProvider extends ChangeNotifier {
       final response = await FirebaseFirestore.instance.collection('leads').add(lead.toJson());
 
       log("[Data Added] $response");
-    } catch (e) {
-      log(e.toString());
-    } finally {
-      isLoading = false;
-    }
-  }
-
-  Future<List<LeadsModel>?> getLeadsData() async {
-    try {
-      isLoading = true;
-      final response = await FirebaseFirestore.instance.collection('leads').get();
-      log(response.toString());
-      return [];
     } catch (e) {
       log(e.toString());
     } finally {
