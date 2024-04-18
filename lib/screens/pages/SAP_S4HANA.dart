@@ -30,7 +30,10 @@ class _sap_s4hanaState extends State<sap_s4hana> {
             Container(
               width: ww,
               height: hh * 0.55,
-              decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/hana.png'), fit: BoxFit.fill)),
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/images/hana.png'),
+                      fit: BoxFit.fill)),
               child: Center(
                 child: Column(
                   children: [
@@ -38,17 +41,24 @@ class _sap_s4hanaState extends State<sap_s4hana> {
                       padding: EdgeInsets.symmetric(vertical: hh * 0.04),
                       child: Text(
                         'SAP S/4HANA',
-                        style: TextStyle(fontSize: ww * 0.009, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: ww * 0.009, fontWeight: FontWeight.bold),
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(bottom: hh * 0.01),
                       child: Text(
                         'Stand apart with Intelligent ERP',
-                        style: TextStyle(fontSize: ww * 0.02, fontWeight: FontWeight.bold, color: Colors.blue.shade900),
+                        style: TextStyle(
+                            fontSize: ww * 0.02,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue.shade900),
                       ),
                     ),
-                    const Image(image: AssetImage('assets/images/img_4.png')),
+                    Image(
+                      image: AssetImage('assets/images/img_4.png'),
+                      width: ww * 0.3,
+                    ),
                   ],
                 ),
               ),
@@ -68,7 +78,10 @@ class _sap_s4hanaState extends State<sap_s4hana> {
                         padding: EdgeInsets.symmetric(vertical: hh * 0.04),
                         child: Text(
                           'What is SAP S/4HANA?',
-                          style: TextStyle(fontSize: ww * 0.015, fontWeight: FontWeight.bold, color: Colors.green),
+                          style: TextStyle(
+                              fontSize: ww * 0.015,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.green),
                         ),
                       ),
                       Container(
@@ -93,7 +106,8 @@ class _sap_s4hanaState extends State<sap_s4hana> {
                                 Padding(
                                   padding: EdgeInsets.only(bottom: hh * 0.025),
                                   child: Image(
-                                    image: const AssetImage('assets/images/sap_s4hana/img_6.png'),
+                                    image: const AssetImage(
+                                        'assets/images/sap_s4hana/img_6.png'),
                                     height: hh * 0.1,
                                     width: ww * 0.15,
                                   ),
@@ -116,7 +130,8 @@ class _sap_s4hanaState extends State<sap_s4hana> {
                                 Padding(
                                   padding: EdgeInsets.only(bottom: hh * 0.025),
                                   child: Image(
-                                    image: const AssetImage('assets/images/sap_s4hana/img_7.png'),
+                                    image: const AssetImage(
+                                        'assets/images/sap_s4hana/img_7.png'),
                                     height: hh * 0.1,
                                     width: ww * 0.15,
                                   ),
@@ -139,7 +154,8 @@ class _sap_s4hanaState extends State<sap_s4hana> {
                                 Padding(
                                   padding: EdgeInsets.only(bottom: hh * 0.025),
                                   child: Image(
-                                    image: const AssetImage('assets/images/sap_s4hana/img.png'),
+                                    image: const AssetImage(
+                                        'assets/images/sap_s4hana/img.png'),
                                     height: hh * 0.1,
                                     width: ww * 0.15,
                                   ),
@@ -162,7 +178,8 @@ class _sap_s4hanaState extends State<sap_s4hana> {
                                 Padding(
                                   padding: EdgeInsets.only(bottom: hh * 0.025),
                                   child: Image(
-                                    image: const AssetImage('assets/images/sap_s4hana/img_1.png'),
+                                    image: const AssetImage(
+                                        'assets/images/sap_s4hana/img_1.png'),
                                     height: hh * 0.1,
                                     width: ww * 0.15,
                                   ),
@@ -186,7 +203,8 @@ class _sap_s4hanaState extends State<sap_s4hana> {
               thickness: 3,
             ),
             Container(
-              padding: EdgeInsets.symmetric(vertical: hh * 0.05, horizontal: ww * 0.2),
+              padding: EdgeInsets.symmetric(
+                  vertical: hh * 0.05, horizontal: ww * 0.2),
               color: Colors.grey.shade100,
               width: ww,
               height: hh * 0.6,
@@ -199,7 +217,10 @@ class _sap_s4hanaState extends State<sap_s4hana> {
                         children: [
                           Text(
                             'Navigate constantly changing industries',
-                            style: TextStyle(fontSize: ww * 0.014, fontWeight: FontWeight.bold, color: Colors.indigo.shade900),
+                            style: TextStyle(
+                                fontSize: ww * 0.014,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.indigo.shade900),
                             softWrap: true,
                           ),
                           Padding(
@@ -235,7 +256,8 @@ class _sap_s4hanaState extends State<sap_s4hana> {
                       ),
                     ),
                     Image(
-                      image: const AssetImage('assets/images/sap_s4hana/img_2.png'),
+                      image: const AssetImage(
+                          'assets/images/sap_s4hana/img_2.png'),
                       height: hh * 0.45,
                       width: ww * 0.35,
                       alignment: Alignment.center,
@@ -243,7 +265,148 @@ class _sap_s4hanaState extends State<sap_s4hana> {
                   ],
                 ),
               ),
-            )
+            ),
+            const Divider(
+              color: Color(0xFF082444),
+              thickness: 3,
+            ),
+            FadeInContainer1(
+                width: ww,
+                height: hh * 0.5,
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: ww * 0.2, vertical: hh * 0.01),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Take the lead in your industry',
+                        style: TextStyle(
+                            fontSize: ww * 0.014,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.indigo.shade900),
+                        softWrap: true,
+                      ),
+                      SizedBox(
+                        height: hh * 0.02,
+                      ),
+                      Text(
+                        'With our trusted team of industry experts by your side we can advise, transform, operate, optimize and innovate your cloud journey on SAP S/4HANA Cloud.',
+                      ),
+                      SizedBox(
+                        height: hh * 0.03,
+                      ),
+                      FadeInFromLeftToRight(
+                        duration: Duration(seconds: 2),
+                        widgets: [
+                          Padding(
+                            padding:
+                                EdgeInsets.symmetric(horizontal: ww * 0.001),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Natural Resources',
+                                  style: TextStyle(
+                                      fontSize: ww * 0.012,
+                                      color: Colors.indigo.shade900),
+                                ),
+                                SizedBox(
+                                  height: hh * 0.02,
+                                ),
+                                Image(
+                                  alignment: Alignment.centerLeft,
+                                  image: AssetImage(
+                                      'assets/images/sap_s4hana/image.png'),
+                                  height: hh * 0.27,
+                                  width: ww * 0.14,
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                EdgeInsets.symmetric(horizontal: ww * 0.001),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Engineering/Construction',
+                                  style: TextStyle(
+                                      fontSize: ww * 0.012,
+                                      color: Colors.indigo.shade900),
+                                ),
+                                SizedBox(
+                                  height: hh * 0.02,
+                                ),
+                                Image(
+                                  alignment: Alignment.centerLeft,
+                                  image: AssetImage(
+                                      'assets/images/sap_s4hana/image1.png'),
+                                  height: hh * 0.27,
+                                  width: ww * 0.14,
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                EdgeInsets.symmetric(horizontal: ww * 0.001),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Manufacturing',
+                                  style: TextStyle(
+                                      fontSize: ww * 0.012,
+                                      color: Colors.indigo.shade900),
+                                ),
+                                SizedBox(
+                                  height: hh * 0.02,
+                                ),
+                                Image(
+                                  alignment: Alignment.centerLeft,
+                                  image: AssetImage(
+                                      'assets/images/sap_s4hana/image3.png'),
+                                  height: hh * 0.27,
+                                  width: ww * 0.14,
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                EdgeInsets.symmetric(horizontal: ww * 0.001),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Consumer Goods',
+                                  style: TextStyle(
+                                      fontSize: ww * 0.012,
+                                      color: Colors.indigo.shade900),
+                                ),
+                                SizedBox(
+                                  height: hh * 0.02,
+                                ),
+                                Image(
+                                  alignment: Alignment.centerLeft,
+                                  image: AssetImage(
+                                      'assets/images/sap_s4hana/image4.png'),
+                                  height: hh * 0.27,
+                                  width: ww * 0.14,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                colour: Colors.white,
+                duration: Duration(seconds: 1)),
+            Web_footer(),
           ],
         ),
       ));

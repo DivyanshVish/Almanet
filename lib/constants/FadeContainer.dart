@@ -14,7 +14,7 @@ class FadeInContainer extends StatefulWidget {
     required this.child,
     required this.colour,
     required this.duration,
-});
+  });
   @override
   _FadeInContainerState createState() => _FadeInContainerState();
 }
@@ -36,17 +36,58 @@ class _FadeInContainerState extends State<FadeInContainer> {
         duration: widget.duration, // Adjust the duration as needed
         curve: Curves.easeInOut,
         child: Container(
-          width: widget.width,
-          height: widget.height,
-          color: widget.colour,
-          child: widget.child
-        ),
+            width: widget.width,
+            height: widget.height,
+            color: widget.colour,
+            child: widget.child),
       ),
     );
   }
 }
 
+class FadeInContainer1 extends StatefulWidget {
+  final double height;
+  final double width;
+  final Widget child;
+  final Color colour;
+  final Duration duration;
 
+  FadeInContainer1({
+    required this.width,
+    required this.height,
+    required this.child,
+    required this.colour,
+    required this.duration,
+  });
+  @override
+  _FadeInContainerState1 createState() => _FadeInContainerState1();
+}
+
+class _FadeInContainerState1 extends State<FadeInContainer1> {
+  bool _isVisible1 = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return VisibilityDetector(
+      key: Key('key1'),
+      onVisibilityChanged: (visibilityInfo) {
+        setState(() {
+          _isVisible1 = visibilityInfo.visibleFraction > 0.5;
+        });
+      },
+      child: AnimatedOpacity(
+        opacity: _isVisible1 ? 1.0 : 0.0,
+        duration: widget.duration, // Adjust the duration as needed
+        curve: Curves.easeInOut,
+        child: Container(
+            width: widget.width,
+            height: widget.height,
+            color: widget.colour,
+            child: widget.child),
+      ),
+    );
+  }
+}
 
 class FadeInContainer_footer extends StatefulWidget {
   final double height;
@@ -81,17 +122,15 @@ class _FadeInContainerState_footer extends State<FadeInContainer_footer> {
         duration: widget.duration, // Adjust the duration as needed
         curve: Curves.easeInOut,
         child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
               colors: [Colors.blue.shade900, Colors.blue.shade50],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-            )
-          ),
+            )),
             width: widget.width,
             height: widget.height,
-            child: widget.child
-        ),
+            child: widget.child),
       ),
     );
   }
