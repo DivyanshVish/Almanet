@@ -23,7 +23,8 @@ class _sliverappbar_collapsedState extends State<sliverappbar_collapsed> {
 
     _scrollController.addListener(() {
       setState(() {
-        innerBoxIsScrolled = _scrollController.position.pixels > Get.height * 0.4 ? true : false;
+        innerBoxIsScrolled =
+            _scrollController.position.pixels > Get.height * 0.4 ? true : false;
       });
     });
   }
@@ -38,7 +39,10 @@ class _sliverappbar_collapsedState extends State<sliverappbar_collapsed> {
       double fs = ww * 0.0165;
       double hh = Get.height;
       return Scaffold(
-          appBar: web_appbar(),
+          appBar: web_appbar(
+            height: hh,
+            width: ww,
+          ),
           body: CustomScrollView(
               controller: _scrollController,
               // double appBarHeight = hh * 0.5; // Initial height
@@ -49,6 +53,7 @@ class _sliverappbar_collapsedState extends State<sliverappbar_collapsed> {
               slivers: <Widget>[
                 SliverAppBar(
                   collapsedHeight: hh * 0.08,
+                  automaticallyImplyLeading: false,
                   actions: [
                     Hover_Button(
                       text: 'About Us',
@@ -137,7 +142,8 @@ class _sliverappbarState extends State<sliverappbar> {
 
     _scrollController.addListener(() {
       setState(() {
-        innerBoxIsScrolled = _scrollController.position.pixels > Get.height * 0.4 ? true : false;
+        innerBoxIsScrolled =
+            _scrollController.position.pixels > Get.height * 0.4 ? true : false;
       });
     });
   }
@@ -152,7 +158,10 @@ class _sliverappbarState extends State<sliverappbar> {
       double fs = ww * 0.0165;
       double hh = Get.height;
       return Scaffold(
-          appBar: web_appbar(),
+          appBar: web_appbar(
+            height: hh,
+            width: ww,
+          ),
           body: CustomScrollView(
               controller: _scrollController,
               // double appBarHeight = hh * 0.5; // Initial height
@@ -163,6 +172,7 @@ class _sliverappbarState extends State<sliverappbar> {
               slivers: <Widget>[
                 SliverAppBar(
                   collapsedHeight: hh * 0.08,
+                  automaticallyImplyLeading: false,
                   actions: [
                     Hover_Button(
                       text: 'About Us',
@@ -242,7 +252,9 @@ class _sliverappbarState extends State<sliverappbar> {
 }
 
 class web_appbar extends StatefulWidget implements PreferredSizeWidget {
-  const web_appbar({super.key});
+  double height;
+  double width;
+  web_appbar({super.key, required this.height, required this.width});
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 
   @override
@@ -252,23 +264,24 @@ class web_appbar extends StatefulWidget implements PreferredSizeWidget {
 class _web_appbarState extends State<web_appbar> {
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      double ww = Get.width;
-      // double fs = ww * 0.0165;
-      double hh = Get.height;
-      return AppBar(
-        backgroundColor: Color(0xFF082444),
-        title: Padding(
-          padding: EdgeInsets.only(left: ww * 0.15),
-          child: Image(
-            image: const AssetImage('assets/images/logo.jpg'),
-            width: ww * 0.1,
-            height: hh * 0.06,
-          ),
+    double ww = widget.width;
+    double hh = widget.height;
+    return AppBar(
+      automaticallyImplyLeading: false,
+      backgroundColor: Color(0xFF082444),
+      title: Padding(
+        padding: EdgeInsets.only(left: ww * 0.15),
+        child: Image(
+          image: const AssetImage('assets/images/logo.jpg'),
+          width: ww * 0.12,
+          height: hh * 0.07,
         ),
-        toolbarHeight: hh * 0.06,
-        actions: [
-          Hover_Button(
+      ),
+      toolbarHeight: hh * 0.05,
+      actions: [
+        Padding(
+          padding: EdgeInsets.only(top: hh * 0.007),
+          child: Hover_Button(
             text: 'Careers',
             defaultcolor: Colors.white,
             hovercolor: Colors.white,
@@ -276,71 +289,76 @@ class _web_appbarState extends State<web_appbar> {
             fontsize: ww * 0.011,
             width: ww,
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: ww * 0.005),
-            child: const Icon(
-              FontAwesomeIcons.facebook,
-              color: Colors.white,
-              size: 18,
-            ),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: ww * 0.005),
+          child: const Icon(
+            FontAwesomeIcons.facebook,
+            color: Colors.white,
+            size: 18,
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: ww * 0.005),
-            child: const Icon(
-              FontAwesomeIcons.instagram,
-              color: Colors.white,
-              size: 18,
-            ),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: ww * 0.005),
+          child: const Icon(
+            FontAwesomeIcons.instagram,
+            color: Colors.white,
+            size: 18,
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: ww * 0.005),
-            child: const Icon(
-              FontAwesomeIcons.twitter,
-              color: Colors.white,
-              size: 18,
-            ),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: ww * 0.005),
+          child: const Icon(
+            FontAwesomeIcons.twitter,
+            color: Colors.white,
+            size: 18,
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: ww * 0.005),
-            child: const Icon(
-              FontAwesomeIcons.youtube,
-              color: Colors.white,
-              size: 18,
-            ),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: ww * 0.005),
+          child: const Icon(
+            FontAwesomeIcons.youtube,
+            color: Colors.white,
+            size: 18,
           ),
-          Padding(
-            padding: EdgeInsets.only(left: ww * 0.005, right: ww * 0.11),
-            child: SizedBox(
-              height: hh * 0.03,
-              width: ww * 0.075,
-              child: ElevatedButton(
-                onPressed: () {
-                  Get.to(() => const login());
-                },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.resolveWith<Color>((states) {
-                    if (!states.contains(MaterialState.hovered)) {
-                      return Colors.green; // Change color when hovered
-                    }
-                    return const Color(0xFF082444); // Default color
-                  }),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      side: const BorderSide(color: Colors.green, width: 1),
-                    ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(
+              left: ww * 0.005, right: ww * 0.11, top: hh * 0.007),
+          child: SizedBox(
+            height: hh * 0.03,
+            width: ww * 0.075,
+            child: ElevatedButton(
+              onPressed: () {
+                Get.to(() => const login());
+              },
+              style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.resolveWith<Color>((states) {
+                  if (!states.contains(MaterialState.hovered)) {
+                    return Colors.green; // Change color when hovered
+                  }
+                  return const Color(0xFF082444); // Default color
+                }),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    side: const BorderSide(color: Colors.green, width: 1),
                   ),
                 ),
-                child: Text(
-                  'Login/Signup',
-                  style: TextStyle(color: Colors.white, fontSize: ww * 0.008, fontWeight: FontWeight.bold),
-                ),
+              ),
+              child: Text(
+                'Login/Signup',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: ww * 0.008,
+                    fontWeight: FontWeight.bold),
               ),
             ),
-          )
-        ],
-      );
-    });
+          ),
+        )
+      ],
+    );
   }
 }
 
@@ -387,7 +405,8 @@ class _Web_footerState extends State<Web_footer> {
                       Align(
                         alignment: Alignment.center,
                         child: Padding(
-                          padding: EdgeInsets.only(top: hh * 0.07, bottom: hh * 0.15),
+                          padding: EdgeInsets.only(
+                              top: hh * 0.07, bottom: hh * 0.15),
                           child: Image(
                             image: AssetImage('assets/images/logo.jpg'),
                             width: ww * 0.15,
@@ -400,9 +419,18 @@ class _Web_footerState extends State<Web_footer> {
                         children: [
                           Text(
                             'Discover more About our world',
-                            style: TextStyle(color: Colors.white, fontSize: ww * 0.01, fontWeight: FontWeight.w500),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: ww * 0.01,
+                                fontWeight: FontWeight.w500),
                           ),
-                          Hover_Button(text: 'Join Our Team >', defaultcolor: Colors.white, hovercolor: Colors.white, ontap: () {}, fontsize: ww * 0.009, width: ww)
+                          Hover_Button(
+                              text: 'Join Our Team >',
+                              defaultcolor: Colors.white,
+                              hovercolor: Colors.white,
+                              ontap: () {},
+                              fontsize: ww * 0.009,
+                              width: ww)
                         ],
                       )
                     ],
@@ -422,24 +450,55 @@ class _Web_footerState extends State<Web_footer> {
                                 padding: EdgeInsets.only(bottom: hh * 0.015),
                                 child: Text(
                                   'Solutions',
-                                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: ww * 0.007),
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: ww * 0.007),
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.symmetric(vertical: hh * 0.01),
-                                child: Hover_Button(text: 'SAP S/4HANA', defaultcolor: Colors.white, hovercolor: Colors.white, ontap: () {}, fontsize: ww * 0.006, width: ww),
+                                padding:
+                                    EdgeInsets.symmetric(vertical: hh * 0.01),
+                                child: Hover_Button(
+                                    text: 'SAP S/4HANA',
+                                    defaultcolor: Colors.white,
+                                    hovercolor: Colors.white,
+                                    ontap: () {},
+                                    fontsize: ww * 0.006,
+                                    width: ww),
                               ),
                               Padding(
-                                padding: EdgeInsets.symmetric(vertical: hh * 0.01),
-                                child: Hover_Button(text: 'SAP S/4HANA', defaultcolor: Colors.white, hovercolor: Colors.white, ontap: () {}, fontsize: ww * 0.006, width: ww),
+                                padding:
+                                    EdgeInsets.symmetric(vertical: hh * 0.01),
+                                child: Hover_Button(
+                                    text: 'SAP S/4HANA',
+                                    defaultcolor: Colors.white,
+                                    hovercolor: Colors.white,
+                                    ontap: () {},
+                                    fontsize: ww * 0.006,
+                                    width: ww),
                               ),
                               Padding(
-                                padding: EdgeInsets.symmetric(vertical: hh * 0.01),
-                                child: Hover_Button(text: 'SAP S/4HANA', defaultcolor: Colors.white, hovercolor: Colors.white, ontap: () {}, fontsize: ww * 0.006, width: ww),
+                                padding:
+                                    EdgeInsets.symmetric(vertical: hh * 0.01),
+                                child: Hover_Button(
+                                    text: 'SAP S/4HANA',
+                                    defaultcolor: Colors.white,
+                                    hovercolor: Colors.white,
+                                    ontap: () {},
+                                    fontsize: ww * 0.006,
+                                    width: ww),
                               ),
                               Padding(
-                                padding: EdgeInsets.symmetric(vertical: hh * 0.01),
-                                child: Hover_Button(text: 'SAP S/4HANA', defaultcolor: Colors.white, hovercolor: Colors.white, ontap: () {}, fontsize: ww * 0.006, width: ww),
+                                padding:
+                                    EdgeInsets.symmetric(vertical: hh * 0.01),
+                                child: Hover_Button(
+                                    text: 'SAP S/4HANA',
+                                    defaultcolor: Colors.white,
+                                    hovercolor: Colors.white,
+                                    ontap: () {},
+                                    fontsize: ww * 0.006,
+                                    width: ww),
                               ),
                             ],
                           ),
@@ -449,54 +508,92 @@ class _Web_footerState extends State<Web_footer> {
                                 padding: EdgeInsets.only(bottom: hh * 0.015),
                                 child: Text(
                                   'About us',
-                                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: ww * 0.007),
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: ww * 0.007),
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.symmetric(vertical: hh * 0.01),
-                                child: Hover_Button(text: 'Know Us More', defaultcolor: Colors.white, hovercolor: Colors.white, ontap: () {}, fontsize: ww * 0.006, width: ww),
+                                padding:
+                                    EdgeInsets.symmetric(vertical: hh * 0.01),
+                                child: Hover_Button(
+                                    text: 'Know Us More',
+                                    defaultcolor: Colors.white,
+                                    hovercolor: Colors.white,
+                                    ontap: () {},
+                                    fontsize: ww * 0.006,
+                                    width: ww),
                               ),
                               Padding(
-                                padding: EdgeInsets.symmetric(vertical: hh * 0.01),
-                                child: Hover_Button(text: 'Blogs', defaultcolor: Colors.white, hovercolor: Colors.white, ontap: () {}, fontsize: ww * 0.006, width: ww),
+                                padding:
+                                    EdgeInsets.symmetric(vertical: hh * 0.01),
+                                child: Hover_Button(
+                                    text: 'Blogs',
+                                    defaultcolor: Colors.white,
+                                    hovercolor: Colors.white,
+                                    ontap: () {},
+                                    fontsize: ww * 0.006,
+                                    width: ww),
                               ),
                               Padding(
-                                padding: EdgeInsets.symmetric(vertical: hh * 0.01),
-                                child: Hover_Button(text: 'Contact Us', defaultcolor: Colors.white, hovercolor: Colors.white, ontap: () {}, fontsize: ww * 0.006, width: ww),
+                                padding:
+                                    EdgeInsets.symmetric(vertical: hh * 0.01),
+                                child: Hover_Button(
+                                    text: 'Contact Us',
+                                    defaultcolor: Colors.white,
+                                    hovercolor: Colors.white,
+                                    ontap: () {},
+                                    fontsize: ww * 0.006,
+                                    width: ww),
                               ),
                             ],
                           )
                         ],
                       ),
                       Padding(
-                        padding: EdgeInsets.only(top: hh * 0.02, right: ww * 0.01),
+                        padding:
+                            EdgeInsets.only(top: hh * 0.02, right: ww * 0.01),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               'Sign up to our Blog.',
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: ww * 0.01, color: Colors.white),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: ww * 0.01,
+                                  color: Colors.white),
                             ),
                             Padding(
                               padding: EdgeInsets.only(left: ww * 0.025),
                               child: OutlinedButton(
                                 onPressed: () {},
                                 style: ButtonStyle(
-                                  foregroundColor: MaterialStateProperty.resolveWith<Color>((states) {
-                                    if (!states.contains(MaterialState.hovered)) {
-                                      return Colors.white; // Change color when hovered
+                                  foregroundColor:
+                                      MaterialStateProperty.resolveWith<Color>(
+                                          (states) {
+                                    if (!states
+                                        .contains(MaterialState.hovered)) {
+                                      return Colors
+                                          .white; // Change color when hovered
                                     }
                                     return Colors.blue; // Default color
                                   }),
-                                  backgroundColor: MaterialStateProperty.resolveWith<Color>((states) {
-                                    if (!states.contains(MaterialState.hovered)) {
-                                      return Colors.transparent; // Change color when hovered
+                                  backgroundColor:
+                                      MaterialStateProperty.resolveWith<Color>(
+                                          (states) {
+                                    if (!states
+                                        .contains(MaterialState.hovered)) {
+                                      return Colors
+                                          .transparent; // Change color when hovered
                                     }
                                     return Colors.white; // Default color
                                   }),
-                                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
                                     RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(0.0), // Set to 0.0 for rectangular shape
+                                      borderRadius: BorderRadius.circular(
+                                          0.0), // Set to 0.0 for rectangular shape
                                     ),
                                   ),
                                 ),
@@ -520,7 +617,8 @@ class _Web_footerState extends State<Web_footer> {
                               width: ww * 0.05,
                             ),
                             Padding(
-                              padding: EdgeInsets.symmetric(horizontal: ww * 0.005),
+                              padding:
+                                  EdgeInsets.symmetric(horizontal: ww * 0.005),
                               child: IconButton(
                                 icon: Icon(
                                   FontAwesomeIcons.facebook,
@@ -528,9 +626,11 @@ class _Web_footerState extends State<Web_footer> {
                                 ),
                                 onPressed: () {},
                                 style: ButtonStyle(
-                                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
                                     RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(0), // Set to 0 for rectangular shape
+                                      borderRadius: BorderRadius.circular(
+                                          0), // Set to 0 for rectangular shape
                                     ),
                                   ),
                                 ),
@@ -540,7 +640,8 @@ class _Web_footerState extends State<Web_footer> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.symmetric(horizontal: ww * 0.005),
+                              padding:
+                                  EdgeInsets.symmetric(horizontal: ww * 0.005),
                               child: IconButton(
                                 icon: Icon(
                                   FontAwesomeIcons.instagram,
@@ -548,9 +649,11 @@ class _Web_footerState extends State<Web_footer> {
                                 ),
                                 onPressed: () {},
                                 style: ButtonStyle(
-                                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
                                     RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(0), // Set to 0 for rectangular shape
+                                      borderRadius: BorderRadius.circular(
+                                          0), // Set to 0 for rectangular shape
                                     ),
                                   ),
                                 ),
@@ -560,7 +663,8 @@ class _Web_footerState extends State<Web_footer> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.symmetric(horizontal: ww * 0.005),
+                              padding:
+                                  EdgeInsets.symmetric(horizontal: ww * 0.005),
                               child: IconButton(
                                 icon: Icon(
                                   FontAwesomeIcons.twitter,
@@ -568,9 +672,11 @@ class _Web_footerState extends State<Web_footer> {
                                 ),
                                 onPressed: () {},
                                 style: ButtonStyle(
-                                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
                                     RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(0), // Set to 0 for rectangular shape
+                                      borderRadius: BorderRadius.circular(
+                                          0), // Set to 0 for rectangular shape
                                     ),
                                   ),
                                 ),
@@ -580,7 +686,8 @@ class _Web_footerState extends State<Web_footer> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.symmetric(horizontal: ww * 0.005),
+                              padding:
+                                  EdgeInsets.symmetric(horizontal: ww * 0.005),
                               child: IconButton(
                                 icon: Icon(
                                   FontAwesomeIcons.youtube,
@@ -588,9 +695,11 @@ class _Web_footerState extends State<Web_footer> {
                                 ),
                                 onPressed: () {},
                                 style: ButtonStyle(
-                                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
                                     RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(0), // Set to 0 for rectangular shape
+                                      borderRadius: BorderRadius.circular(
+                                          0), // Set to 0 for rectangular shape
                                     ),
                                   ),
                                 ),
