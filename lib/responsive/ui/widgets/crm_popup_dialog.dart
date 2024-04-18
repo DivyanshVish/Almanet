@@ -181,16 +181,15 @@ class _CRMPopupDialogWidgetState extends State<CRMPopupDialogWidget> {
                   children: [
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: widget.onGenerateLeadsButton,
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(6),
+                          onPressed: widget.onGenerateLeadsButton,
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            backgroundColor: Colors.green,
                           ),
-                          backgroundColor: Colors.green,
-                        ),
-                        child: const Text('Generate Leads'),
-                      ),
+                          child: const Text('Genertate Leads')),
                     ),
                     const SizedBox(width: 8),
                     Expanded(

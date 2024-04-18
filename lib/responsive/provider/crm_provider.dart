@@ -12,6 +12,16 @@ class CRMProvider extends ChangeNotifier {
   List<LeadsModel> _leadsList = [];
   List<LeadsModel> get leadsList => _leadsList;
 
+/* --------------------------------- Update --------------------------------- */
+  List<LeadsModel> _updatedLeadsList = [];
+  List<LeadsModel> get updatedLeadsList => _updatedLeadsList;
+
+/* --------------------------------- Update --------------------------------- */
+  set updatedLeadsList(List<LeadsModel> value) {
+    _updatedLeadsList = value;
+    notifyListeners();
+  }
+
   set leadsList(List<LeadsModel> value) {
     _leadsList = value;
     notifyListeners();

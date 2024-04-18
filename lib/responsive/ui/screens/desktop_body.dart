@@ -134,19 +134,19 @@ class _DesktopBodyState extends State<DesktopBody> {
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                          backgroundColor: Colors.green,
-                        ),
-                        child: const Text('New'),
-                        onPressed: () async {
-                          //TODO: Add functionality for the "New" button here
-                        },
-                      ),
+                      // ElevatedButton(
+                      //   style: ElevatedButton.styleFrom(
+                      //     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                      //     shape: RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.circular(6),
+                      //     ),
+                      //     backgroundColor: Colors.green,
+                      //   ),
+                      //   child: const Text('New'),
+                      //   onPressed: () async {
+
+                      //   },
+                      // ),
                       const SizedBox(width: 8),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
@@ -156,7 +156,6 @@ class _DesktopBodyState extends State<DesktopBody> {
                           ),
                           backgroundColor: Colors.green,
                         ),
-                        child: const Text('Generate Lead'),
                         onPressed: () async {
                           await showDialog(
                             context: context,
@@ -200,6 +199,7 @@ class _DesktopBodyState extends State<DesktopBody> {
                           );
                           await getLeadsData();
                         },
+                        child: Text('Generate Leads'),
                       ),
                     ],
                   );

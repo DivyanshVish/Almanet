@@ -1,7 +1,9 @@
+import 'package:almanet/responsive/ui/widgets/crm_edit.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class CRMListTile extends StatelessWidget {
-  const CRMListTile({
+  CRMListTile({
     super.key,
     required this.nameController,
     required this.contactController,
@@ -84,9 +86,18 @@ class CRMListTile extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 10),
-          Text(
-            'Number of Leads : $numberOfTeamMembersController',
-            style: Theme.of(context).textTheme.bodyMedium,
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  'Number of Leads : $numberOfTeamMembersController',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              ),
+              Expanded(
+                child: const EditButtonCrmPage(),
+              )
+            ],
           ),
         ],
       ),
