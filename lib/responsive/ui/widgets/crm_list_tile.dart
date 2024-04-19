@@ -1,6 +1,10 @@
+import 'package:almanet/responsive/provider/crm_provider.dart';
 import 'package:almanet/responsive/ui/widgets/crm_edit.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+
+import '../../models/lead_model.dart';
 
 class CRMListTile extends StatelessWidget {
   CRMListTile({
@@ -21,6 +25,16 @@ class CRMListTile extends StatelessWidget {
   final String companyController;
   final String selectedCompanyGroup;
   final String numberOfTeamMembersController;
+
+  TextEditingController nameControllerUpdate = TextEditingController();
+  TextEditingController addressControllerUpdate = TextEditingController();
+  TextEditingController contactControllerUpdate = TextEditingController();
+  TextEditingController companyControllerUpdate = TextEditingController();
+  TextEditingController emailControllerUpdate = TextEditingController();
+  TextEditingController selectedCompanyGroupController =
+      TextEditingController();
+  TextEditingController numberOfTeamMembersControllerUpdate =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -86,19 +100,58 @@ class CRMListTile extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 10),
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  'Number of Leads : $numberOfTeamMembersController',
-                  style: Theme.of(context).textTheme.bodyMedium,
+          Consumer<CRMProvider>(builder: (context, crmProvider, child) {
+            return Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    'Number of Leads : $numberOfTeamMembersController',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
                 ),
-              ),
-              Expanded(
-                child: const EditButtonCrmPage(),
-              )
-            ],
-          ),
+                Expanded(
+                  child: EditButtonCrmPage(
+                    nameController: nameControllerUpdate,
+                    addressController: addressControllerUpdate,
+                    contactController: contactControllerUpdate,
+                    companyController: companyControllerUpdate,
+                    emailController: emailControllerUpdate,
+                    selectedCompanyGroupController:
+                        selectedCompanyGroupController,
+                    numberOfTeamMembersController:
+                        numberOfTeamMembersControllerUpdate,
+                    onGenerateLeadsButton: () async {
+                      if (nameControllerUpdate.text.isEmpty &&
+                          emailControllerUpdate.text.isEmpty &&
+                          contactControllerUpdate.text.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("Please fill all the data"),
+                          ),
+                        );
+                        return;
+                      }
+                      LeadsModel lead = LeadsModel(
+                        name: nameControllerUpdate.text.trim(),
+                        email: emailControllerUpdate.text.trim(),
+                        address: addressControllerUpdate.text.trim(),
+                        contact: contactControllerUpdate.text.trim(),
+                        companyName: companyControllerUpdate.text.trim(),
+                        selectedCompanyGroup: crmProvider.selectedCompanyGroup,
+                        numberOfTeamMembers:
+                            numberOfTeamMembersControllerUpdate.text.trim(),
+                      );
+                      await crmProvider.saveDataToFirebase(lead: lead);
+                      Get.back();
+                    },
+                    selectIndustriesOnChange: (newValue) {
+                      crmProvider.selectedCompanyGroup = newValue;
+                    },
+                  ),
+                )
+              ],
+            );
+          }),
         ],
       ),
     );
