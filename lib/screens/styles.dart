@@ -1,6 +1,8 @@
 import 'package:almanet/Crm/crm_web_page.dart';
 import 'package:almanet/screens/pages/Login.dart';
 import 'package:almanet/constants/hover_buttoons.dart';
+import 'package:almanet/screens/pages/SAP_S4HANA.dart';
+import 'package:almanet/screens/pages/Sap_abap.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -381,7 +383,7 @@ class _Web_footerState extends State<Web_footer> {
           height: hh * 0.5,
           child: Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: ww * 0.15,
+              horizontal: ww * 0.2,
             ),
             child: Row(
               children: [
@@ -463,7 +465,7 @@ class _Web_footerState extends State<Web_footer> {
                                     text: 'SAP S/4HANA',
                                     defaultcolor: Colors.white,
                                     hovercolor: Colors.white,
-                                    ontap: () {},
+                                    ontap: () {Get.to(()=>sap_s4hana());},
                                     fontsize: ww * 0.006,
                                     width: ww),
                               ),
@@ -471,10 +473,10 @@ class _Web_footerState extends State<Web_footer> {
                                 padding:
                                     EdgeInsets.symmetric(vertical: hh * 0.01),
                                 child: Hover_Button(
-                                    text: 'SAP S/4HANA',
+                                    text: 'SAP ABAP',
                                     defaultcolor: Colors.white,
                                     hovercolor: Colors.white,
-                                    ontap: () {},
+                                    ontap: () { Get.to(()=>Sap_ABAP());},
                                     fontsize: ww * 0.006,
                                     width: ww),
                               ),

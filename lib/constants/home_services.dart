@@ -37,8 +37,9 @@ class _Home_ServicesState extends State<Home_Services> {
               padding: EdgeInsets.symmetric(vertical: hh * 0.04),
               child: Text(
                 widget.Description,
-                overflow: TextOverflow.visible,
+                overflow: TextOverflow.ellipsis,
                 softWrap: true,
+                maxLines: 6,
                 style: TextStyle(fontSize: ww * 0.0085, color: Colors.black, decoration: TextDecoration.none),
               ),
             ),

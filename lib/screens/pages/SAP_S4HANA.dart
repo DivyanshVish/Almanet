@@ -21,8 +21,8 @@ class _sap_s4hanaState extends State<sap_s4hana> {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
-      double ww = Get.width;
-      double hh = Get.height;
+        double ww = Get.width;
+        double hh = Get.height;
       return sliverappbar_collapsed(
           child: SingleChildScrollView(
         child: Column(
@@ -67,11 +67,13 @@ class _sap_s4hanaState extends State<sap_s4hana> {
               height: hh * 0.005,
             ),
             FadeInContainer(
+
                 width: ww,
                 height: hh * 0.6,
                 colour: Colors.white,
                 duration: const Duration(milliseconds: 500),
-                child: Center(
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: ww*0.2),
                   child: Column(
                     children: [
                       Padding(
