@@ -1,4 +1,5 @@
 class LeadsModel {
+  String? id;
   String? name;
   String? email;
   String? address;
@@ -8,6 +9,7 @@ class LeadsModel {
   String? selectedCompanyGroup;
 
   LeadsModel({
+    this.id,
     this.name,
     this.email,
     this.address,
@@ -16,8 +18,9 @@ class LeadsModel {
     this.numberOfTeamMembers,
     this.selectedCompanyGroup,
   });
-  factory LeadsModel.fromJson(Map<String, dynamic> json) {
+  factory LeadsModel.fromJson(Map<String, dynamic> json, String? id) {
     return LeadsModel(
+      id: id,
       name: json['name'],
       email: json['email'],
       address: json['address'],

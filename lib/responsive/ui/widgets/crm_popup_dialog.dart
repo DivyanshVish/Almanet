@@ -1,3 +1,4 @@
+import 'package:almanet/responsive/models/lead_model.dart';
 import 'package:almanet/responsive/provider/crm_provider.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -7,34 +8,40 @@ import 'package:provider/provider.dart';
 class CRMPopupDialogWidget extends StatefulWidget {
   const CRMPopupDialogWidget({
     super.key,
-    // required this.selectedCompanyGroup,
-    required this.nameController,
-    required this.emailController,
-    required this.addressController,
-    required this.contactController,
-    required this.companyController,
-    required this.onGenerateLeadsButton,
-    required this.selectIndustriesOnChange,
-    required this.numberOfTeamMembersController,
-    required this.selectedCompanyGroupController,
+    this.existingLead,
+    this.isUpdating,
   });
 
-  // final String? selectedCompanyGroup;
-  final VoidCallback onGenerateLeadsButton;
-  final TextEditingController nameController;
-  final TextEditingController emailController;
-  final TextEditingController addressController;
-  final TextEditingController contactController;
-  final TextEditingController companyController;
-  final Function(String?) selectIndustriesOnChange;
-  final TextEditingController numberOfTeamMembersController;
-  final TextEditingController selectedCompanyGroupController;
+  final LeadsModel? existingLead;
+  final bool? isUpdating;
 
   @override
   State<CRMPopupDialogWidget> createState() => _CRMPopupDialogWidgetState();
 }
 
 class _CRMPopupDialogWidgetState extends State<CRMPopupDialogWidget> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+  TextEditingController contactController = TextEditingController();
+  TextEditingController companyController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController selectedCompanyGroupController = TextEditingController();
+  TextEditingController numberOfTeamMembersController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.existingLead != null) {
+      nameController.text = widget.existingLead!.name ?? "";
+      addressController.text = widget.existingLead!.address ?? "";
+      contactController.text = widget.existingLead!.contact ?? "";
+      companyController.text = widget.existingLead!.companyName ?? "";
+      emailController.text = widget.existingLead!.email ?? "";
+      selectedCompanyGroupController.text = widget.existingLead!.selectedCompanyGroup ?? dummyIndustriesData[0];
+      numberOfTeamMembersController.text = widget.existingLead!.numberOfTeamMembers ?? "";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -107,7 +114,9 @@ class _CRMPopupDialogWidgetState extends State<CRMPopupDialogWidget> {
                         child: Text(value),
                       );
                     }).toList(),
-                    onChanged: widget.selectIndustriesOnChange,
+                    onChanged: (newValue) {
+                      context.read<CRMProvider>().selectedCompanyGroup = newValue;
+                    },
                   ),
                 ),
                 const SizedBox(height: 15),
@@ -119,7 +128,7 @@ class _CRMPopupDialogWidgetState extends State<CRMPopupDialogWidget> {
                   style: const TextStyle(
                     fontSize: 14,
                   ),
-                  controller: widget.numberOfTeamMembersController,
+                  controller: numberOfTeamMembersController,
                 ),
                 const SizedBox(height: 18),
                 Column(
@@ -136,7 +145,7 @@ class _CRMPopupDialogWidgetState extends State<CRMPopupDialogWidget> {
                       height: 10,
                     ),
                     TextFormField(
-                      controller: widget.nameController,
+                      controller: nameController,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Name',
@@ -146,28 +155,28 @@ class _CRMPopupDialogWidgetState extends State<CRMPopupDialogWidget> {
                       height: 15,
                     ),
                     TextFormField(
-                      controller: widget.contactController,
+                      controller: contactController,
                       decoration: const InputDecoration(border: OutlineInputBorder(), labelText: 'Contact'),
                     ),
                     const SizedBox(
                       height: 15,
                     ),
                     TextFormField(
-                      controller: widget.addressController,
+                      controller: addressController,
                       decoration: const InputDecoration(border: OutlineInputBorder(), labelText: 'Address'),
                     ),
                     const SizedBox(
                       height: 15,
                     ),
                     TextFormField(
-                      controller: widget.emailController,
+                      controller: emailController,
                       decoration: const InputDecoration(border: OutlineInputBorder(), labelText: 'Email Address'),
                     ),
                     const SizedBox(
                       height: 15,
                     ),
                     TextFormField(
-                      controller: widget.companyController,
+                      controller: companyController,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Company Name',
@@ -181,7 +190,41 @@ class _CRMPopupDialogWidgetState extends State<CRMPopupDialogWidget> {
                   children: [
                     Expanded(
                       child: ElevatedButton(
-                          onPressed: widget.onGenerateLeadsButton,
+                          onPressed: () async {
+                            if (nameController.text.isEmpty && emailController.text.isEmpty && contactController.text.isEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("Please fill all the data"),
+                                ),
+                              );
+                              return;
+                            }
+                            LeadsModel lead;
+                            if (widget.isUpdating ?? false) {
+                              lead = LeadsModel(
+                                id: widget.existingLead!.id,
+                                name: nameController.text.trim(),
+                                email: emailController.text.trim(),
+                                address: addressController.text.trim(),
+                                contact: contactController.text.trim(),
+                                companyName: companyController.text.trim(),
+                                selectedCompanyGroup: context.read<CRMProvider>().selectedCompanyGroup,
+                                numberOfTeamMembers: numberOfTeamMembersController.text.trim(),
+                              );
+                            } else {
+                              lead = LeadsModel(
+                                name: nameController.text.trim(),
+                                email: emailController.text.trim(),
+                                address: addressController.text.trim(),
+                                contact: contactController.text.trim(),
+                                companyName: companyController.text.trim(),
+                                selectedCompanyGroup: context.read<CRMProvider>().selectedCompanyGroup,
+                                numberOfTeamMembers: numberOfTeamMembersController.text.trim(),
+                              );
+                            }
+                            (widget.isUpdating ?? false) ? await context.read<CRMProvider>().updateDataToFirebase(lead: lead) : await context.read<CRMProvider>().saveDataToFirebase(lead: lead);
+                            Get.back();
+                          },
                           style: ElevatedButton.styleFrom(
                             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                             shape: RoundedRectangleBorder(
@@ -189,7 +232,7 @@ class _CRMPopupDialogWidgetState extends State<CRMPopupDialogWidget> {
                             ),
                             backgroundColor: Colors.green,
                           ),
-                          child: const Text('Genertate Leads')),
+                          child: (widget.isUpdating ?? false) ? const Text('Update Leads') : const Text('Genertate Leads')),
                     ),
                     const SizedBox(width: 8),
                     Expanded(

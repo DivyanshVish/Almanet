@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Almanet',
         theme: CustomTheme.customTheme,
-        home:  Home(),
+        home: const Home(),
       ),
     );
   }

@@ -12,7 +12,7 @@ class CRMProvider extends ChangeNotifier {
   List<LeadsModel> _leadsList = [];
   List<LeadsModel> get leadsList => _leadsList;
 
-/* --------------------------------- Update --------------------------------- */
+  /* --------------------------------- Update --------------------------------- */
   List<LeadsModel> _updatedLeadsList = [];
   List<LeadsModel> get updatedLeadsList => _updatedLeadsList;
 
@@ -49,6 +49,18 @@ class CRMProvider extends ChangeNotifier {
       final response = await FirebaseFirestore.instance.collection('leads').add(lead.toJson());
 
       log("[Data Added] $response");
+    } catch (e) {
+      log(e.toString());
+    } finally {
+      isLoading = false;
+    }
+  }
+
+  Future updateDataToFirebase({required LeadsModel lead}) async {
+    try {
+      isLoading = true;
+      log(lead.id.toString());
+      await FirebaseFirestore.instance.collection('leads').doc(lead.id).update(lead.toJson());
     } catch (e) {
       log(e.toString());
     } finally {

@@ -1,40 +1,16 @@
-import 'package:almanet/responsive/provider/crm_provider.dart';
-import 'package:almanet/responsive/ui/widgets/crm_edit.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 
 import '../../models/lead_model.dart';
 
 class CRMListTile extends StatelessWidget {
-  CRMListTile({
+  const CRMListTile({
     super.key,
-    required this.nameController,
-    required this.contactController,
-    required this.addressController,
-    required this.emailController,
-    required this.companyController,
-    required this.selectedCompanyGroup,
-    required this.numberOfTeamMembersController,
+    required this.lead,
+    required this.onPressEdit,
   });
 
-  final String nameController;
-  final String contactController;
-  final String addressController;
-  final String emailController;
-  final String companyController;
-  final String selectedCompanyGroup;
-  final String numberOfTeamMembersController;
-
-  TextEditingController nameControllerUpdate = TextEditingController();
-  TextEditingController addressControllerUpdate = TextEditingController();
-  TextEditingController contactControllerUpdate = TextEditingController();
-  TextEditingController companyControllerUpdate = TextEditingController();
-  TextEditingController emailControllerUpdate = TextEditingController();
-  TextEditingController selectedCompanyGroupController =
-      TextEditingController();
-  TextEditingController numberOfTeamMembersControllerUpdate =
-      TextEditingController();
+  final VoidCallback onPressEdit;
+  final LeadsModel lead;
 
   @override
   Widget build(BuildContext context) {
@@ -53,13 +29,13 @@ class CRMListTile extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'Name : $nameController',
+                  'Name : ${lead.name}',
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
               Expanded(
                 child: Text(
-                  'Contact : $contactController',
+                  'Contact : ${lead.contact}',
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
@@ -70,13 +46,13 @@ class CRMListTile extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'Address : $addressController',
+                  'Address : ${lead.address}',
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
               Expanded(
                 child: Text(
-                  'Email : $emailController',
+                  'Email : ${lead.email}',
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
@@ -87,71 +63,37 @@ class CRMListTile extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'Company Name : $companyController',
+                  'Company Name : ${lead.companyName}',
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
               Expanded(
                 child: Text(
-                  'Selected Industries : $selectedCompanyGroup',
+                  'Selected Industries : ${lead.selectedCompanyGroup}',
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
             ],
           ),
           const SizedBox(height: 10),
-          Consumer<CRMProvider>(builder: (context, crmProvider, child) {
-            return Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    'Number of Leads : $numberOfTeamMembersController',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  'Number of Leads : ${lead.numberOfTeamMembers}',
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
-                Expanded(
-                  child: EditButtonCrmPage(
-                    nameController: nameControllerUpdate,
-                    addressController: addressControllerUpdate,
-                    contactController: contactControllerUpdate,
-                    companyController: companyControllerUpdate,
-                    emailController: emailControllerUpdate,
-                    selectedCompanyGroupController:
-                        selectedCompanyGroupController,
-                    numberOfTeamMembersController:
-                        numberOfTeamMembersControllerUpdate,
-                    onGenerateLeadsButton: () async {
-                      if (nameControllerUpdate.text.isEmpty &&
-                          emailControllerUpdate.text.isEmpty &&
-                          contactControllerUpdate.text.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("Please fill all the data"),
-                          ),
-                        );
-                        return;
-                      }
-                      LeadsModel lead = LeadsModel(
-                        name: nameControllerUpdate.text.trim(),
-                        email: emailControllerUpdate.text.trim(),
-                        address: addressControllerUpdate.text.trim(),
-                        contact: contactControllerUpdate.text.trim(),
-                        companyName: companyControllerUpdate.text.trim(),
-                        selectedCompanyGroup: crmProvider.selectedCompanyGroup,
-                        numberOfTeamMembers:
-                            numberOfTeamMembersControllerUpdate.text.trim(),
-                      );
-                      await crmProvider.saveDataToFirebase(lead: lead);
-                      Get.back();
-                    },
-                    selectIndustriesOnChange: (newValue) {
-                      crmProvider.selectedCompanyGroup = newValue;
-                    },
-                  ),
-                )
-              ],
-            );
-          }),
+              ),
+              Expanded(
+                child: IconButton(
+                  splashColor: Colors.green,
+                  splashRadius: 20,
+                  icon: const Icon(Icons.edit),
+                  onPressed: onPressEdit,
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );

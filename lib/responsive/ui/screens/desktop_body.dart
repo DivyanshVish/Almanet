@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:almanet/constants/dummy_data/industries_dummy_data.dart';
 import 'package:almanet/responsive/models/lead_model.dart';
 import 'package:almanet/responsive/provider/crm_provider.dart';
 import 'package:almanet/responsive/ui/widgets/crm_list_tile.dart';
@@ -16,17 +17,8 @@ class DesktopBody extends StatefulWidget {
 }
 
 class _DesktopBodyState extends State<DesktopBody> {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController addressController = TextEditingController();
-  TextEditingController contactController = TextEditingController();
-  TextEditingController companyController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController selectedCompanyGroupController = TextEditingController();
-  TextEditingController numberOfTeamMembersController = TextEditingController();
-
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getLeadsData();
   }
@@ -35,13 +27,16 @@ class _DesktopBodyState extends State<DesktopBody> {
     try {
       QuerySnapshot<Map<String, dynamic>> response = await FirebaseFirestore.instance.collection('leads').get();
 
-      List<LeadsModel> data = response.docs
-          .map(
-            (leads) => LeadsModel.fromJson(
-              leads.data(),
-            ),
-          )
-          .toList();
+      List<LeadsModel> data = response.docs.map(
+        (leads) {
+          LeadsModel data = LeadsModel.fromJson(
+            leads.data(),
+            leads.id.toString(),
+          );
+
+          return data;
+        },
+      ).toList();
 
       if (!mounted) return;
       context.read<CRMProvider>().leadsList = data;
@@ -161,45 +156,12 @@ class _DesktopBodyState extends State<DesktopBody> {
                             context: context,
                             barrierDismissible: false,
                             builder: (BuildContext context) {
-                              return CRMPopupDialogWidget(
-                                // selectedCompanyGroup: crmProvider.selectedCompanyGroup!,
-                                nameController: nameController,
-                                addressController: addressController,
-                                contactController: contactController,
-                                companyController: companyController,
-                                emailController: emailController,
-                                selectedCompanyGroupController: selectedCompanyGroupController,
-                                numberOfTeamMembersController: numberOfTeamMembersController,
-                                onGenerateLeadsButton: () async {
-                                  if (nameController.text.isEmpty && emailController.text.isEmpty && contactController.text.isEmpty) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text("Please fill all the data"),
-                                      ),
-                                    );
-                                    return;
-                                  }
-                                  LeadsModel lead = LeadsModel(
-                                    name: nameController.text.trim(),
-                                    email: emailController.text.trim(),
-                                    address: addressController.text.trim(),
-                                    contact: contactController.text.trim(),
-                                    companyName: companyController.text.trim(),
-                                    selectedCompanyGroup: crmProvider.selectedCompanyGroup,
-                                    numberOfTeamMembers: numberOfTeamMembersController.text.trim(),
-                                  );
-                                  await crmProvider.saveDataToFirebase(lead: lead);
-                                  Get.back();
-                                },
-                                selectIndustriesOnChange: (newValue) {
-                                  crmProvider.selectedCompanyGroup = newValue;
-                                },
-                              );
+                              return const CRMPopupDialogWidget();
                             },
                           );
                           await getLeadsData();
                         },
-                        child: Text('Generate Leads'),
+                        child: const Text('Generate Leads'),
                       ),
                     ],
                   );
@@ -214,13 +176,29 @@ class _DesktopBodyState extends State<DesktopBody> {
                     itemCount: crmProvider.leadsList.length,
                     shrinkWrap: true,
                     itemBuilder: (context, index) => CRMListTile(
-                      nameController: crmProvider.leadsList[index].name ?? "-",
-                      contactController: crmProvider.leadsList[index].contact ?? "-",
-                      addressController: crmProvider.leadsList[index].address ?? "-",
-                      emailController: crmProvider.leadsList[index].email ?? "-",
-                      companyController: crmProvider.leadsList[index].companyName ?? "-",
-                      selectedCompanyGroup: crmProvider.leadsList[index].selectedCompanyGroup ?? "-",
-                      numberOfTeamMembersController: crmProvider.leadsList[index].numberOfTeamMembers ?? "-",
+                      onPressEdit: () async {
+                        await showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (BuildContext context) {
+                            return CRMPopupDialogWidget(
+                              isUpdating: true,
+                              existingLead: crmProvider.leadsList[index],
+                            );
+                          },
+                        );
+                        await getLeadsData();
+                      },
+                      lead: LeadsModel(
+                        id: crmProvider.leadsList[index].id ?? "",
+                        name: crmProvider.leadsList[index].name ?? "",
+                        contact: crmProvider.leadsList[index].contact ?? "",
+                        address: crmProvider.leadsList[index].address ?? "",
+                        email: crmProvider.leadsList[index].email ?? "",
+                        companyName: crmProvider.leadsList[index].companyName ?? "",
+                        selectedCompanyGroup: crmProvider.leadsList[index].selectedCompanyGroup ?? dummyIndustriesData[0],
+                        numberOfTeamMembers: crmProvider.leadsList[index].numberOfTeamMembers ?? "",
+                      ),
                     ),
                   );
                 },
