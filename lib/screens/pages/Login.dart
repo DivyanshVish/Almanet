@@ -1,9 +1,13 @@
+import 'package:almanet/Sign_Up.dart';
 import 'package:almanet/screens/home.dart';
 import 'package:almanet/constants/hover_buttoons.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:google_sign_in_web/google_sign_in_web.dart' as web;
 
 import 'Sign_Up.dart';
 
@@ -15,8 +19,37 @@ class login extends StatefulWidget {
 }
 
 class _loginState extends State<login> {
+  final FirebaseAuth fa = FirebaseAuth.instance;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  void googlesignin() async{
+    GoogleSignInAccount? user;
+    final  clientid  = '902959262622-bspp6j8834hqr0dfui79fsgf26mihgh6.apps.googleusercontent.com';
+    GoogleSignIn googleuser =  GoogleSignIn(clientId: clientid,);
+    googleuser.signInSilently(suppressErrors: false);
+
+
+    // GoogleSignInAuthentication? googleauth = await googleuser?.authentication;
+    // AuthCredential credential = GoogleAuthProvider.credential(
+    //   accessToken: googleauth?.accessToken,
+    //   idToken: googleauth?.idToken,
+    //
+    // );
+    //
+    // UserCredential usercred = await FirebaseAuth.instance.signInWithCredential(credential);
+    // print(usercred.user?.displayName);
+
+  }
   @override
   Widget build(BuildContext context) {
+
+    var email = TextEditingController();
+    var pass = TextEditingController();
     return LayoutBuilder(builder: (context, constraints) {
       double ww = Get.width;
       double hh = Get.height;
@@ -45,7 +78,7 @@ class _loginState extends State<login> {
                   width: Get.width * 0.4,
                   height: Get.height * 0.6,
                   color: Colors.grey.shade200,
-                  padding: const EdgeInsets.only(left: 50, right: 50, top: 20),
+                  padding:  EdgeInsets.only(left: ww*0.02, right: ww*0.02, top: hh*0.01),
                   child: Column(
                     // crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -56,7 +89,7 @@ class _loginState extends State<login> {
                       //   fontWeight: FontWeight.bold,
                       // ),),
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12.0),
+                        padding:  EdgeInsets.symmetric(vertical: hh*0.01),
                         child: Text(
                           "Login to your account",
                           style: TextStyle(
@@ -68,28 +101,33 @@ class _loginState extends State<login> {
                       ),
 
                       Padding(
-                        padding: const EdgeInsets.only(top: 10, left: 10, bottom: 7),
+                        padding:  EdgeInsets.only(top: 10, left: 10, bottom: hh*0.01,),
                         child: Container(
                           width: Get.width * 0.127,
                           alignment: Alignment.topLeft,
                           decoration: BoxDecoration(color: Colors.blue, borderRadius: BorderRadius.circular(25)),
-                          child: ListTile(
-                            leading: CircleAvatar(
-                              backgroundImage: const AssetImage('assets/images/img.png'),
-                              radius: ww * 0.01,
-                            ),
-                            title: Text(
-                              'Sign in with Google',
-                              style: TextStyle(color: Colors.white, fontSize: ww * 0.0085),
+                          child: InkWell(
+                            onTap: (){
+                              googlesignin();
+                            },
+                            child: ListTile(
+                              leading: CircleAvatar(
+                                backgroundImage: const AssetImage('assets/images/img.png'),
+                                radius: ww * 0.01,
+                              ),
+                              title: Text(
+                                'Sign in with Google',
+                                style: TextStyle(color: Colors.white, fontSize: ww * 0.0085),
+                              ),
                             ),
                           ),
                         ),
                       ),
                       Row(
                         children: [
-                          const Expanded(
+                           Expanded(
                             child: Padding(
-                              padding: EdgeInsets.only(left: 30.0),
+                              padding: EdgeInsets.only(left: ww*0.02),
                               child: Divider(),
                             ),
                           ),
@@ -100,9 +138,9 @@ class _loginState extends State<login> {
                               style: TextStyle(fontSize: ww * 0.008),
                             ),
                           ),
-                          const Expanded(
+                           Expanded(
                             child: Padding(
-                              padding: EdgeInsets.only(right: 30.0),
+                              padding: EdgeInsets.only(right:ww*0.02),
                               child: Divider(),
                             ),
                           ),
@@ -130,6 +168,7 @@ class _loginState extends State<login> {
                                 ),
                                 padding: const EdgeInsets.all(12),
                                 child: TextField(
+                                  controller: email,
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintText: 'Email',
@@ -153,6 +192,7 @@ class _loginState extends State<login> {
                               ),
                               padding: const EdgeInsets.all(12),
                               child: TextField(
+                                controller: pass,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   hintText: 'Password',
@@ -178,9 +218,13 @@ class _loginState extends State<login> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 20.0),
+                        padding:  EdgeInsets.only(top: 20.0),
                         child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () async{
+                              FirebaseAuth auth =  FirebaseAuth.instance;
+                              auth.signInWithEmailAndPassword(email: email.text.toString(), password: pass.text.toString());
+                              Get.offAll(()=>Home());
+                            },
                             child: Text(
                               'Login',
                               style: TextStyle(color: Colors.white, fontSize: ww * 0.015),
@@ -206,7 +250,7 @@ class _loginState extends State<login> {
                         ),
                         ElevatedButton(
                             onPressed: () {
-                              Get.to(() => const signup());
+                              Get.to(() =>  signup());
                             },
                             child: Text(
                               'Sign Up',

@@ -3,6 +3,8 @@ import 'package:almanet/screens/pages/Login.dart';
 import 'package:almanet/constants/hover_buttoons.dart';
 import 'package:almanet/screens/pages/SAP_S4HANA.dart';
 import 'package:almanet/screens/pages/Sap_abap.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -264,6 +266,7 @@ class web_appbar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _web_appbarState extends State<web_appbar> {
+  var fa = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
     double ww = widget.width;
@@ -324,41 +327,102 @@ class _web_appbarState extends State<web_appbar> {
             size: 18,
           ),
         ),
-        Padding(
-          padding: EdgeInsets.only(
-              left: ww * 0.005, right: ww * 0.11, top: hh * 0.007),
-          child: SizedBox(
-            height: hh * 0.03,
-            width: ww * 0.075,
-            child: ElevatedButton(
-              onPressed: () {
-                Get.to(() => const login());
-              },
-              style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.resolveWith<Color>((states) {
-                  if (!states.contains(MaterialState.hovered)) {
-                    return Colors.green; // Change color when hovered
+        StreamBuilder<User?>(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (!snapshot.hasError) {
+                if (snapshot.connectionState == ConnectionState.active) {
+                  if (snapshot.hasData) {
+
+                      // Add return statement here
+                      return Padding(
+                        padding: EdgeInsets.only(
+                            left: ww * 0.005, right: ww * 0.11, top: hh * 0.007),
+                        child: SizedBox(
+                          height: hh * 0.03,
+                          width: ww * 0.075,
+                          child: ElevatedButton(
+                            onPressed: () {
+
+                            },
+                            style: ButtonStyle(
+                              backgroundColor:
+                              MaterialStateProperty.resolveWith<Color>((states) {
+                                if (!states.contains(MaterialState.hovered)) {
+                                  return Colors.green; // Change color when hovered
+                                }
+                                return const Color(0xFF082444); // Default color
+                              }),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  side: const BorderSide(
+                                      color: Colors.green, width: 1),
+                                ),
+                              ),
+                            ),
+                            child: Text(
+                              fa==null ? 'Hi' : 'Hello, ${fa?.displayName}' ?? 'Ho',
+
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: ww * 0.008,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                      );
+
+
+                  } else {
+                    return Padding(
+                      padding: EdgeInsets.only(
+                          left: ww * 0.005, right: ww * 0.11, top: hh * 0.007),
+                      child: SizedBox(
+                        height: hh * 0.03,
+                        width: ww * 0.075,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Get.to(() => login());
+                          },
+                          style: ButtonStyle(
+                            backgroundColor:
+                            MaterialStateProperty.resolveWith<Color>((states) {
+                              if (!states.contains(MaterialState.hovered)) {
+                                return Colors.green; // Change color when hovered
+                              }
+                              return const Color(0xFF082444); // Default color
+                            }),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                side: const BorderSide(
+                                    color: Colors.green, width: 1),
+                              ),
+                            ),
+                          ),
+                          child: Text(
+                            'Login/Signup',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: ww * 0.008,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                    );
                   }
-                  return const Color(0xFF082444); // Default color
-                }),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    side: const BorderSide(color: Colors.green, width: 1),
-                  ),
-                ),
-              ),
-              child: Text(
-                'Login/Signup',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: ww * 0.008,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-          ),
-        )
+                } else {
+                  return Text('b');
+                }
+              } else {
+                return Text('c');
+              }
+            }
+        ),
+
       ],
     );
   }
