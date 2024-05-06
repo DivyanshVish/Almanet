@@ -25,8 +25,7 @@ class _CRMPopupDialogWidgetState extends State<CRMPopupDialogWidget> {
   TextEditingController contactController = TextEditingController();
   TextEditingController companyController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  TextEditingController selectedCompanyGroupController =
-      TextEditingController();
+  TextEditingController selectedCompanyGroupController = TextEditingController();
   TextEditingController numberOfTeamMembersController = TextEditingController();
 
   @override
@@ -38,10 +37,8 @@ class _CRMPopupDialogWidgetState extends State<CRMPopupDialogWidget> {
       contactController.text = widget.existingLead!.contact ?? "";
       companyController.text = widget.existingLead!.companyName ?? "";
       emailController.text = widget.existingLead!.email ?? "";
-      selectedCompanyGroupController.text =
-          widget.existingLead!.selectedCompanyGroup ?? dummyIndustriesData[0];
-      numberOfTeamMembersController.text =
-          widget.existingLead!.numberOfTeamMembers ?? "";
+      selectedCompanyGroupController.text = widget.existingLead!.selectedCompanyGroup ?? dummyIndustriesData[0];
+      numberOfTeamMembersController.text = widget.existingLead!.numberOfTeamMembers ?? "";
     }
   }
 
@@ -58,32 +55,30 @@ class _CRMPopupDialogWidgetState extends State<CRMPopupDialogWidget> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'Need help to reach the target?',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Need help to reach the target?',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
                       ),
-                      IconButton(
-                        icon: const Icon(
-                          Icons.close,
-                          color: Colors.black,
-                          size: 30,
-                        ),
-                        splashRadius: 20,
-                        onPressed: () {
-                          Get.back();
-                        },
+                    ),
+                    IconButton(
+                      icon: const Icon(
+                        Icons.close,
+                        color: Colors.black,
+                        size: 30,
                       ),
-                    ],
-                  ),
+                      splashRadius: 20,
+                      onPressed: () {
+                        Get.back();
+                      },
+                    ),
+                  ],
                 ),
                 const Divider(
                   thickness: 1,
@@ -102,15 +97,17 @@ class _CRMPopupDialogWidgetState extends State<CRMPopupDialogWidget> {
                 ),
                 const SizedBox(height: 12),
                 Container(
+                  width: double.infinity,
                   decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: Colors.black54),
                     borderRadius: BorderRadius.circular(4),
+                    border: Border.all(width: 1, color: Colors.black54),
                   ),
                   child: DropdownButton<String>(
-                    hint: const Text('Select the Industries'),
-                    value: context.watch<CRMProvider>().selectedCompanyGroup,
+                    isExpanded: true,
                     underline: const SizedBox(),
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    hint: const Text('Select the Industries'),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    value: context.watch<CRMProvider>().selectedCompanyGroup,
                     items: dummyIndustriesData.map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
@@ -118,8 +115,7 @@ class _CRMPopupDialogWidgetState extends State<CRMPopupDialogWidget> {
                       );
                     }).toList(),
                     onChanged: (newValue) {
-                      context.read<CRMProvider>().selectedCompanyGroup =
-                          newValue;
+                      context.read<CRMProvider>().selectedCompanyGroup = newValue;
                     },
                   ),
                 ),
@@ -160,25 +156,21 @@ class _CRMPopupDialogWidgetState extends State<CRMPopupDialogWidget> {
                     ),
                     TextFormField(
                       controller: contactController,
-                      decoration: const InputDecoration(
-                          border: OutlineInputBorder(), labelText: 'Contact'),
+                      decoration: const InputDecoration(border: OutlineInputBorder(), labelText: 'Contact'),
                     ),
                     const SizedBox(
                       height: 15,
                     ),
                     TextFormField(
                       controller: addressController,
-                      decoration: const InputDecoration(
-                          border: OutlineInputBorder(), labelText: 'Address'),
+                      decoration: const InputDecoration(border: OutlineInputBorder(), labelText: 'Address'),
                     ),
                     const SizedBox(
                       height: 15,
                     ),
                     TextFormField(
                       controller: emailController,
-                      decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Email Address'),
+                      decoration: const InputDecoration(border: OutlineInputBorder(), labelText: 'Email Address'),
                     ),
                     const SizedBox(
                       height: 15,
@@ -199,9 +191,7 @@ class _CRMPopupDialogWidgetState extends State<CRMPopupDialogWidget> {
                     Expanded(
                       child: ElevatedButton(
                           onPressed: () async {
-                            if (nameController.text.isEmpty &&
-                                emailController.text.isEmpty &&
-                                contactController.text.isEmpty) {
+                            if (nameController.text.isEmpty && emailController.text.isEmpty && contactController.text.isEmpty) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content: Text("Please fill all the data"),
@@ -218,11 +208,8 @@ class _CRMPopupDialogWidgetState extends State<CRMPopupDialogWidget> {
                                 address: addressController.text.trim(),
                                 contact: contactController.text.trim(),
                                 companyName: companyController.text.trim(),
-                                selectedCompanyGroup: context
-                                    .read<CRMProvider>()
-                                    .selectedCompanyGroup,
-                                numberOfTeamMembers:
-                                    numberOfTeamMembersController.text.trim(),
+                                selectedCompanyGroup: context.read<CRMProvider>().selectedCompanyGroup,
+                                numberOfTeamMembers: numberOfTeamMembersController.text.trim(),
                               );
                             } else {
                               lead = LeadsModel(
@@ -231,33 +218,21 @@ class _CRMPopupDialogWidgetState extends State<CRMPopupDialogWidget> {
                                 address: addressController.text.trim(),
                                 contact: contactController.text.trim(),
                                 companyName: companyController.text.trim(),
-                                selectedCompanyGroup: context
-                                    .read<CRMProvider>()
-                                    .selectedCompanyGroup,
-                                numberOfTeamMembers:
-                                    numberOfTeamMembersController.text.trim(),
+                                selectedCompanyGroup: context.read<CRMProvider>().selectedCompanyGroup,
+                                numberOfTeamMembers: numberOfTeamMembersController.text.trim(),
                               );
                             }
-                            (widget.isUpdating ?? false)
-                                ? await context
-                                    .read<CRMProvider>()
-                                    .updateDataToFirebase(lead: lead)
-                                : await context
-                                    .read<CRMProvider>()
-                                    .saveDataToFirebase(lead: lead);
+                            (widget.isUpdating ?? false) ? await context.read<CRMProvider>().updateDataToFirebase(lead: lead) : await context.read<CRMProvider>().saveDataToFirebase(lead: lead);
                             Get.back();
                           },
                           style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 16),
+                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(6),
                             ),
                             backgroundColor: Colors.green,
                           ),
-                          child: (widget.isUpdating ?? false)
-                              ? const Text('Update Leads')
-                              : const Text('Genertate Leads')),
+                          child: (widget.isUpdating ?? false) ? const Text('Update Leads') : const Text('Genertate Leads')),
                     ),
                     const SizedBox(width: 8),
                     Expanded(
@@ -266,8 +241,7 @@ class _CRMPopupDialogWidgetState extends State<CRMPopupDialogWidget> {
                           Get.back();
                         },
                         style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 16),
+                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(6),
                           ),

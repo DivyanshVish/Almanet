@@ -1,3 +1,4 @@
 {
-  "dart.flutterSdkPath": ".fvm/versions/stable"
+  "dart.flutterSdkPath": ".fvm/versions/stable",
+  "cmake.sourceDirectory": "F:/Almanet/build/windows/x64/extracted/firebase_cpp_sdk_windows"
 }
