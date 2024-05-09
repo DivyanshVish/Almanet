@@ -80,7 +80,7 @@ class _DesktopBodyState extends State<DesktopBody> {
                   onTap: () {},
                   child: const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 12.0),
-                    child: Text("Reports"),
+                    child: Text("Opportunities"),
                   ),
                 ),
               ),
@@ -90,7 +90,7 @@ class _DesktopBodyState extends State<DesktopBody> {
                   onTap: () {},
                   child: const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 12.0),
-                    child: Text("Configuration"),
+                    child: Text("Reports"),
                   ),
                 ),
               ),
@@ -130,26 +130,52 @@ class _DesktopBodyState extends State<DesktopBody> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       const SizedBox(width: 8),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(6),
+                      SizedBox(
+                        height: 35,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            backgroundColor: Colors.green,
                           ),
-                          backgroundColor: Colors.green,
+                          onPressed: () async {
+                            await showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (BuildContext context) {
+                                return const CRMPopupDialogWidget();
+                              },
+                            );
+                            await getLeadsData();
+                          },
+                          child: const Text(
+                            'Generate Leads',
+                            style: TextStyle(color: Colors.white, fontSize: 16),
+                          ),
                         ),
-                        onPressed: () async {
-                          await showDialog(
-                            context: context,
-                            barrierDismissible: false,
-                            builder: (BuildContext context) {
-                              return const CRMPopupDialogWidget();
-                            },
-                          );
-                          await getLeadsData();
-                        },
-                        child: const Text('Generate Leads'),
                       ),
+                      const SizedBox(width: 16),
+                      SizedBox(
+                          height: 35,
+                          width: 270,
+                          child: SearchBar(
+                            padding: MaterialStateProperty.all<EdgeInsets>(
+                              const EdgeInsets.symmetric(horizontal: 16.0),
+                            ),
+                            hintText: "Search Leads",
+                            textStyle: MaterialStateProperty.all<TextStyle>(
+                              const TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                              ),
+                            ),
+                            shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(6))),
+                            leading: const Icon(Icons.search, color: Colors.white),
+                            backgroundColor: MaterialStateProperty.all(Colors.green),
+                            autoFocus: false,
+                          ))
                     ],
                   );
                 },
