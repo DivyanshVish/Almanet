@@ -1,6 +1,7 @@
 import 'package:almanet/responsive/ui/screens/desktop_body.dart';
 import 'package:almanet/responsive/ui/screens/mobile_body.dart';
 import 'package:almanet/responsive/ui/responsive.dart';
+import 'package:almanet/responsive/ui/screens/new_desktop.dart';
 
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,7 @@ class _CRMPageState extends State<CRMPage> {
     return const Scaffold(
       body: Responsive(
         mobile: MobileBody(),
-        desktop: DesktopBody(),
+        desktop: NewDesktop(),
       ),
     );
   }

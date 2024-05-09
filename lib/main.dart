@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Almanet',
         theme: CustomTheme.customTheme,
-        home: const Home(),
+        home: const CRMPage(),
       ),
     );
   }

@@ -129,19 +129,6 @@ class _DesktopBodyState extends State<DesktopBody> {
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      // ElevatedButton(
-                      //   style: ElevatedButton.styleFrom(
-                      //     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                      //     shape: RoundedRectangleBorder(
-                      //       borderRadius: BorderRadius.circular(6),
-                      //     ),
-                      //     backgroundColor: Colors.green,
-                      //   ),
-                      //   child: const Text('New'),
-                      //   onPressed: () async {
-
-                      //   },
-                      // ),
                       const SizedBox(width: 8),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
