@@ -133,23 +133,9 @@
 // }
 
 import 'dart:developer';
-
-import 'package:almanet/constants/dummy_data/industries_dummy_data.dart';
 import 'package:almanet/constants/dummy_data/option_for_creating%20_leads.dart';
-import 'package:almanet/responsive/models/lead_model.dart';
-import 'package:almanet/responsive/provider/crm_provider.dart';
-import 'package:almanet/responsive/ui/screens/subleads/UpdateSCreen.dart';
-import 'package:almanet/responsive/ui/screens/subleads/delet.dart';
-import 'package:almanet/responsive/ui/screens/subleads/newleads.dart';
-import 'package:almanet/responsive/ui/widgets/crm_list_tile.dart';
-import 'package:almanet/responsive/ui/widgets/crm_popup_dialog.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 
 class NewDesktop extends StatefulWidget {
   const NewDesktop({super.key});
@@ -250,21 +236,16 @@ class _NewDesktopState extends State<NewDesktop> {
                 child: DropdownMenu<String>(
                   enableFilter: true,
                   enableSearch: false,
-                  textStyle: const TextStyle(
-                      color: Colors.black54, fontWeight: FontWeight.bold),
+                  textStyle: const TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),
                   width: 200,
-                  inputDecorationTheme:
-                      const InputDecorationTheme(border: InputBorder.none),
+                  inputDecorationTheme: const InputDecorationTheme(border: InputBorder.none),
                   hintText: "Generate Leads",
                   onSelected: (String? value) {
                     // This is called when the user selects an item.
                     setState(() {});
                   },
-                  dropdownMenuEntries:
-                      OptionofLeadsNew.map<DropdownMenuEntry<String>>(
-                          (String value) {
-                    return DropdownMenuEntry<String>(
-                        value: value, label: value);
+                  dropdownMenuEntries: OptionofLeadsNew.map<DropdownMenuEntry<String>>((String value) {
+                    return DropdownMenuEntry<String>(value: value, label: value);
                   }).toList(),
                 ),
               ),
@@ -275,7 +256,6 @@ class _NewDesktopState extends State<NewDesktop> {
             SizedBox(
               height: 50,
               width: 400,
-
               child: SearchBar(
                 // shape: ,
                 padding: const MaterialStatePropertyAll<EdgeInsets>(
@@ -288,10 +268,10 @@ class _NewDesktopState extends State<NewDesktop> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-              
+
                 leading: const Icon(Icons.search),
                 backgroundColor: MaterialStatePropertyAll(Colors.green[400]),
-                elevation: const MaterialStatePropertyAll(5),autoFocus: false,
+                elevation: const MaterialStatePropertyAll(5), autoFocus: false,
               ),
             ),
           ],
