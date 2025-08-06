@@ -382,9 +382,8 @@ class _AddFundsScreenState extends State<AddFundsScreen> {
                                                   .map((i) {
                                                 return InkWell(
                                                   onTap: () {
-                                                    // Always request focus when chip is tapped
-                                                    // This ensures keyboard opens even after back button press
-                                                    _inputNode.requestFocus();
+                                                    // First unfocus to reset the focus state
+                                                    _inputNode.unfocus();
                                                     
                                                     sendAnalyticsEvents(
                                                       "chip_clicked",
@@ -395,6 +394,13 @@ class _AddFundsScreenState extends State<AddFundsScreen> {
                                                     );
                                                     getIt<AddfundsCubit>()
                                                         .chooseFundRupees(i);
+                                                    
+                                                    // Then request focus after a short delay to ensure keyboard shows
+                                                    Future.delayed(const Duration(milliseconds: 50), () {
+                                                      if (mounted) {
+                                                        _inputNode.requestFocus();
+                                                      }
+                                                    });
                                                   },
                                                   child: Container(
                                                     decoration: BoxDecoration(
