@@ -34,14 +34,12 @@ class AddFundsScreen extends StatefulWidget {
   State<AddFundsScreen> createState() => _AddFundsScreenState();
 }
 
-class _AddFundsScreenState extends State<AddFundsScreen> with WidgetsBindingObserver {
-  late FocusNode _inputNode;
+class _AddFundsScreenState extends State<AddFundsScreen> {
+  final FocusNode _inputNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
-    _inputNode = FocusNode();
 
     sendAnalyticsEvents(
       "page_viewed",
@@ -71,42 +69,7 @@ class _AddFundsScreenState extends State<AddFundsScreen> with WidgetsBindingObse
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    super.didChangeAppLifecycleState(state);
-    // Recreate focus node when app resumes to fix Android back button issues
-    if (state == AppLifecycleState.resumed) {
-      Future.delayed(const Duration(milliseconds: 100), () {
-        if (mounted) {
-          _recreateFocusNode();
-        }
-      });
-    }
-  }
-
-  void _recreateFocusNode() {
-    _inputNode.dispose();
-    _inputNode = FocusNode();
-    setState(() {});
-  }
-
-  void _forceKeyboardOpen() {
-    // Unfocus first to reset state
-    FocusScope.of(context).unfocus();
-    
-    // Recreate focus node to ensure clean state
-    _recreateFocusNode();
-    
-    // Request focus after a delay
-    Future.delayed(const Duration(milliseconds: 100), () {
-      if (mounted) {
-        FocusScope.of(context).requestFocus(_inputNode);
-      }
-    });
-  }
-
-  @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
     _inputNode.dispose(); // Clean up the focus node
     super.dispose();
   }
@@ -428,8 +391,14 @@ class _AddFundsScreenState extends State<AddFundsScreen> with WidgetsBindingObse
                                                     getIt<AddfundsCubit>()
                                                         .chooseFundRupees(i);
                                                     
-                                                    // Force keyboard to open using our robust method
-                                                    _forceKeyboardOpen();
+                                                    // Force show keyboard using SystemChannels
+                                                    SystemChannels.textInput.invokeMethod('TextInput.show');
+                                                    // Request focus after a short delay
+                                                    Future.delayed(const Duration(milliseconds: 50), () {
+                                                      if (mounted) {
+                                                        FocusScope.of(context).requestFocus(_inputNode);
+                                                      }
+                                                    });
                                                   },
                                                   child: Container(
                                                     decoration: BoxDecoration(
