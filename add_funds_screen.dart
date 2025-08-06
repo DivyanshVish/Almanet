@@ -34,9 +34,14 @@ class AddFundsScreen extends StatefulWidget {
   State<AddFundsScreen> createState() => _AddFundsScreenState();
 }
 
-class _AddFundsScreenState extends State<AddFundsScreen> {
+class _AddFundsScreenState extends State<AddFundsScreen> with WidgetsBindingObserver {
+  late FocusNode _inputNode;
+
   @override
   void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    _inputNode = FocusNode();
 
     sendAnalyticsEvents(
       "page_viewed",
@@ -57,20 +62,51 @@ class _AddFundsScreenState extends State<AddFundsScreen> {
       _inputNode.requestFocus();
       debugPrint('Input field focus requested: ${_inputNode.hasFocus}');
     });
-    super.initState();
 
     if(widget.showComplienceLoader && getIt<TopBannerCubit>().data.userInfoDTO?.data!.cashTrade==true){
       Future.delayed( const Duration(milliseconds: 250),(){
         sessionLoaderBF(context:context);
       });
     }
-
   }
 
-  final FocusNode _inputNode = FocusNode();
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    // Recreate focus node when app resumes to fix Android back button issues
+    if (state == AppLifecycleState.resumed) {
+      Future.delayed(const Duration(milliseconds: 100), () {
+        if (mounted) {
+          _recreateFocusNode();
+        }
+      });
+    }
+  }
+
+  void _recreateFocusNode() {
+    _inputNode.dispose();
+    _inputNode = FocusNode();
+    setState(() {});
+  }
+
+  void _forceKeyboardOpen() {
+    // Unfocus first to reset state
+    FocusScope.of(context).unfocus();
+    
+    // Recreate focus node to ensure clean state
+    _recreateFocusNode();
+    
+    // Request focus after a delay
+    Future.delayed(const Duration(milliseconds: 100), () {
+      if (mounted) {
+        FocusScope.of(context).requestFocus(_inputNode);
+      }
+    });
+  }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _inputNode.dispose(); // Clean up the focus node
     super.dispose();
   }
@@ -382,9 +418,6 @@ class _AddFundsScreenState extends State<AddFundsScreen> {
                                                   .map((i) {
                                                 return InkWell(
                                                   onTap: () {
-                                                    // First unfocus to reset the focus state
-                                                    _inputNode.unfocus();
-                                                    
                                                     sendAnalyticsEvents(
                                                       "chip_clicked",
                                                       {
@@ -395,12 +428,8 @@ class _AddFundsScreenState extends State<AddFundsScreen> {
                                                     getIt<AddfundsCubit>()
                                                         .chooseFundRupees(i);
                                                     
-                                                    // Then request focus after a short delay to ensure keyboard shows
-                                                    Future.delayed(const Duration(milliseconds: 50), () {
-                                                      if (mounted) {
-                                                        _inputNode.requestFocus();
-                                                      }
-                                                    });
+                                                    // Force keyboard to open using our robust method
+                                                    _forceKeyboardOpen();
                                                   },
                                                   child: Container(
                                                     decoration: BoxDecoration(
